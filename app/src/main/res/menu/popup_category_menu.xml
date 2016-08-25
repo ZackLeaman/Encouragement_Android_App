@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/encouragementCategory"
+        android:title="Encouragement"/>
+
+    <item
+        android:id="@+id/prayerCategory"
+        android:title="Prayer">
+        <menu>
+
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/scriptureCategory"
+        android:title="Scripture">
+        <menu>
+
+        </menu>
+    </item>
+</menu>

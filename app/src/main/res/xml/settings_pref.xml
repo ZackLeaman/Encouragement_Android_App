@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <!--<PreferenceCategory-->
+        <!--android:title="">-->
+    <!--</PreferenceCategory>-->
+    <!--<PreferenceCategory-->
+        <!--android:title="">-->
+    <!--</PreferenceCategory>-->
+
+
+    <PreferenceCategory
+        android:title="App Preferences"
+        >
+
+        <ListPreference
+
+            android:key="backgroundSelection"
+            android:title="Background"
+            android:summary="Select your background here"
+            android:entries="@array/background_names"
+            android:entryValues="@array/background_values"
+            android:defaultValue="-1"
+            />
+
+        <SwitchPreference
+            android:key = "wantsStarterEncouragement"
+            android:title="Starter encouragements"
+            android:summary="Include these entries"
+            android:defaultValue="true"
+            />
+
+        <SwitchPreference
+            android:key = "wantsPrayerAndScripture"
+            android:title="Prayer and Scripture"
+            android:summary="Include these categories"
+            android:defaultValue="true"
+            />
+
+        <!--<RingtonePreference-->
+            <!--android:key="ringkey"-->
+            <!--android:title="Ringtone"-->
+            <!--android:summary="Select your ringtone here"-->
+            <!--/>-->
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="About"
+        >
+
+        <Preference
+            android:key="aboutPreference"
+            android:title="Thinking of You"
+            android:summary="Encouragement, Prayer, and Scripture notification service that allows users to either create their own entries or save entries from their own short messaging service. Encouragements get recycled so that the user will never get the same notification entry twice until all encouragements have been shown. The user can set alarms on individual Prayer and Scripture entries. One can also use this app to send SMS messages."
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Permissions"
+        >
+
+        <Preference
+            android:key="permissionsContactsPreferences"
+            android:title="Contacts"
+            android:summary="Uses contacts in order to assign an address to entries that are saved from the SMS inbox."
+            />
+
+        <Preference
+            android:key="permissionsPhonePreferences"
+            android:title="Phone"
+            android:summary="Allows this app to read the phone's current state and own identity."
+            />
+
+        <Preference
+            android:key="permissionsSMSPreferences"
+            android:title="SMS"
+            android:summary="Uses the Short Messaging Service for the user to send and receive SMS messages."
+            />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

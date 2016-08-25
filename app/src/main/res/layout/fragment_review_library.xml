@@ -1,0 +1,125 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.wordpress.zackleaman.materialtablayout.ReviewLibrary"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="140dp"
+        android:background="@color/colorPrimary"
+        android:alpha="0.75"
+        android:weightSum="1">
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnBack"
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimary"
+            android:drawableLeft= "@android:drawable/ic_menu_revert"
+            android:drawableStart="@android:drawable/ic_menu_revert"
+            android:textSize="20dp"
+            android:paddingLeft="7.5dp"
+            android:visibility="visible"
+            android:paddingTop="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Categories"
+            android:id="@+id/tvTitle"
+            android:textColor="#ffffff"
+            android:paddingTop="13dp"
+            android:paddingBottom="8dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/btnBack"
+            android:layout_toEndOf="@+id/btnBack"
+            android:layout_marginLeft="15dp"
+            android:textStyle="bold|italic"
+            android:textSize="20dp"
+            />
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="46dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnAdd"
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimary"
+            android:drawableLeft="@android:drawable/ic_menu_add"
+            android:drawableStart="@android:drawable/ic_menu_add"
+            android:textSize="20dp"
+            android:paddingLeft="7.5dp"
+            android:visibility="visible"
+            android:layout_weight="0.04"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:paddingTop="5dp"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignLeft="@+id/EncouragementList"
+        android:layout_alignStart="@+id/EncouragementList"
+        android:layout_alignRight="@+id/EncouragementList"
+        android:layout_alignEnd="@+id/EncouragementList"
+        android:id="@+id/linearLayoutAddCategory"
+        android:background="@color/colorPrimaryDark"
+        android:alpha="0.75"
+        android:visibility="visible">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/etCategoryEntry"
+            android:layout_weight="1"
+            android:layout_marginTop="14dp"
+            android:textColor="#ffffff"
+            android:maxLength="13"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="Category Title"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create"
+            android:id="@+id/btnCategoryCreate"
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimary"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/EncouragementList"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:alpha="0.75"
+        android:padding="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_below="@+id/linearLayoutAddCategory"
+        android:layout_marginTop="16dp"/>
+
+</RelativeLayout>

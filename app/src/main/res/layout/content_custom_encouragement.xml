@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/entryRelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sunset"
+    tools:context="com.wordpress.zackleaman.materialtablayout.CurrentEncouragement">
+
+
+    <ScrollView
+        android:id="@+id/ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        >
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            >
+
+            <HorizontalScrollView
+                android:id="@+id/hsv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:fillViewport="true"
+                android:measureAllChildren="false"
+                android:scrollbars="none"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <Button
+                        android:id="@+id/btn_cycle_pictures"
+                        android:layout_width="70dp"
+                        android:layout_height="110dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:background="@color/colorAccent2"
+                        android:drawableBottom="@android:drawable/ic_menu_rotate"
+                        android:paddingBottom="15dp"
+                        android:text="Cycle Photos"
+                        android:textColor="@color/colorAccent"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_ariedlandscape_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/ariedlandscape_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_brickwall_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/brickwall_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_city_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/city_small"
+                        android:tintMode="add"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_mountains1_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/mountains1_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_mountains2_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/mountains2_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_roof_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/roof_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_sea1_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/sea1_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_sea2_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/sea2_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_sea3_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/sea3_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_sky1_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/sky1_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_sky2_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/sky2_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_sunset_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/sunset_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_tarp_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/tarp_small"
+                        android:tintMode="add"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_wheatfield_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="70dp"
+                        android:src="@drawable/wheatfield_small"
+                        android:tintMode="add"/>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/btnClose"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="@color/colorPrimary"
+                android:text="X"
+                android:textColor="#ffffff"
+                android:layout_gravity="right"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0.75"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:id="@+id/tvEncouragementMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tvEncouragementFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:alpha="0.75"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp">
+                </TextView>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:alpha="0.75"
+                android:background="@color/colorPrimaryDark"
+                android:visibility="visible"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:id="@+id/tvNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_toLeftOf="@+id/btnInfoNotification"
+                    android:layout_toStartOf="@+id/btnInfoNotification"
+                    android:allowUndo="false"
+                    android:alpha="0.75"
+                    android:background="@color/colorPrimary"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    android:singleLine="false"
+                    android:text="Alarm Weekly on Monday 8:39 PM"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
+                    android:textSize="14dp"
+                    android:visibility="visible"/>
+
+                <Button
+                    android:id="@+id/btnInfoNotification"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tvNotification"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/colorPrimaryDark"
+                    android:drawableRight="@android:drawable/ic_menu_info_details"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="15dp"
+                    android:visibility="visible"/>
+
+                <!--<ScrollView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@+id/tvNotification"-->
+                <!--android:id="@+id/svNotificationDetails"-->
+                <!--android:visibility="visible">-->
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutNotification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvNotification"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btnNotificationFreq"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvNotification"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/colorPrimaryDark"
+                        android:drawableRight="@android:drawable/ic_menu_more"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="Daily Notification"
+                        android:textColor="#ffffff"
+                        android:visibility="visible"/>
+
+                    <Button
+                        android:id="@+id/btnDayWeekNotification"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/btnNotificationFreq"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/colorPrimaryDark"
+                        android:drawableRight="@android:drawable/ic_menu_more"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="Sunday"
+                        android:textColor="#ffffff"
+                        android:visibility="visible"/>
+
+                    <TimePicker
+                        android:id="@+id/timePickerNotification"
+                        style="@style/AppTheme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/btnDayWeekNotification"
+                        android:layout_centerHorizontal="true"
+                        android:timePickerMode="spinner"
+                        android:visibility="visible">
+
+                    </TimePicker>
+
+                    <Button
+                        android:id="@+id/btnSaveNotification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/timePickerNotification"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/colorPrimaryDark"
+                        android:drawableRight="@android:drawable/ic_menu_save"
+                        android:text="Save"
+                        android:textColor="#ffffff"
+                        android:visibility="visible"/>
+                </LinearLayout>
+                <!--</ScrollView>-->
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

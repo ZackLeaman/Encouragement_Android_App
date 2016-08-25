@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/last10Messages"
+        android:title="Last 10 Messages"
+        />
+
+    <item
+        android:id="@+id/last20Messages"
+        android:title="Last 20 Messages"
+        />
+
+    <item
+        android:id="@+id/last50Messages"
+        android:title="Last 50 Messages"
+        />
+</menu>

@@ -1,0 +1,398 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context="com.wordpress.zackleaman.materialtablayout.CurrentEncouragement"
+    >
+
+
+    <!--<ScrollView-->
+    <!--android:id="@+id/scrollView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutEncouragement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:alpha="0.75"
+            android:background="@color/colorPrimaryDark"
+            >
+
+            <TextView
+                android:id="@+id/tvEncouragement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/btnInfoEncouragement"
+                android:layout_toStartOf="@+id/btnInfoEncouragement"
+                android:background="@color/colorPrimary"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp"
+                android:singleLine="false"
+                android:text="Encouragement"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                android:textStyle="bold|italic"
+                android:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/tvEncouragementAlarmString"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvEncouragement"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:text="Alarm Off"
+                android:textColor="#dcffffff"
+                android:textStyle="italic"
+                android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/btnInfoEncouragement"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tvEncouragement"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/colorPrimaryDark"
+                android:drawableRight="@android:drawable/ic_menu_info_details"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
+                android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/btnNotificationFreqEncouragement"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvEncouragementAlarmString"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPrimaryDark"
+                android:drawableRight="@android:drawable/ic_menu_more"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Daily Notification"
+                android:textColor="#ffffff"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btnDayWeekEncouragement"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnNotificationFreqEncouragement"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorPrimaryDark"
+                android:drawableRight="@android:drawable/ic_menu_more"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Monday"
+                android:textColor="#ffffff"
+                android:visibility="gone"/>
+
+            <TimePicker
+                android:id="@+id/timePickerEncouragement"
+                style="@style/AppTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnDayWeekEncouragement"
+                android:layout_centerHorizontal="true"
+                android:timePickerMode="spinner"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btnSaveEncouragement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/timePickerEncouragement"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorPrimaryDark"
+                android:drawableRight="@android:drawable/ic_menu_save"
+                android:text="Save"
+                android:textColor="#ffffff"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutEncouragementEntry"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/relativeLayoutEncouragement"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutEncouragementEntryInner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/relativeLayoutEncouragement"
+                    >
+
+                <TextView
+                    android:id="@+id/tvEncouragementFrom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvEncouragementMessage"
+                    android:layout_toLeftOf="@+id/btnEncouragementEntry"
+                    android:layout_toStartOf="@+id/btnEncouragementEntry"
+                    android:alpha="0.75"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:textColor="#ffffff"
+                    android:textSize="14dp">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tvEncouragementMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_toLeftOf="@+id/btnEncouragementEntry"
+                    android:layout_toStartOf="@+id/btnEncouragementEntry"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp">
+                </TextView>
+
+                <Button
+                    android:id="@+id/btnEncouragementEntry"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/colorPrimary"
+                    android:drawableRight="@android:drawable/ic_media_play"
+                    android:paddingBottom="15dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="15dp"
+                    android:visibility="invisible"/>
+                </RelativeLayout>
+            </ScrollView>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnEncouragementDropdown"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/relativeLayoutEncouragementEntry"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:drawableBottom="@android:drawable/arrow_up_float"
+            android:paddingBottom="5dp"
+            android:textColor="#ffffff"/>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prayer and Scripture Categories Off"
+            android:id="@+id/switchPrayerAndScripture"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/btnEncouragementDropdown"
+            android:layout_marginTop="16dp"
+            android:padding="10dp"
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimary"
+            android:alpha="0.75"
+            android:textStyle="italic"/>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPrayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnEncouragementDropdown"
+            android:layout_marginTop="16dp"
+            android:alpha="0.75"
+            android:background="@color/colorPrimaryDark">
+
+            <TextView
+                android:id="@+id/tvPrayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/btnInfoPrayer"
+                android:background="@color/colorPrimary"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp"
+                android:singleLine="false"
+                android:text="Prayer"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                android:textStyle="bold|italic"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"/>
+
+            <Button
+                android:id="@+id/btnInfoPrayer"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tvPrayer"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/colorPrimary"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/listViewPrayer"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/relativeLayoutPrayer"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:paddingLeft="5dp"
+            android:visibility="gone"
+            />
+
+        <Button
+            android:id="@+id/btnPrayerDropdown"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/listViewPrayer"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:drawableBottom="@android:drawable/arrow_down_float"
+            android:paddingBottom="5dp"
+            android:textColor="#ffffff"/>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutScripture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnPrayerDropdown"
+            android:layout_marginTop="16dp"
+            android:alpha="0.75"
+            android:background="@color/colorPrimaryDark">
+
+            <TextView
+                android:id="@+id/tvScripture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/btnInfoScripture"
+                android:layout_toStartOf="@+id/btnInfoScripture"
+                android:background="@color/colorPrimary"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp"
+                android:singleLine="false"
+                android:text="Scripture"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                android:textStyle="bold|italic"
+                />
+
+            <Button
+                android:id="@+id/btnInfoScripture"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tvScripture"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/colorPrimary"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
+                />
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/listViewScripture"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/relativeLayoutScripture"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:paddingLeft="5dp"
+            android:visibility="gone"
+            />
+
+        <Button
+            android:id="@+id/btnScriptureDropdown"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/listViewScripture"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:drawableBottom="@android:drawable/arrow_down_float"
+            android:paddingBottom="5dp"
+            android:textColor="#ffffff"/>
+
+
+    </RelativeLayout>
+    <!--</ScrollView>-->
+</RelativeLayout>

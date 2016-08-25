@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.wordpress.zackleaman.materialtablayout.CurrentEncouragement">
+
+    <item
+        android:id="@+id/moveEntry"
+        android:orderInCategory="10"
+        android:title="Move">
+            <menu>
+
+            </menu>
+        </item>
+
+    <item
+        android:id="@+id/choosePhotoEntry"
+        android:orderInCategory="50"
+        android:title="Background"
+        />
+
+    <item
+        android:icon="@android:drawable/ic_menu_delete"
+        android:id="@+id/deleteEntry"
+        android:orderInCategory="100"
+        android:title="Delete"
+        />
+</menu>

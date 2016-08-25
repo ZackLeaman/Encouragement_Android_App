@@ -1,0 +1,148 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wordpress.zackleaman.materialtablayout.SendMessageFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sync Contacts"
+            android:id="@+id/btnSyncContacts"
+            android:background="#ffffff"
+            android:alpha="0.75"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="140dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/toNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="To"
+                android:padding="16dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:layout_toLeftOf="@+id/btnCancelContact"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:popupTheme="@style/PopupMenu"/>
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="X"
+                android:id="@+id/btnCancelContact"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="@color/colorPrimary"
+                android:textColor="#ffffff"
+                android:visibility="visible"
+                android:layout_alignParentTop="true"
+                android:textSize="20dp"
+                android:gravity="top|right"
+                android:paddingRight="16dp"
+                android:paddingTop="20dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary">
+
+            <EditText
+                android:id="@+id/editTextMessage"
+                android:layout_width="257dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/btnSendSMS"
+                android:alpha="0.75"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="Message"
+                android:inputType="textMultiLine"
+                android:padding="16dp"
+                android:singleLine="false"
+                android:textColor="#ffffff"
+                android:textColorHighlight="@color/colorPrimaryDark"
+                android:textColorHint="#ffffff"
+                android:textColorLink="#ffffff"
+                />
+
+            <Button
+                android:id="@+id/btnSendSMS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:alpha="0.75"
+                android:background="#ffffff"
+                android:text="Send"
+                android:textColor="@color/colorPrimary"
+                android:padding="20dp"/>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/editTextTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/editTextPhoneNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:ems="10"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:padding="10dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</ScrollView>

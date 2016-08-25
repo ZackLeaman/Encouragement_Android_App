@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Daily Notification"
+        android:id="@+id/popup_dailyNotification"/>
+
+    <item
+        android:title="Weekly Notification"
+        android:id="@+id/popup_weeklyNotification"/>
+
+    <item
+        android:title="No Notification"
+        android:id="@+id/popup_noNotification"/>
+
+    <item
+        android:title="Sunday"
+        android:id="@+id/popup_sunday"/>
+
+    <item
+        android:title="Monday"
+        android:id="@+id/popup_monday"/>
+
+    <item
+        android:title="Tuesday"
+        android:id="@+id/popup_tuesday"/>
+
+    <item
+        android:title="Wednesday"
+        android:id="@+id/popup_wednesday"/>
+
+    <item
+        android:title="Thursday"
+        android:id="@+id/popup_thursday"/>
+
+    <item
+        android:title="Friday"
+        android:id="@+id/popup_friday"/>
+
+    <item
+        android:title="Saturday"
+        android:id="@+id/popup_saturday"/>
+
+</menu>
