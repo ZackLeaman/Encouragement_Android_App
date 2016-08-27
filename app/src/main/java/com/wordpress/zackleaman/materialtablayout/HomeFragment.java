@@ -22,10 +22,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -99,7 +97,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
     private String encouragementAlarmString = "Alarm Off";
     private TextView tvEncouragementAlarmString;
 
-    private Switch switchPrayerAndScripture;
+    private TextView tvPrayerAndScripture;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -887,11 +885,10 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
 
         // This is switch that will appear if Prayer and Scripture Categories are turned off
-        switchPrayerAndScripture = (Switch)getView().findViewById(R.id.switchPrayerAndScripture);
+        tvPrayerAndScripture = (TextView) getView().findViewById(R.id.tvPrayerAndScripture);
         boolean wantsPrayerAndScripture = sp.getBoolean("wantsPrayerAndScripture",true);
         if(wantsPrayerAndScripture){
-            switchPrayerAndScripture.setChecked(wantsPrayerAndScripture);
-            switchPrayerAndScripture.setVisibility(View.GONE);
+            tvPrayerAndScripture.setVisibility(View.GONE);
         }else{
             RelativeLayout relativeLayoutPrayer, relativeLayoutScripture;
             ListView listViewPrayer, listViewScripture;
@@ -907,19 +904,8 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             btnPrayerDropdown.setVisibility(View.GONE);
             btnScriptureDropdown.setVisibility(View.GONE);
 
-            switchPrayerAndScripture.setVisibility(View.VISIBLE);
-            switchPrayerAndScripture.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if(b){
-                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-                        sp.edit().putBoolean("wantsPrayerAndScripture",b).commit();
-                        Intent intent = new Intent(getContext(),MainActivity.class);
-                        getActivity().finish();
-                        startActivity(intent);
-                    }
-                }
-            });
+            tvPrayerAndScripture.setVisibility(View.VISIBLE);
+
         }
 
 //        /// THIS IS THE START OF PRAYER NOTIFICATION INITIALIZATION

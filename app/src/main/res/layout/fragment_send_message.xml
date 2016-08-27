@@ -1,148 +1,338 @@
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView2"
+    android:id="@+id/LinearLayoutSendMessageBase"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wordpress.zackleaman.materialtablayout.SendMessageFragment">
+    tools:context="com.wordpress.zackleaman.materialtablayout.SendMessageFragment"
+    >
 
-    <LinearLayout
+
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="128dp"
+        >
 
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sync Contacts"
-            android:id="@+id/btnSyncContacts"
-            android:background="#ffffff"
-            android:alpha="0.75"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="140dp"
-            android:layout_marginRight="16dp"
-            android:textColor="@color/colorPrimary"
-            android:visibility="gone"/>
+            android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:alpha="0.75"
-            android:background="@color/colorPrimary"
-            android:layout_marginTop="140dp">
-
-            <AutoCompleteTextView
-                android:id="@+id/toNumber"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="To"
-                android:padding="16dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                android:layout_toLeftOf="@+id/btnCancelContact"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:popupTheme="@style/PopupMenu"/>
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp">
 
-            <Button
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="X"
-                android:id="@+id/btnCancelContact"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:background="@color/colorPrimary"
-                android:textColor="#ffffff"
-                android:visibility="visible"
-                android:layout_alignParentTop="true"
-                android:textSize="20dp"
-                android:gravity="top|right"
-                android:paddingRight="16dp"
-                android:paddingTop="20dp"/>
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvSendMessageTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:alpha="0.75"
+                    android:background="@color/colorPrimary"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    android:singleLine="false"
+                    android:text="Send Message"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
+                    android:textSize="22sp"
+                    android:textStyle="bold|italic"
+                    android:visibility="visible"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:alpha="0.75"
-            android:background="@color/colorPrimary">
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutSend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvSendMessageTitle"
+                    android:alpha="0.75"
+                    android:background="@color/colorPrimary"
+                    android:visibility="visible">
 
-            <EditText
-                android:id="@+id/editTextMessage"
-                android:layout_width="257dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_toLeftOf="@+id/btnSendSMS"
-                android:alpha="0.75"
-                android:ems="10"
-                android:gravity="top"
-                android:hint="Message"
-                android:inputType="textMultiLine"
-                android:padding="16dp"
-                android:singleLine="false"
-                android:textColor="#ffffff"
-                android:textColorHighlight="@color/colorPrimaryDark"
-                android:textColorHint="#ffffff"
-                android:textColorLink="#ffffff"
-                />
+                    <AutoCompleteTextView
+                        android:id="@+id/toNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_toLeftOf="@+id/btnCancelContact"
+                        android:layout_toStartOf="@+id/btnCancelContact"
+                        android:hint="To"
+                        android:padding="16dp"
+                        android:popupTheme="@style/PopupMenu"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#ffffff"
+                        />
 
-            <Button
-                android:id="@+id/btnSendSMS"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:alpha="0.75"
-                android:background="#ffffff"
-                android:text="Send"
-                android:textColor="@color/colorPrimary"
-                android:padding="20dp"/>
-        </RelativeLayout>
+                    <Button
+                        android:id="@+id/btnCancelContact"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:gravity="top|end"
+                        android:paddingRight="16dp"
+                        android:paddingTop="20dp"
+                        android:text="X"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp"
+                        android:visibility="visible"
+                        />
 
-        <EditText
-            android:id="@+id/editTextTo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:alpha="0.75"
-            android:background="@color/colorPrimary"
-            android:ems="10"
-            android:hint="Name"
-            android:inputType="textPersonName"
-            android:padding="10dp"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:visibility="gone"/>
+                    <EditText
+                        android:id="@+id/editTextMessage"
+                        android:layout_width="257dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/toNumber"
+                        android:layout_toLeftOf="@+id/btnSendSMS"
+                        android:allowUndo="false"
+                        android:ems="10"
+                        android:gravity="top"
+                        android:hint="Message"
+                        android:inputType="textMultiLine"
+                        android:padding="16dp"
+                        android:singleLine="false"
+                        android:textColor="#ffffff"
+                        android:textColorHighlight="@color/colorPrimaryDark"
+                        android:textColorHint="#ffffff"
+                        android:textColorLink="#ffffff"/>
 
-        <EditText
-            android:id="@+id/editTextPhoneNo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:alpha="0.75"
-            android:background="@color/colorPrimary"
-            android:ems="10"
-            android:hint="Phone Number"
-            android:inputType="phone"
-            android:padding="10dp"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:visibility="gone"/>
+                    <Button
+                        android:id="@+id/btnSendSMS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="false"
+                        android:background="#ffffff"
+                        android:padding="20dp"
+                        android:text="Send"
+                        android:textColor="@color/colorPrimary"/>
 
-    </LinearLayout>
-</ScrollView>
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btnSendDropdown"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/RelativeLayoutSend"
+                    android:alpha="0.75"
+                    android:background="@color/colorPrimaryDark"
+                    android:drawableBottom="@android:drawable/arrow_up_float"
+                    android:paddingBottom="5dp"
+                    android:textColor="#ffffff"/>
+
+                <TextView
+                    android:id="@+id/tvAddToMyTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/btnSendDropdown"
+                    android:layout_marginTop="16dp"
+                    android:alpha="0.75"
+                    android:background="@color/colorPrimary"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    android:singleLine="false"
+                    android:text="Add To My Library"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
+                    android:textSize="22dp"
+                    android:textStyle="bold|italic"
+                    android:visibility="visible"/>
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutNotificationAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvAddToMyTitle"
+                    android:alpha="0.75"
+                    android:background="@color/colorPrimary">
+
+                    <Button
+                        android:id="@+id/btnCategorySub"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="5dp"
+                        android:drawableRight="@android:drawable/ic_menu_more"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="10dp"
+                        android:text="Encouragement"
+                        android:textColor="#ffffff"
+                        android:visibility="visible"
+                        />
+
+                    <EditText
+                        android:id="@+id/etMessageAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/btnCategorySub"
+                        android:background="@color/colorPrimaryDark"
+                        android:ems="10"
+                        android:hint="Message"
+                        android:inputType="textMultiLine"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="10dp"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#ffffff"
+                        android:textSize="16dp"/>
+
+                    <TextView
+                        android:id="@+id/tvNotificationTitleAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_below="@+id/etMessageAdd"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/colorPrimary"
+                        android:padding="10dp"
+                        android:text="Notification Settings"
+                        android:textColor="#ffffff"
+                        android:textSize="18dp"
+                        android:textStyle="bold|italic"/>
+
+                    <Button
+                        android:id="@+id/btnNotificationTypeAdd"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/tvNotificationTitleAdd"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/colorPrimaryDark"
+                        android:drawableRight="@android:drawable/ic_menu_more"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="10dp"
+                        android:text="Daily Notification"
+                        android:textColor="#ffffff"
+                        android:visibility="visible"/>
+
+                    <Button
+                        android:id="@+id/btnNotificationDayAdd"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/btnNotificationTypeAdd"
+                        android:background="@color/colorPrimaryDark"
+                        android:drawableRight="@android:drawable/ic_menu_more"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="10dp"
+                        android:text="Monday"
+                        android:textColor="#ffffff"
+                        android:visibility="visible"/>
+
+                    <TimePicker
+                        android:id="@+id/timePickerNotificationAdd"
+                        style="@style/AppTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/btnNotificationDayAdd"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/colorPrimaryDark"
+                        android:timePickerMode="spinner"
+                        android:visibility="visible">
+
+                    </TimePicker>
+
+                    <Button
+                        android:id="@+id/btnCreateAdd"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/timePickerNotificationAdd"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/colorPrimary"
+                        android:padding="10dp"
+                        android:text="Create"
+                        android:textColor="#ffffff"/>
+
+                    <Button
+                        android:id="@+id/btnClearAdd"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/timePickerNotificationAdd"
+                        android:background="@color/colorPrimary"
+                        android:padding="10dp"
+                        android:text="Clear"
+                        android:textColor="#ffffff"/>
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btnAddDropdown"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/RelativeLayoutNotificationAdd"
+                    android:alpha="0.75"
+                    android:background="@color/colorPrimaryDark"
+                    android:drawableBottom="@android:drawable/arrow_up_float"
+                    android:paddingBottom="5dp"
+                    android:textColor="#ffffff"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

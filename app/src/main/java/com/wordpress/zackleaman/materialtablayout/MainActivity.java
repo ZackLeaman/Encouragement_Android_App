@@ -253,14 +253,14 @@ public class MainActivity extends AbsRuntimePermission {
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPagerAdapter.addFragments(new HomeFragment(), "Home");
         mViewPagerAdapter.addFragments(new ReviewLibrary(), "Library");
-        mViewPagerAdapter.addFragments(new SendMessageFragment(), "Send");
+        mViewPagerAdapter.addFragments(new SendMessageFragment(), "Create");
         mViewPagerAdapter.addFragments(new NewMessages(), "Inbox");
         myContext = getApplicationContext();
         mViewPager.setAdapter(mViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setIcon(R.drawable.ic_home_white_36dp);
         mTabLayout.getTabAt(1).setIcon(R.drawable.ic_view_agenda_white_36dp);
-        mTabLayout.getTabAt(2).setIcon(R.drawable.forward_message);
+        mTabLayout.getTabAt(2).setIcon(R.drawable.ic_create_white_36dp);
         mTabLayout.getTabAt(3).setIcon(R.drawable.message);
 
 

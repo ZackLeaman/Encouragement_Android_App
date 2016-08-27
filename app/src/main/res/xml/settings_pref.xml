@@ -17,7 +17,7 @@
 
             android:key="backgroundSelection"
             android:title="Background"
-            android:summary="Select your background here"
+            android:summary="Select or change your background here"
             android:entries="@array/background_names"
             android:entryValues="@array/background_values"
             android:defaultValue="-1"
@@ -53,7 +53,7 @@
         <Preference
             android:key="aboutPreference"
             android:title="Thinking of You"
-            android:summary="Encouragement, Prayer, and Scripture notification service that allows users to either create their own entries or save entries from their own short messaging service. Encouragements get recycled so that the user will never get the same notification entry twice until all encouragements have been shown. The user can set alarms on individual Prayer and Scripture entries. One can also use this app to send SMS messages."
+            android:summary="Encouragement notification service that allows users to either create their own entries or save entries from their own short messaging service. Encouragements get recycled so that the user will never get the same notification entry twice until all encouragements have been shown. Prayer and Scripture categories can be added with the ability to set individual alarms on those entries. Users can also send SMS messages."
             />
 
     </PreferenceCategory>

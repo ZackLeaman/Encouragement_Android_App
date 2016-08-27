@@ -70,13 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Notification Settings"
-            android:id="@+id/tvNotificationTitle"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="18dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
+            android:id="@+id/tvNotificationTitleAdd"
+            android:textSize="18sp"
             android:textStyle="bold|italic"
             android:textColor="#ffffff"
             android:background="@color/colorPrimary"
@@ -91,8 +86,6 @@
             android:text="Daily Notification"
             android:textColor="#ffffff"
             android:background="@color/colorPrimaryDark"
-            android:layout_below="@+id/tvEncouragementAlarmString"
-            android:layout_centerHorizontal="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:layout_marginTop="5dp"
@@ -107,8 +100,6 @@
             android:text="Monday"
             android:textColor="#ffffff"
             android:background="@color/colorPrimaryDark"
-            android:layout_below="@+id/btnNotificationFreqEncouragement"
-            android:layout_centerHorizontal="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:visibility="visible"/>
@@ -119,8 +110,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:timePickerMode="spinner"
-            android:layout_below="@+id/btnDayWeekEncouragement"
-            android:layout_centerHorizontal="true"
             android:visibility="visible">
 
         </TimePicker>
