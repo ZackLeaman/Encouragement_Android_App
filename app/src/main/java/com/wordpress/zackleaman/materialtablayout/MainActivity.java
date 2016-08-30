@@ -39,14 +39,14 @@ public class MainActivity extends AbsRuntimePermission {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_main);
+        setContentView(R.layout.activity_main);
         mToolbar = (Toolbar)findViewById(R.id.toolBar);
         setSupportActionBar(mToolbar);
 
         svPermissions = (ScrollView)findViewById(R.id.svPermissions);
 
-        isFirstTimeOpening = false;
-        saveBoolean("isFirstTimeOpening",isFirstTimeOpening);
+//        isFirstTimeOpening = false;
+//        saveBoolean("isFirstTimeOpening",isFirstTimeOpening);
         isFirstTimeOpening = loadBoolean("isFirstTimeOpening",getApplicationContext());
 
         requestAppPermissions(new String[]{
@@ -246,6 +246,24 @@ public class MainActivity extends AbsRuntimePermission {
             mainRelativeLayout.setBackgroundResource(R.drawable.tarp);
         }else if(picChoice == 13){
             mainRelativeLayout.setBackgroundResource(R.drawable.wheatfield);
+        }else if(picChoice == 14){
+            mainRelativeLayout.setBackgroundResource(R.drawable.city_2);
+        }else if(picChoice == 15){
+            mainRelativeLayout.setBackgroundResource(R.drawable.crumbled_paper);
+        }else if(picChoice == 16){
+            mainRelativeLayout.setBackgroundResource(R.drawable.forest);
+        }else if(picChoice == 17){
+            mainRelativeLayout.setBackgroundResource(R.drawable.hut_wall);
+        }else if(picChoice == 18){
+            mainRelativeLayout.setBackgroundResource(R.drawable.sea_4);
+        }else if(picChoice == 19){
+            mainRelativeLayout.setBackgroundResource(R.drawable.shore);
+        }else if(picChoice == 20){
+            mainRelativeLayout.setBackgroundResource(R.drawable.train);
+        }else if(picChoice == 21){
+            mainRelativeLayout.setBackgroundResource(R.drawable.tropic_2);
+        }else if(picChoice == 22){
+            mainRelativeLayout.setBackgroundResource(R.drawable.wood);
         }
 
 
@@ -292,14 +310,6 @@ public class MainActivity extends AbsRuntimePermission {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private boolean saveBoolean(String stringName,Boolean sKey){
-        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor mEdit1=sp.edit();
-        mEdit1.remove("SMS_" + stringName);
-        mEdit1.putBoolean("SMS_" + stringName,sKey);
-        return mEdit1.commit();
     }
 
     private Boolean loadBoolean(String stringName, Context mContext){

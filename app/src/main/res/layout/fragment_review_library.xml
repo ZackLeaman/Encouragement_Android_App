@@ -13,7 +13,7 @@
         android:id="@+id/linearLayout"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="87dp"
         android:background="@color/colorPrimary"
         android:alpha="0.75"
         android:weightSum="1">

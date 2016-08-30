@@ -98,6 +98,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
     private TextView tvEncouragementAlarmString;
 
     private TextView tvPrayerAndScripture;
+    private String homeEncouragement = "";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -136,6 +137,21 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         loadArray(notificationPrayerList,getActivity().getApplicationContext(),"notificationPrayerList");
         loadArray(notificationScriptureList,getActivity().getApplicationContext(),"notificationScriptureList");
         loadArray(encouragementList,getActivity().getApplicationContext(),"encouragementList");
+
+        if(MainActivity.isFirstTimeOpening){
+            MainActivity.isFirstTimeOpening = false;
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor mEdit1 = sp.edit();
+            mEdit1.remove("SMS_isFirstTimeOpening");
+            mEdit1.putBoolean("SMS_isFirstTimeOpening",false);
+            mEdit1.commit();
+            DialogPopup dialog = new DialogPopup();
+            Bundle args = new Bundle();
+            args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.OTHER_CATEGORIES);
+            args.putInt("FragmentID",this.getId());
+            dialog.setArguments(args);
+            dialog.show(getFragmentManager(), "other-categories");
+        }
 
 
 
@@ -350,11 +366,18 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         if(notificationEncouragementList.isEmpty() && encouragements.isEmpty()){
             notificationEncouragementList.add(0,"/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off");
             saveArray(notificationEncouragementList,"notificationEncouragementList");
+            SharedPreferences.Editor mEdit1 = sp.edit();
+            mEdit1.remove("homeEncouragement");
+            mEdit1.putString("homeEncouragement",notificationEncouragementList.get(0));
+            mEdit1.commit();
         }
         if(notificationEncouragementList.size() == 1 && !encouragements.isEmpty()){
             if(notificationEncouragementList.get(0).equals("/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off")){
                 notificationEncouragementList.remove(0);
                 saveArray(notificationEncouragementList, "notificationEncouragementList");
+                SharedPreferences.Editor mEdit1 = sp.edit();
+                mEdit1.remove("homeEncouragement");
+                mEdit1.commit();
             }
         }
         if(notificationEncouragementList.isEmpty() || MainActivity.isFirstTimeOpening || notificationEncouragementList == null){
@@ -398,7 +421,8 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     }
                 }
 
-                String[] entry = notificationEncouragementList.get(0).split("/n");
+                homeEncouragement = sp.getString("homeEncouragement",notificationEncouragementList.get(0));
+                String[] entry = homeEncouragement.split("/n");
                 String nameAddressDate = entry[2];
                 String message = entry[3];
 
@@ -444,7 +468,18 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     }
                 }
 
-                String[] entry = notificationEncouragementList.get(0).split("/n");
+
+                homeEncouragement = sp.getString("homeEncouragement",notificationEncouragementList.get(0));
+                for(int l = 0; l < starterEncouragements.size(); l++){
+                    if(homeEncouragement.equals(starterEncouragements.get(l))){
+                        homeEncouragement = notificationEncouragementList.get(0);
+                        SharedPreferences.Editor mEdit1 = sp.edit();
+                        mEdit1.remove("homeEncouragement");
+                        mEdit1.putString("homeEncouragement", homeEncouragement);
+                        mEdit1.commit();
+                    }
+                }
+                String[] entry = homeEncouragement.split("/n");
                 String nameAddressDate = entry[2];
                 String message = entry[3];
 
@@ -464,7 +499,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             public void onClick(View view) {
                 if(!notificationEncouragementList.get(0).equals("/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off")){
                     selectedEncouragement.clear();
-                    selectedEncouragement.add(0,notificationEncouragementList.get(0));
+                    selectedEncouragement.add(0,homeEncouragement);
                     saveArray(selectedEncouragement,"selectedEncouragement");
                     Intent intent = new Intent(getContext().getApplicationContext(),CurrentEncouragement.class);
                     startActivity(intent);
@@ -489,7 +524,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             public void onClick(View view) {
                 if(!notificationEncouragementList.get(0).equals("/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off")){
                     selectedEncouragement.clear();
-                    selectedEncouragement.add(0,notificationEncouragementList.get(0));
+                    selectedEncouragement.add(0,homeEncouragement);
                     saveArray(selectedEncouragement,"selectedEncouragement");
                     Intent intent = new Intent(getContext().getApplicationContext(),CurrentEncouragement.class);
                     startActivity(intent);
@@ -751,6 +786,8 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                         saveString("encouragementType","Weekly");
                         break;
                     case NONE:
+                        encouragementAlarmString = "Alarm Off";
+                        saveString("encouragementAlarmString", encouragementAlarmString);
                         saveString("EncouragementNotiFreq","None");
                         saveString("encouragementType","Off");
                         stopNotification(3);
@@ -908,654 +945,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
         }
 
-//        /// THIS IS THE START OF PRAYER NOTIFICATION INITIALIZATION
-//
-//        tvPrayerMessage = (TextView)getView().findViewById(R.id.tvPrayerMessage);
-//        tvPrayerFrom = (TextView)getView().findViewById(R.id.tvPrayerFrom);
-//
-//        String updatePra = loadString("needUpdateNotificationPrayer",getContext());
-//        if(!updatePra.isEmpty()){
-//            try{
-//                needUpdateNotificationPrayer = Boolean.parseBoolean(updateEnc);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        if(needUpdateNotificationPrayer){
-//            notificationPrayerList.remove(0);
-//            needUpdateNotificationPrayer = false;
-//            saveString("needUpdateNotificationPrayer","false");
-//            saveArray(notificationPrayerList,"notificationPrayerList");
-//        }
-//        if(notificationPrayerList.isEmpty() || MainActivity.isFirstTimeOpening || notificationPrayerList == null){
-//            Random r = new Random();
-//            ArrayList<String> orderedList = new ArrayList<>();
-//            for(int i = 0; i < encouragementList.size(); i++){
-//                try{
-//                    String[] entry = encouragementList.get(i).split("/n");
-//                    String category = entry[1];
-//
-//                    if(category.equals("Prayer")){
-//                        orderedList.add(encouragementList.get(i));
-//                    }
-//
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            int olSize = orderedList.size();
-//            int i1;
-//            while(olSize > 0){
-//                if(olSize > 1) {
-//                    i1 = r.nextInt(olSize);
-//                    notificationPrayerList.add(0,orderedList.get(i1));
-//                    orderedList.remove(i1);
-//                }else{
-//                    notificationPrayerList.add(0,orderedList.get(0));
-//                    orderedList.remove(0);
-//                }
-//                olSize--;
-//
-//            }
-//            saveArray(notificationPrayerList,"notificationPrayerList");
-//            try{
-//                for(int j = 0; j < encouragementList.size(); j++){
-//                    if(notificationPrayerList.get(0).equals(encouragementList.get(j))){
-//                        positionPrayer = j;
-//                    }
-//                }
-//
-//                String[] entry = notificationPrayerList.get(0).split("/n");
-//                String nameAddressDate = entry[2];
-//                String message = entry[3];
-//
-//                tvPrayerMessage.setText(message);
-//                tvPrayerFrom.setText(nameAddressDate);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//
-//        }else{
-//            try{
-//                for(int j = 0; j < encouragementList.size(); j++){
-//                    if(notificationPrayerList.get(0).equals(encouragementList.get(j))){
-//                        positionPrayer = j;
-//                    }
-//                }
-//
-//                String[] entry = notificationPrayerList.get(0).split("/n");
-//                String nameAddressDate = entry[2];
-//                String message = entry[3];
-//
-//                tvPrayerMessage.setText(message);
-//                tvPrayerFrom.setText(nameAddressDate);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//
-//
-//        relativeLayoutPrayerEntry = (RelativeLayout)getView().findViewById(R.id.relativeLayoutPrayerEntry);
-//        relativeLayoutPrayerEntry.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                selectedEncouragement.add(0,encouragementList.get(positionPrayer));
-//                saveArray(selectedEncouragement,"selectedEncouragement");
-//                Intent intent = new Intent(getContext().getApplicationContext(),CurrentEncouragement.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//
-//
-//
-//        tvPrayer = (TextView)getView().findViewById(R.id.tvPrayer);
-//        btnInfoPrayer = (Button)getView().findViewById(R.id.btnInfoPrayer);
-//        btnNotificationFreqPrayer = (Button)getView().findViewById(R.id.btnNotificationFreqPrayer);
-//        btnDayWeekPrayer = (Button)getView().findViewById(R.id.btnDayWeekPrayer);
-//        timePickerPrayer = (TimePicker)getView().findViewById(R.id.timePickerPrayer);
-//        btnSavePrayer = (Button)getView().findViewById(R.id.btnSavePrayer);
-//
-//        //TODO NEED to work for Prayer and Scripture as well
-//        mPrayerNotification = PrayerNotification.DAILY;
-//        btnNotificationFreqPrayer.setText("Daily Notification");
-//        mPrayerDay = PrayerDay.SUNDAY;
-//        btnDayWeekPrayer.setText("Sunday");
-//        String prayDay = loadString("PrayerDay",getActivity().getApplicationContext());
-//        String prayNotFreq = loadString("PrayerNotiFreq",getActivity().getApplicationContext());
-//
-//        if(prayNotFreq.equals("Daily")){
-//            tvPrayer.setText("Daily Prayer");
-//            mPrayerNotification = PrayerNotification.DAILY;
-//            btnNotificationFreqPrayer.setText("Daily Notification");
-//        }else if(prayNotFreq.equals("Weekly")){
-//            tvPrayer.setText("Weekly Prayer");
-//            mPrayerNotification = PrayerNotification.WEEKLY;
-//            btnNotificationFreqPrayer.setText("Weekly Notification");
-//        }else if(prayNotFreq.equals("None")){
-//            tvPrayer.setText("Prayer");
-//            mPrayerNotification = PrayerNotification.NONE;
-//            btnNotificationFreqPrayer.setText("No Notification");
-//        }
-//
-//        if(prayDay.equals("Sunday")){
-//            mPrayerDay = PrayerDay.SUNDAY;
-//            btnDayWeekPrayer.setText(prayDay);
-//        }else if(prayDay.equals("Monday")){
-//            mPrayerDay = PrayerDay.MONDAY;
-//            btnDayWeekPrayer.setText(prayDay);
-//        }else if(prayDay.equals("Tuesday")){
-//            mPrayerDay = PrayerDay.TUESDAY;
-//            btnDayWeekPrayer.setText(prayDay);
-//        }else if(prayDay.equals("Wednesday")){
-//            mPrayerDay = PrayerDay.WEDNESDAY;
-//            btnDayWeekPrayer.setText(prayDay);
-//        }else if(prayDay.equals("Thursday")){
-//            mPrayerDay = PrayerDay.THURSDAY;
-//            btnDayWeekPrayer.setText(prayDay);
-//        }else if(prayDay.equals("Friday")){
-//            mPrayerDay = PrayerDay.FRIDAY;
-//            btnDayWeekPrayer.setText(prayDay);
-//        }else if(prayDay.equals("Saturday")){
-//            mPrayerDay = PrayerDay.SATURDAY;
-//            btnDayWeekPrayer.setText(prayDay);
-//        }
-//
-//
-//        isPrayerInfoActive = false;
-//        isPrayerNotiFreqActive = false;
-//        isPrayerDayActive = false;
-//        btnNotificationFreqPrayer.setVisibility(View.GONE);
-//        btnDayWeekPrayer.setVisibility(View.GONE);
-//        timePickerPrayer.setVisibility(View.GONE);
-//        btnSavePrayer.setVisibility(View.GONE);
-//        btnInfoPrayer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-//        btnInfoPrayer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                isPrayerInfoActive = !isPrayerInfoActive;
-//                if(isPrayerInfoActive){
-//                    btnInfoPrayer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-//                    btnNotificationFreqPrayer.setVisibility(View.VISIBLE);
-//                    btnSavePrayer.setVisibility(View.VISIBLE);
-//                    switch (mPrayerNotification){
-//                        case DAILY:
-//                            btnDayWeekPrayer.setVisibility(View.GONE);
-//                            timePickerPrayer.setVisibility(View.VISIBLE);
-//                            break;
-//                        case WEEKLY:
-//                            btnDayWeekPrayer.setVisibility(View.VISIBLE);
-//                            timePickerPrayer.setVisibility(View.VISIBLE);
-//                            break;
-//                        case NONE:
-//                            btnDayWeekPrayer.setVisibility(View.GONE);
-//                            timePickerPrayer.setVisibility(View.GONE);
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//
-//                    if (Build.VERSION.SDK_INT >= 23 ) {
-//                        String hour = loadString("PrayerTimeHour",getContext());
-//                        String minute = loadString("PrayerTimeMinute",getContext());
-//                        if(!hour.isEmpty()){
-//                            timePickerPrayer.setHour(Integer.parseInt(hour));
-//                        }
-//                        if(!minute.isEmpty()){
-//                            timePickerPrayer.setMinute(Integer.parseInt(minute));
-//                        }
-//                    }else {
-//                        String hour = loadString("PrayerTimeHour",getContext());
-//                        String minute = loadString("PrayerTimeMinute",getContext());
-//                        if(!hour.isEmpty()){
-//                            timePickerPrayer.setCurrentHour(Integer.parseInt(hour));
-//                        }
-//                        if(!minute.isEmpty()){
-//                            timePickerPrayer.setCurrentMinute(Integer.parseInt(minute));
-//                        }
-//                    }
-//
-//
-//                }else{
-//                    btnNotificationFreqPrayer.setVisibility(View.GONE);
-//                    btnDayWeekPrayer.setVisibility(View.GONE);
-//                    timePickerPrayer.setVisibility(View.GONE);
-//                    btnSavePrayer.setVisibility(View.GONE);
-//                    btnInfoPrayer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-//                }
-//            }
-//        });
-//        btnNotificationFreqPrayer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                isPrayerNotiFreqActive = true;
-//                isPrayerDayActive = false;
-//                isEncouragementDayActive = false;
-//                isEncouragementNotiFreqActive = false;
-//                isScriptureDayActive = false;
-//                isScriptureNotiFreqActive = false;
-//                showPopUp(view);
-//            }
-//        });
-//        btnDayWeekPrayer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                isPrayerNotiFreqActive = false;
-//                isPrayerDayActive = true;
-//                isEncouragementDayActive = false;
-//                isEncouragementNotiFreqActive = false;
-//                isScriptureDayActive = false;
-//                isScriptureNotiFreqActive = false;
-//                showPopUp(view);
-//            }
-//        });
-//        btnSavePrayer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int day = 0;
-//                int hour = 1;
-//                int minute = 1;
-//
-//                if (Build.VERSION.SDK_INT >= 23 ) {
-//                    saveString("PrayerTimeHour",Integer.toString(timePickerPrayer.getHour()));
-//                    saveString("PrayerTimeMinute",Integer.toString(timePickerPrayer.getMinute()));
-//                    hour = timePickerPrayer.getHour();
-//                    minute = timePickerPrayer.getMinute();
-//                }else {
-//                    saveString("PrayerTimeHour",Integer.toString(timePickerPrayer.getCurrentHour()));
-//                    saveString("PrayerTimeMinute",Integer.toString(timePickerPrayer.getCurrentMinute()));
-//                    hour = timePickerPrayer.getCurrentHour();
-//                    minute = timePickerPrayer.getCurrentMinute();
-//                }
-//                switch (mPrayerDay){
-//                    case SUNDAY:
-//                        saveString("PrayerDay","Sunday");
-//                        day = 1;
-//                        break;
-//                    case MONDAY:
-//                        saveString("PrayerDay","Monday");
-//                        day = 2;
-//                        break;
-//                    case TUESDAY:
-//                        saveString("PrayerDay","Tuesday");
-//                        day = 3;
-//                        break;
-//                    case WEDNESDAY:
-//                        saveString("PrayerDay","Wednesday");
-//                        day = 4;
-//                        break;
-//                    case THURSDAY:
-//                        saveString("PrayerDay","Thursday");
-//                        day = 5;
-//                        break;
-//                    case FRIDAY:
-//                        saveString("PrayerDay","Friday");
-//                        day = 6;
-//                        break;
-//                    case SATURDAY:
-//                        saveString("PrayerDay","Saturday");
-//                        day = 7;
-//                        break;
-//                }
-//                switch (mPrayerNotification){
-//                    case DAILY:
-//                        saveString("PrayerNotiFreq","Daily");
-//                        setDailyAlarm("Daily",day,hour,minute,4,encouragementList.get(positionPrayer),Integer.toString(positionPrayer));
-//                        break;
-//                    case WEEKLY:
-//                        saveString("PrayerNotiFreq","Weekly");
-//                        setDailyAlarm("Weekly",day,hour,minute,4,encouragementList.get(positionPrayer),Integer.toString(positionPrayer));
-//                        break;
-//                    case NONE:
-//                        saveString("PrayerNotiFreq","None");
-//                        stopNotification(4);
-//                        break;
-//                }
-//
-//
-//
-//                btnInfoPrayer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-//                isPrayerInfoActive = false;
-//                isPrayerNotiFreqActive = false;
-//                isPrayerDayActive = false;
-//                btnDayWeekPrayer.setVisibility(View.GONE);
-//                btnNotificationFreqPrayer.setVisibility(View.GONE);
-//                btnSavePrayer.setVisibility(View.GONE);
-//                timePickerPrayer.setVisibility(View.GONE);
-//
-//                Toast.makeText(getActivity().getApplicationContext(),
-//                        "Prayer Notification Settings Saved",
-//                        Toast.LENGTH_LONG).show();
-//
-//            }
-//        });
-//
-//
-//        /// THIS IS THE START OF SCRIPTURE NOTIFICATION INITIALIZATION
-//
-//        tvScriptureMessage = (TextView)getView().findViewById(R.id.tvScriptureMessage);
-//        tvScriptureFrom = (TextView)getView().findViewById(R.id.tvScriptureFrom);
-//
-//        String updateScr = loadString("needUpdateNotificationScripture",getContext());
-//        if(!updateScr.isEmpty()){
-//            try{
-//                needUpdateNotificationScripture = Boolean.parseBoolean(updateScr);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        if(needUpdateNotificationScripture){
-//            notificationScriptureList.remove(0);
-//            needUpdateNotificationScripture = false;
-//            saveString("needUpdateNotificationScripture","false");
-//            saveArray(notificationScriptureList,"notificationScriptureList");
-//        }
-//        if(notificationScriptureList.isEmpty() || MainActivity.isFirstTimeOpening || notificationScriptureList == null){
-//            Random r = new Random();
-//            ArrayList<String> orderedList = new ArrayList<>();
-//            for(int i = 0; i < encouragementList.size(); i++){
-//                try{
-//                    String[] entry = encouragementList.get(i).split("/n");
-//                    String category = entry[1];
-//
-//                    if(category.equals("Scripture")){
-//                        orderedList.add(encouragementList.get(i));
-//                    }
-//
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            int olSize = orderedList.size();
-//            int i1;
-//            while(olSize > 0){
-//                if(olSize > 1) {
-//                    i1 = r.nextInt(olSize);
-//                    notificationScriptureList.add(0,orderedList.get(i1));
-//                    orderedList.remove(i1);
-//                }else{
-//                    notificationScriptureList.add(0,orderedList.get(0));
-//                    orderedList.remove(0);
-//                }
-//                olSize--;
-//
-//            }
-//            saveArray(notificationScriptureList,"notificationScriptureList");
-//            try{
-//                for(int j = 0; j < encouragementList.size(); j++){
-//                    if(notificationScriptureList.get(0).equals(encouragementList.get(j))){
-//                        positionScripture = j;
-//                    }
-//                }
-//
-//                String[] entry = notificationScriptureList.get(0).split("/n");
-//                String nameAddressDate = entry[2];
-//                String message = entry[3];
-//
-//                tvScriptureMessage.setText(message);
-//                tvScriptureFrom.setText(nameAddressDate);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//
-//        }else{
-//            try{
-//                for(int j = 0; j < encouragementList.size(); j++){
-//                    if(notificationScriptureList.get(0).equals(encouragementList.get(j))){
-//                        positionScripture = j;
-//                    }
-//                }
-//
-//                String[] entry = notificationScriptureList.get(0).split("/n");
-//                String nameAddressDate = entry[2];
-//                String message = entry[3];
-//
-//                tvScriptureMessage.setText(message);
-//                tvScriptureFrom.setText(nameAddressDate);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//
-//
-//        relativeLayoutScriptureEntry = (RelativeLayout)getView().findViewById(R.id.relativeLayoutScriptureEntry);
-//        relativeLayoutScriptureEntry.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                selectedEncouragement.add(0,encouragementList.get(positionScripture));
-//                saveArray(selectedEncouragement,"selectedEncouragement");
-//                Intent intent = new Intent(getContext().getApplicationContext(),CurrentEncouragement.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//
-//
-//
-//        tvScripture = (TextView)getView().findViewById(R.id.tvScripture);
-//        btnInfoScripture = (Button)getView().findViewById(R.id.btnInfoScripture);
-//        btnNotificationFreqScripture = (Button)getView().findViewById(R.id.btnNotificationFreqScripture);
-//        btnDayWeekScripture = (Button)getView().findViewById(R.id.btnDayWeekScripture);
-//        timePickerScripture = (TimePicker)getView().findViewById(R.id.timePickerScripture);
-//        btnSaveScripture = (Button)getView().findViewById(R.id.btnSaveScripture);
-//
-//        //TODO NEED to work for Prayer and Scripture as well
-//        mScriptureNotification = ScriptureNotification.DAILY;
-//        btnNotificationFreqScripture.setText("Daily Notification");
-//        mScriptureDay = ScriptureDay.SUNDAY;
-//        btnDayWeekScripture.setText("Sunday");
-//        String scrDay = loadString("ScriptureDay",getActivity().getApplicationContext());
-//        String scrNotFreq = loadString("ScriptureNotiFreq",getActivity().getApplicationContext());
-//
-//        if(scrNotFreq.equals("Daily")){
-//            tvScripture.setText("Daily Scripture");
-//            mScriptureNotification = ScriptureNotification.DAILY;
-//            btnNotificationFreqScripture.setText("Daily Notification");
-//        }else if(scrNotFreq.equals("Weekly")){
-//            tvScripture.setText("Weekly Scripture");
-//            mScriptureNotification = ScriptureNotification.WEEKLY;
-//            btnNotificationFreqScripture.setText("Weekly Notification");
-//        }else if(scrNotFreq.equals("None")){
-//            tvScripture.setText("Scripture");
-//            mScriptureNotification = ScriptureNotification.NONE;
-//            btnNotificationFreqScripture.setText("No Notification");
-//        }
-//
-//        if(scrDay.equals("Sunday")){
-//            mScriptureDay = ScriptureDay.SUNDAY;
-//            btnDayWeekScripture.setText(scrDay);
-//        }else if(scrDay.equals("Monday")){
-//            mScriptureDay = ScriptureDay.MONDAY;
-//            btnDayWeekScripture.setText(scrDay);
-//        }else if(scrDay.equals("Tuesday")){
-//            mScriptureDay = ScriptureDay.TUESDAY;
-//            btnDayWeekScripture.setText(scrDay);
-//        }else if(scrDay.equals("Wednesday")){
-//            mScriptureDay = ScriptureDay.WEDNESDAY;
-//            btnDayWeekScripture.setText(scrDay);
-//        }else if(scrDay.equals("Thursday")){
-//            mScriptureDay = ScriptureDay.THURSDAY;
-//            btnDayWeekScripture.setText(scrDay);
-//        }else if(scrDay.equals("Friday")){
-//            mScriptureDay = ScriptureDay.FRIDAY;
-//            btnDayWeekScripture.setText(scrDay);
-//        }else if(scrDay.equals("Saturday")){
-//            mScriptureDay = ScriptureDay.SATURDAY;
-//            btnDayWeekScripture.setText(scrDay);
-//        }
-//
-//
-//        isScriptureInfoActive = false;
-//        isScriptureNotiFreqActive = false;
-//        isScriptureDayActive = false;
-//        btnNotificationFreqScripture.setVisibility(View.GONE);
-//        btnDayWeekScripture.setVisibility(View.GONE);
-//        timePickerScripture.setVisibility(View.GONE);
-//        btnSaveScripture.setVisibility(View.GONE);
-//        btnInfoScripture.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-//        btnInfoScripture.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                isScriptureInfoActive = !isScriptureInfoActive;
-//                if(isScriptureInfoActive){
-//                    btnInfoScripture.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-//                    btnNotificationFreqScripture.setVisibility(View.VISIBLE);
-//                    btnSaveScripture.setVisibility(View.VISIBLE);
-//                    switch (mScriptureNotification){
-//                        case DAILY:
-//                            btnDayWeekScripture.setVisibility(View.GONE);
-//                            timePickerScripture.setVisibility(View.VISIBLE);
-//                            break;
-//                        case WEEKLY:
-//                            btnDayWeekScripture.setVisibility(View.VISIBLE);
-//                            timePickerScripture.setVisibility(View.VISIBLE);
-//                            break;
-//                        case NONE:
-//                            btnDayWeekScripture.setVisibility(View.GONE);
-//                            timePickerScripture.setVisibility(View.GONE);
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//
-//                    if (Build.VERSION.SDK_INT >= 23 ) {
-//                        String hour = loadString("ScriptureTimeHour",getContext());
-//                        String minute = loadString("ScriptureTimeMinute",getContext());
-//                        if(!hour.isEmpty()){
-//                            timePickerScripture.setHour(Integer.parseInt(hour));
-//                        }
-//                        if(!minute.isEmpty()){
-//                            timePickerScripture.setMinute(Integer.parseInt(minute));
-//                        }
-//                    }else {
-//                        String hour = loadString("ScriptureTimeHour",getContext());
-//                        String minute = loadString("ScriptureTimeMinute",getContext());
-//                        if(!hour.isEmpty()){
-//                            timePickerScripture.setCurrentHour(Integer.parseInt(hour));
-//                        }
-//                        if(!minute.isEmpty()){
-//                            timePickerScripture.setCurrentMinute(Integer.parseInt(minute));
-//                        }
-//                    }
-//
-//
-//                }else{
-//                    btnNotificationFreqScripture.setVisibility(View.GONE);
-//                    btnDayWeekScripture.setVisibility(View.GONE);
-//                    timePickerScripture.setVisibility(View.GONE);
-//                    btnSaveScripture.setVisibility(View.GONE);
-//                    btnInfoScripture.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-//                }
-//            }
-//        });
-//        btnNotificationFreqScripture.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                isPrayerNotiFreqActive = false;
-//                isPrayerDayActive = false;
-//                isEncouragementDayActive = false;
-//                isEncouragementNotiFreqActive = false;
-//                isScriptureDayActive = false;
-//                isScriptureNotiFreqActive = true;
-//                showPopUp(view);
-//            }
-//        });
-//        btnDayWeekScripture.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                isPrayerNotiFreqActive = false;
-//                isPrayerDayActive = false;
-//                isEncouragementDayActive = false;
-//                isEncouragementNotiFreqActive = false;
-//                isScriptureDayActive = true;
-//                isScriptureNotiFreqActive = false;
-//                showPopUp(view);
-//            }
-//        });
-//        btnSaveScripture.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int day = 0;
-//                int hour = 1;
-//                int minute = 1;
-//
-//                if (Build.VERSION.SDK_INT >= 23 ) {
-//                    saveString("ScriptureTimeHour",Integer.toString(timePickerScripture.getHour()));
-//                    saveString("ScriptureTimeMinute",Integer.toString(timePickerScripture.getMinute()));
-//                    hour = timePickerScripture.getHour();
-//                    minute = timePickerScripture.getMinute();
-//                }else {
-//                    saveString("ScriptureTimeHour",Integer.toString(timePickerScripture.getCurrentHour()));
-//                    saveString("ScriptureTimeMinute",Integer.toString(timePickerScripture.getCurrentMinute()));
-//                    hour = timePickerScripture.getCurrentHour();
-//                    minute = timePickerScripture.getCurrentMinute();
-//                }
-//                switch (mScriptureDay){
-//                    case SUNDAY:
-//                        saveString("ScriptureDay","Sunday");
-//                        day = 1;
-//                        break;
-//                    case MONDAY:
-//                        saveString("ScriptureDay","Monday");
-//                        day = 2;
-//                        break;
-//                    case TUESDAY:
-//                        saveString("ScriptureDay","Tuesday");
-//                        day = 3;
-//                        break;
-//                    case WEDNESDAY:
-//                        saveString("ScriptureDay","Wednesday");
-//                        day = 4;
-//                        break;
-//                    case THURSDAY:
-//                        saveString("ScriptureDay","Thursday");
-//                        day = 5;
-//                        break;
-//                    case FRIDAY:
-//                        saveString("ScriptureDay","Friday");
-//                        day = 6;
-//                        break;
-//                    case SATURDAY:
-//                        saveString("ScriptureDay","Saturday");
-//                        day = 7;
-//                        break;
-//                }
-//                switch (mScriptureNotification){
-//                    case DAILY:
-//                        saveString("ScriptureNotiFreq","Daily");
-//                        setDailyAlarm("Daily",day,hour,minute,5,encouragementList.get(positionScripture),Integer.toString(positionScripture));
-//                        break;
-//                    case WEEKLY:
-//                        saveString("ScriptureNotiFreq","Weekly");
-//                        setDailyAlarm("Weekly",day,hour,minute,5,encouragementList.get(positionScripture),Integer.toString(positionScripture));
-//                        break;
-//                    case NONE:
-//                        saveString("ScriptureNotiFreq","None");
-//                        stopNotification(5);
-//                        break;
-//                }
-//
-//
-//
-//                btnInfoScripture.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-//                isScriptureInfoActive = false;
-//                isScriptureNotiFreqActive = false;
-//                isScriptureDayActive = false;
-//                btnDayWeekScripture.setVisibility(View.GONE);
-//                btnNotificationFreqScripture.setVisibility(View.GONE);
-//                btnSaveScripture.setVisibility(View.GONE);
-//                timePickerScripture.setVisibility(View.GONE);
-//
-//                Toast.makeText(getActivity().getApplicationContext(),
-//                        "Scripture Notification Settings Saved",
-//                        Toast.LENGTH_LONG).show();
-//
-//            }
-//        });
     }
 
     @Override
@@ -1617,16 +1006,18 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext().getApplicationContext(),notifyID,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         try {
-            if(!notificationEncouragementList.get(0).equals("/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off")) {
-                for (int l = 0; l < notificationEncouragementList.size(); l++) {
-                    String[] encEntry = notificationEncouragementList.get(l).split("/n");
-                    encEntry[6] = "Alarm " + notificationType;
-                    String revisedMsg = "/n" + encEntry[1] + "/n" + encEntry[2] + "/n" + encEntry[3] +
-                            "/n" + encEntry[4] + "/n" + encEntry[5] + "/n" + encEntry[6];
-                    notificationEncouragementList.set(l, revisedMsg);
-                }
-                saveArray(notificationEncouragementList, "notificationEncouragementList");
-            }
+            // TODO get rid of this cause causing problems different than actual encouragements
+//            if(!notificationEncouragementList.get(0).equals("/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off")) {
+//                for (int l = 0; l < notificationEncouragementList.size(); l++) {
+//                    String[] encEntry = notificationEncouragementList.get(l).split("/n");
+//                    encEntry[6] = "Alarm " + notificationType;
+//                    String revisedMsg = "/n" + encEntry[1] + "/n" + encEntry[2] + "/n" + encEntry[3] +
+//                            "/n" + encEntry[4] + "/n" + encEntry[5] + "/n" + encEntry[6];
+//                    notificationEncouragementList.set(l, revisedMsg);
+//                }
+//                saveArray(notificationEncouragementList, "notificationEncouragementList");
+//            }
+            // TODO end of section to get rid of
 
             loadArray(alarmList, getContext(), "alarmList");
             boolean newEntry = true;
@@ -1650,10 +1041,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             e.printStackTrace();
         }
 
-//        Toast.makeText(getContext(),Long.toString(calendar.getTimeInMillis()),Toast.LENGTH_LONG).show();
-//        Toast.makeText(getContext(),Long.toString(System.currentTimeMillis()),Toast.LENGTH_LONG).show();
-
-
 
         AlarmManager alarmManager = (AlarmManager)
                 getContext().getApplicationContext().getSystemService(Context.ALARM_SERVICE);
@@ -1662,33 +1049,26 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             // if calendar time has already passed then add a day to the time
             if(calendar.getTimeInMillis() < System.currentTimeMillis()){
                 calendar.setTimeInMillis(calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY);
-//                Toast.makeText(getContext(),"Time Added",Toast.LENGTH_LONG).show();
-
             }
 
-            // alarm setWindow
+            // alarm set
             if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             } else {
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             }
-//            alarmManager.setWindow(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-//                    AlarmManager.INTERVAL_DAY, pendingIntent);
         }else if(notificationType.equals("Weekly")){
             // if calendar time has already passed then add a week to the time
             if(calendar.getTimeInMillis() < System.currentTimeMillis()){
                 calendar.setTimeInMillis(calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY*7);
-//                Toast.makeText(getContext(),"Time Added",Toast.LENGTH_LONG).show();
             }
 
-            // alarm setWindow
+            // alarm set
             if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             } else {
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             }
-//            alarmManager.setWindow(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-//                    AlarmManager.INTERVAL_DAY*7, pendingIntent);
         }
 
     }
@@ -1702,52 +1082,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         alarmManagerstop.cancel(senderstop);
     }
 
-
-//    public void setAlarm1(View view){
-//        Toast.makeText(getContext().getApplicationContext(),"Setting Alarm 5 seconds",Toast.LENGTH_SHORT).show();
-//        //this is 5 seconds
-//        long alertTime = new GregorianCalendar().getTimeInMillis();
-//        alertTime += 5*1000;
-//
-//
-//        Intent alertIntent = new Intent(getContext(),AlertReceiver.class);
-//        alertIntent.putExtra("msg","This is msg for 5 seconds");
-//        alertIntent.putExtra("msgText","This is msgText for 5 seconds");
-//        alertIntent.putExtra("msgAlert","This is msgAlert for 5 seconds");
-//        alertIntent.putExtra("msgSub","This is msgSub for 5 seconds");
-//        alertIntent.putExtra("notifyID",1);
-//
-//        AlarmManager alarmManager = (AlarmManager)
-//                getContext().getSystemService(Context.ALARM_SERVICE);
-//
-//        alarmManager.set(AlarmManager.RTC_WAKEUP,alertTime,
-//                PendingIntent.getBroadcast(getContext(),1,alertIntent,
-//                        0));
-//
-//    }
-//
-//    public void setAlarm2(View view){
-//        Toast.makeText(getContext().getApplicationContext(),"Setting Alarm 10 seconds",Toast.LENGTH_SHORT).show();
-//        //this is 5 seconds
-//        long alertTime = new GregorianCalendar().getTimeInMillis();
-//        alertTime += 10*1000;
-//
-//
-//        Intent alertIntent = new Intent(getContext(),AlertReceiver.class);
-//        alertIntent.putExtra("msg","This is msg for 10 seconds");
-//        alertIntent.putExtra("msgText","This is msgText for 10 seconds");
-//        alertIntent.putExtra("msgAlert","This is msgAlert for 10 seconds");
-//        alertIntent.putExtra("msgSub","This is msgSub for 10 seconds");
-//        alertIntent.putExtra("notifyID",2);
-//
-//        AlarmManager alarmManager = (AlarmManager)
-//                getContext().getSystemService(Context.ALARM_SERVICE);
-//
-//        alarmManager.set(AlarmManager.RTC_WAKEUP,alertTime,
-//                PendingIntent.getBroadcast(getContext(),2,alertIntent,
-//                        0));
-//
-//    }
 
 
     public void showPopUp(View v){
@@ -1785,21 +1119,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     timePickerEncouragement.setVisibility(View.VISIBLE);
                     isEncouragementNotiFreqActive = false;
                 }
-//                }else if(isPrayerNotiFreqActive) {
-//                    tvPrayer.setText("Daily Prayer");
-//                    mPrayerNotification = PrayerNotification.DAILY;
-//                    btnNotificationFreqPrayer.setText("Daily Notification");
-//                    btnDayWeekPrayer.setVisibility(View.GONE);
-//                    timePickerPrayer.setVisibility(View.VISIBLE);
-//                    isPrayerNotiFreqActive = false;
-//                }else if(isScriptureNotiFreqActive) {
-//                    tvScripture.setText("Daily Scripture");
-//                    mScriptureNotification = ScriptureNotification.DAILY;
-//                    btnNotificationFreqScripture.setText("Daily Notification");
-//                    btnDayWeekScripture.setVisibility(View.GONE);
-//                    timePickerScripture.setVisibility(View.VISIBLE);
-//                    isScriptureNotiFreqActive = false;
-//                }
                 return true;
             case R.id.popup_weeklyNotification:
                 if(isEncouragementNotiFreqActive) {
@@ -1810,21 +1129,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     timePickerEncouragement.setVisibility(View.VISIBLE);
                     isEncouragementNotiFreqActive = false;
                 }
-//                }else if(isPrayerNotiFreqActive) {
-//                    tvPrayer.setText("Weekly Prayer");
-//                    mPrayerNotification = PrayerNotification.WEEKLY;
-//                    btnNotificationFreqPrayer.setText("Weekly Notification");
-//                    btnDayWeekPrayer.setVisibility(View.VISIBLE);
-//                    timePickerPrayer.setVisibility(View.VISIBLE);
-//                    isPrayerNotiFreqActive = false;
-//                }else if(isScriptureNotiFreqActive) {
-//                    tvScripture.setText("Weekly Scripture");
-//                    mScriptureNotification = ScriptureNotification.WEEKLY;
-//                    btnNotificationFreqScripture.setText("Weekly Notification");
-//                    btnDayWeekScripture.setVisibility(View.VISIBLE);
-//                    timePickerScripture.setVisibility(View.VISIBLE);
-//                    isScriptureNotiFreqActive = false;
-//                }
                 return true;
             case R.id.popup_noNotification:
                 if(isEncouragementNotiFreqActive) {
@@ -1835,21 +1139,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     timePickerEncouragement.setVisibility(View.GONE);
                     isEncouragementNotiFreqActive = false;
                 }
-//                }else if(isPrayerNotiFreqActive) {
-//                    tvPrayer.setText("Prayer");
-//                    mPrayerNotification = PrayerNotification.NONE;
-//                    btnNotificationFreqPrayer.setText("No Notification");
-//                    btnDayWeekPrayer.setVisibility(View.GONE);
-//                    timePickerPrayer.setVisibility(View.GONE);
-//                    isPrayerNotiFreqActive = false;
-//                }else if(isScriptureNotiFreqActive) {
-//                    tvScripture.setText("Scripture");
-//                    mScriptureNotification = ScriptureNotification.NONE;
-//                    btnNotificationFreqScripture.setText("No Notification");
-//                    btnDayWeekScripture.setVisibility(View.GONE);
-//                    timePickerScripture.setVisibility(View.GONE);
-//                    isScriptureNotiFreqActive = false;
-//                }
                 return true;
             case R.id.popup_sunday:
                 if(isEncouragementDayActive) {
@@ -1857,15 +1146,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     mEncouragementDay = EncouragementDay.SUNDAY;
                     isEncouragementDayActive = false;
                 }
-//                }else if(isPrayerDayActive) {
-//                    btnDayWeekPrayer.setText("Sunday");
-//                    mPrayerDay = PrayerDay.SUNDAY;
-//                    isPrayerDayActive = false;
-//                }else if(isScriptureDayActive) {
-//                    btnDayWeekScripture.setText("Sunday");
-//                    mScriptureDay = ScriptureDay.SUNDAY;
-//                    isScriptureDayActive = false;
-//                }
                 return true;
             case R.id.popup_monday:
                 if(isEncouragementDayActive) {
@@ -1873,15 +1153,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     mEncouragementDay = EncouragementDay.MONDAY;
                     isEncouragementDayActive = false;
                 }
-//                }else if(isPrayerDayActive) {
-//                    btnDayWeekPrayer.setText("Monday");
-//                    mPrayerDay = PrayerDay.MONDAY;
-//                    isPrayerDayActive = false;
-//                }else if(isScriptureDayActive) {
-//                    btnDayWeekScripture.setText("Monday");
-//                    mScriptureDay = ScriptureDay.MONDAY;
-//                    isScriptureDayActive = false;
-//                }
                 return true;
             case R.id.popup_tuesday:
                 if(isEncouragementDayActive) {
@@ -1889,15 +1160,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     mEncouragementDay = EncouragementDay.TUESDAY;
                     isEncouragementDayActive = false;
                 }
-//                }else if(isPrayerDayActive) {
-//                    btnDayWeekPrayer.setText("Tuesday");
-//                    mPrayerDay = PrayerDay.TUESDAY;
-//                    isPrayerDayActive = false;
-//                }else if(isScriptureDayActive) {
-//                    btnDayWeekScripture.setText("Tuesday");
-//                    mScriptureDay = ScriptureDay.TUESDAY;
-//                    isScriptureDayActive = false;
-//                }
                 return true;
             case R.id.popup_wednesday:
                 if(isEncouragementDayActive) {
@@ -1905,15 +1167,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     mEncouragementDay = EncouragementDay.WEDNESDAY;
                     isEncouragementDayActive = false;
                 }
-//                }else if(isPrayerDayActive) {
-//                    btnDayWeekPrayer.setText("Wednesday");
-//                    mPrayerDay = PrayerDay.WEDNESDAY;
-//                    isPrayerDayActive = false;
-//                }else if(isScriptureDayActive) {
-//                    btnDayWeekScripture.setText("Wednesday");
-//                    mScriptureDay = ScriptureDay.WEDNESDAY;
-//                    isScriptureDayActive = false;
-//                }
                 return true;
             case R.id.popup_thursday:
                 if(isEncouragementDayActive) {
@@ -1921,15 +1174,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     mEncouragementDay = EncouragementDay.THURSDAY;
                     isEncouragementDayActive = false;
                 }
-//                }else if(isPrayerDayActive) {
-//                    btnDayWeekPrayer.setText("Thursday");
-//                    mPrayerDay = PrayerDay.THURSDAY;
-//                    isPrayerDayActive = false;
-//                }else if(isScriptureDayActive) {
-//                    btnDayWeekScripture.setText("Thursday");
-//                    mScriptureDay = ScriptureDay.THURSDAY;
-//                    isScriptureDayActive = false;
-//                }
                 return true;
             case R.id.popup_friday:
                 if(isEncouragementDayActive) {
@@ -1937,15 +1181,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     mEncouragementDay = EncouragementDay.FRIDAY;
                     isEncouragementDayActive = false;
                 }
-//                }else if(isPrayerDayActive) {
-//                    btnDayWeekPrayer.setText("Friday");
-//                    mPrayerDay = PrayerDay.FRIDAY;
-//                    isPrayerDayActive = false;
-//                }else if(isScriptureDayActive) {
-//                    btnDayWeekScripture.setText("Friday");
-//                    mScriptureDay = ScriptureDay.FRIDAY;
-//                    isScriptureDayActive = false;
-//                }
                 return true;
             case R.id.popup_saturday:
                 if(isEncouragementDayActive) {
@@ -1953,15 +1188,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     mEncouragementDay = EncouragementDay.SATURDAY;
                     isEncouragementDayActive = false;
                 }
-//                }else if(isPrayerDayActive) {
-//                    btnDayWeekPrayer.setText("Saturday");
-//                    mPrayerDay = PrayerDay.SATURDAY;
-//                    isPrayerDayActive = false;
-//                }else if(isScriptureDayActive) {
-//                    btnDayWeekScripture.setText("Saturday");
-//                    mScriptureDay = ScriptureDay.SATURDAY;
-//                    isScriptureDayActive = false;
-//                }
                 return true;
             default:
                 return false;

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ public class AlertReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("AlertReceiver","in On Receive");
         loadArray(notificationEncouragementList,context,"notificationEncouragementList");
 
         String msgFull = intent.getStringExtra("msg");
@@ -106,8 +108,16 @@ public class AlertReceiver extends BroadcastReceiver {
                             intent.getStringExtra("msgAlert"),
                             intent.getStringExtra("msgPos"),
                             intent.getIntExtra("notifyID", 999));
+
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+                    SharedPreferences.Editor mEdit1 = sp.edit();
+                    mEdit1.remove("homeEncouragement");
+                    mEdit1.putString("homeEncouragement",msgFull);
+                    mEdit1.commit();
+
                     notificationEncouragementList.remove(0);
                     saveArray(notificationEncouragementList,context,"notificationEncouragementList");
+                    Log.d("notifEncouragementList",notificationEncouragementList.toString());
                 }
             }else {
                 if (!alarmType.equals("Off")) {
@@ -174,6 +184,8 @@ public class AlertReceiver extends BroadcastReceiver {
     }
 
     public void createNotification(Context context, String msg, String msgCategory, String msgTitle,String msgText, String msgAlert, String msgPos, int notifyID){
+
+
         Intent intent = new Intent(context, CurrentEncouragement.class);
 
         //intent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);

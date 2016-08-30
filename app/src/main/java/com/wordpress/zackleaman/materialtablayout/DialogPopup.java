@@ -29,6 +29,7 @@ public class DialogPopup extends DialogFragment {
     private LayoutInflater mLayoutInflater;
     public static final String DIALOG_TYPE = "command";
     public static final String DELETE_RECORD = "deleteRecord";
+    public static final String OTHER_CATEGORIES = "otherCategories";
     private ArrayList<String> encouragementList = new ArrayList<>();
     private ArrayList<String> shownEncouragementList = new ArrayList<>();
 
@@ -54,12 +55,7 @@ public class DialogPopup extends DialogFragment {
             builder.setView(view).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-//                    ContentResolver contentResolver = getActivity().getContentResolver();
-//                    Uri uri = FriendsContract.Friends.buildFriendUri(String.valueOf(_id));
-//                    contentResolver.delete(uri, null, null);
-//                    Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent);
+
                     if(entryPos != -1){
                         encouragementList.remove(entryPos);
                         saveArray(encouragementList,"encouragementList");
@@ -81,6 +77,24 @@ public class DialogPopup extends DialogFragment {
                             notificationEncouragementList.remove(j);
                             saveArray(notificationEncouragementList, "notificationEncouragementList");
                             j = notificationEncouragementList.size();
+                        }
+                    }
+
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    String homeEncouragement = sp.getString("homeEncouragement","none");
+                    if(msg.equals(homeEncouragement)){
+                        if(!notificationEncouragementList.isEmpty()){
+                            //homeEncouragement = notificationEncouragementList.get(0);
+                            SharedPreferences.Editor mEdit1 = sp.edit();
+                            mEdit1.remove("homeEncouragement");
+                            //mEdit1.putString("homeEncouragement",homeEncouragement);
+                            mEdit1.commit();
+                        }else{
+                           // homeEncouragement = "/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off";
+                            SharedPreferences.Editor mEdit1 = sp.edit();
+                            mEdit1.remove("homeEncouragement");
+                            //mEdit1.putString("homeEncouragement",homeEncouragement);
+                            mEdit1.commit();
                         }
                     }
 
@@ -111,6 +125,33 @@ public class DialogPopup extends DialogFragment {
                         }
                     });
 
+        } else if(command.equals(OTHER_CATEGORIES)){
+
+            final int FragmentId = getArguments().getInt("FragmentID");
+            TextView popupMessage = (TextView) view.findViewById(R.id.popup_message);
+            popupMessage.setText("Would you like to include Prayer and Scripture Categories?");
+            builder.setView(view).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    SharedPreferences.Editor mEdit1 = sp.edit();
+                    mEdit1.putBoolean("wantsPrayerAndScripture",true);
+                    mEdit1.commit();
+                }
+            })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+                            SharedPreferences.Editor mEdit1 = sp.edit();
+                            mEdit1.putBoolean("wantsPrayerAndScripture",false);
+                            mEdit1.commit();
+                            Intent intent = new Intent(getContext(),MainActivity.class);
+                            getActivity().finish();
+                            startActivity(intent);
+                        }
+                    });
+
         } else {
             Log.d(LOG_TAG, "Invalid command passed as parameter");
         }
@@ -119,6 +160,8 @@ public class DialogPopup extends DialogFragment {
         return builder.create();
 
     }
+
+
 
 
     private boolean saveArray(List<String> sKey, String arrayName){

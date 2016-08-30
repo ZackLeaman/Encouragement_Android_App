@@ -5,6 +5,27 @@
              tools:context="com.wordpress.zackleaman.materialtablayout.NewMessages"
     >
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last 10 Messages"
+        android:id="@+id/btnLastMessages"
+        android:background="@color/colorPrimary"
+        android:alpha="0.75"
+        android:textColor="#ffffff"
+        android:padding="16dp"
+        android:drawableRight="@android:drawable/ic_menu_more"
+        android:drawableEnd="@android:drawable/ic_menu_more"
+        android:layout_marginTop="87dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignLeft="@+id/SMSList"
+        android:layout_alignStart="@+id/SMSList"
+        android:layout_alignRight="@+id/SMSList"
+        android:layout_alignEnd="@+id/SMSList"
+        android:gravity="left|center_vertical"
+        android:textStyle="bold|italic"
+        android:textSize="16dp"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,28 +38,6 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:layout_below="@+id/btnLastMessages"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Last 10 Messages"
-        android:id="@+id/btnLastMessages"
-        android:background="@color/colorPrimary"
-        android:alpha="0.75"
-        android:textColor="#ffffff"
-        android:padding="16dp"
-        android:drawableRight="@android:drawable/ic_menu_more"
-        android:drawableEnd="@android:drawable/ic_menu_more"
-        android:layout_marginTop="140dp"
-        android:layout_marginBottom="10dp"
-        android:layout_alignLeft="@+id/SMSList"
-        android:layout_alignStart="@+id/SMSList"
-        android:layout_alignRight="@+id/SMSList"
-        android:layout_alignEnd="@+id/SMSList"
-        android:gravity="left|center_vertical"
-        android:textStyle="bold|italic"
-        android:textSize="16dp"/>
-
 
 
 </RelativeLayout>

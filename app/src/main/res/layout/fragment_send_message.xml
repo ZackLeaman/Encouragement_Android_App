@@ -12,7 +12,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="75dp"
         >
 
         <LinearLayout
@@ -290,14 +290,17 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="false"
+                        android:layout_alignParentStart="false"
                         android:layout_below="@+id/timePickerNotificationAdd"
                         android:layout_marginTop="10dp"
                         android:background="@color/colorPrimary"
                         android:padding="10dp"
                         android:text="Create"
-                        android:textColor="#ffffff"/>
+                        android:textColor="#ffffff"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"/>
 
                     <Button
                         android:id="@+id/btnClearAdd"
@@ -305,13 +308,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="false"
+                        android:layout_alignParentRight="false"
                         android:layout_below="@+id/timePickerNotificationAdd"
                         android:background="@color/colorPrimary"
                         android:padding="10dp"
                         android:text="Clear"
-                        android:textColor="#ffffff"/>
+                        android:textColor="#ffffff"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"/>
 
                 </RelativeLayout>
 

@@ -101,6 +101,24 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.tarp_small);
             }else if(picChoice.equals("13")){
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.wheatfield_small);
+            }else if(picChoice.equals("14")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.city_2_small);
+            }else if(picChoice.equals("15")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.crumbled_paper_small);
+            }else if(picChoice.equals("16")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.forest_small);
+            }else if(picChoice.equals("17")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.hut_wall_small);
+            }else if(picChoice.equals("18")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.sea_4_small);
+            }else if(picChoice.equals("19")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.shore_small);
+            }else if(picChoice.equals("20")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.train_small);
+            }else if(picChoice.equals("21")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.tropic_2_small);
+            }else if(picChoice.equals("22")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.wood_small);
             }
 
         }
@@ -156,6 +174,24 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.tarp_small);
             }else if(picChoice.equals("13")){
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.wheatfield_small);
+            }else if(picChoice.equals("14")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.city_2_small);
+            }else if(picChoice.equals("15")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.crumbled_paper_small);
+            }else if(picChoice.equals("16")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.forest_small);
+            }else if(picChoice.equals("17")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.hut_wall_small);
+            }else if(picChoice.equals("18")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.sea_4_small);
+            }else if(picChoice.equals("19")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.shore_small);
+            }else if(picChoice.equals("20")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.train_small);
+            }else if(picChoice.equals("21")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.tropic_2_small);
+            }else if(picChoice.equals("22")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.wood_small);
             }
         }
 

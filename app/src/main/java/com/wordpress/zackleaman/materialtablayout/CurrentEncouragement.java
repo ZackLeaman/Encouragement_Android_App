@@ -42,7 +42,8 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
     private ArrayList<String> selectedEncouragement, selectedBackground, encouragementList, categoriesList, categoriesListPrayer, categoriesListScripture;
     private RelativeLayout entryRelativeLayout;
     private ImageButton btnAriedLandscape, btnBrickwall, btnCity, btnMountains1, btnMountains2,
-                        btnRoof, btnSea1, btnSea2, btnSea3, btnSky1, btnSky2, btnSunset, btnTarp, btnWheatfield;
+                        btnRoof, btnSea1, btnSea2, btnSea3, btnSky1, btnSky2, btnSunset, btnTarp, btnWheatfield,
+                        btnCity2, btnCrumbledPaper,btnForest,btnHutWall,btnSea4,btnShore,btnTrain,btnTropic2,btnWood;
     private Button btnClose, btnCyclePhotos;
     private HorizontalScrollView hsv;
     private String fullEntry;
@@ -109,6 +110,17 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         btnSunset  = (ImageButton)findViewById(R.id.btn_sunset_small);
         btnTarp  = (ImageButton)findViewById(R.id.btn_tarp_small);
         btnWheatfield = (ImageButton)findViewById(R.id.btn_wheatfield_small);
+        //                        btnCity2, btnCrumbledPaper,btnForest,btnHutWall,btnSea4,btnShore,btnTrain,btnTropic2,btnWood;
+        btnCity2 = (ImageButton)findViewById(R.id.btn_city_2);
+        btnCrumbledPaper = (ImageButton)findViewById(R.id.btn_crumbled_paper);
+        btnForest = (ImageButton)findViewById(R.id.btn_forest);
+        btnHutWall = (ImageButton)findViewById(R.id.btn_hut_wall);
+        btnSea4 = (ImageButton)findViewById(R.id.btn_sea4);
+        btnShore = (ImageButton)findViewById(R.id.btn_shore);
+        btnTrain = (ImageButton)findViewById(R.id.btn_train);
+        btnTropic2 = (ImageButton)findViewById(R.id.btn_tropic2);
+        btnWood = (ImageButton)findViewById(R.id.btn_wood);
+
         btnClose = (Button)findViewById(R.id.btnClose);
         btnCyclePhotos = (Button)findViewById(R.id.btn_cycle_pictures);
         btnAriedLandscape.setOnClickListener(this);
@@ -127,6 +139,16 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         btnWheatfield.setOnClickListener(this);
         btnClose.setOnClickListener(this);
         btnCyclePhotos.setOnClickListener(this);
+        btnCity2.setOnClickListener(this);
+        btnCrumbledPaper.setOnClickListener(this);
+        btnForest.setOnClickListener(this);
+        btnHutWall.setOnClickListener(this);
+        btnSea4.setOnClickListener(this);
+        btnShore.setOnClickListener(this);
+        btnTrain.setOnClickListener(this);
+        btnTropic2.setOnClickListener(this);
+        btnWood.setOnClickListener(this);
+
         hsv = (HorizontalScrollView)findViewById(R.id.hsv);
         hsv.setVisibility(View.INVISIBLE);
         btnClose.setVisibility(View.GONE);
@@ -192,6 +214,24 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
             btnTarp.setAlpha(0.2f);
         }else if(picChoice == 13){
             btnWheatfield.setAlpha(0.2f);
+        }else if(picChoice == 14){
+            btnCity2.setAlpha(0.2f);
+        }else if(picChoice == 15){
+            btnCrumbledPaper.setAlpha(0.2f);
+        }else if(picChoice == 16){
+            btnForest.setAlpha(0.2f);
+        }else if(picChoice == 17){
+            btnHutWall.setAlpha(0.2f);
+        }else if(picChoice == 18){
+            btnSea4.setAlpha(0.2f);
+        }else if(picChoice == 19){
+            btnShore.setAlpha(0.2f);
+        }else if(picChoice == 20){
+            btnTrain.setAlpha(0.2f);
+        }else if(picChoice == 21){
+            btnTropic2.setAlpha(0.2f);
+        }else if(picChoice == 22){
+            btnWood.setAlpha(0.2f);
         }
         if(picChoice == -1){
             Random r = new Random();
@@ -226,6 +266,24 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
             entryRelativeLayout.setBackgroundResource(R.drawable.tarp);
         }else if(picChoice == 13){
             entryRelativeLayout.setBackgroundResource(R.drawable.wheatfield);
+        }else if(picChoice == 14){
+            entryRelativeLayout.setBackgroundResource(R.drawable.city_2);
+        }else if(picChoice == 15){
+            entryRelativeLayout.setBackgroundResource(R.drawable.crumbled_paper);
+        }else if(picChoice == 16){
+            entryRelativeLayout.setBackgroundResource(R.drawable.forest);
+        }else if(picChoice == 17){
+            entryRelativeLayout.setBackgroundResource(R.drawable.hut_wall);
+        }else if(picChoice == 18){
+            entryRelativeLayout.setBackgroundResource(R.drawable.sea_4);
+        }else if(picChoice == 19){
+            entryRelativeLayout.setBackgroundResource(R.drawable.shore);
+        }else if(picChoice == 20){
+            entryRelativeLayout.setBackgroundResource(R.drawable.train);
+        }else if(picChoice == 21){
+            entryRelativeLayout.setBackgroundResource(R.drawable.tropic_2);
+        }else if(picChoice == 22){
+            entryRelativeLayout.setBackgroundResource(R.drawable.wood);
         }
 
 
@@ -854,6 +912,61 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
 //                selectedBackground.add(0,"14");
 //                saveArray(selectedBackground,"selectedBackground");
                 break;
+            //TODO add the new picture buttons
+            case R.id.btn_city_2:
+                entryRelativeLayout.setBackgroundResource(R.drawable.city_2);
+                resetButtonTints();
+                btnCity2.setAlpha(0.2f);
+                saveString("backgroundSelection","14");
+                break;
+            case R.id.btn_crumbled_paper:
+                entryRelativeLayout.setBackgroundResource(R.drawable.crumbled_paper);
+                resetButtonTints();
+                btnCrumbledPaper.setAlpha(0.2f);
+                saveString("backgroundSelection","15");
+                break;
+            case R.id.btn_forest:
+                entryRelativeLayout.setBackgroundResource(R.drawable.forest);
+                resetButtonTints();
+                btnForest.setAlpha(0.2f);
+                saveString("backgroundSelection","16");
+                break;
+            case R.id.btn_hut_wall:
+                entryRelativeLayout.setBackgroundResource(R.drawable.hut_wall);
+                resetButtonTints();
+                btnHutWall.setAlpha(0.2f);
+                saveString("backgroundSelection","17");
+                break;
+            case R.id.btn_sea4:
+                entryRelativeLayout.setBackgroundResource(R.drawable.sea_4);
+                resetButtonTints();
+                btnSea4.setAlpha(0.2f);
+                saveString("backgroundSelection","18");
+                break;
+            case R.id.btn_shore:
+                entryRelativeLayout.setBackgroundResource(R.drawable.shore);
+                resetButtonTints();
+                btnShore.setAlpha(0.2f);
+                saveString("backgroundSelection","19");
+                break;
+            case R.id.btn_train:
+                entryRelativeLayout.setBackgroundResource(R.drawable.train);
+                resetButtonTints();
+                btnTrain.setAlpha(0.2f);
+                saveString("backgroundSelection","20");
+                break;
+            case R.id.btn_tropic2:
+                entryRelativeLayout.setBackgroundResource(R.drawable.tropic_2);
+                resetButtonTints();
+                btnTropic2.setAlpha(0.2f);
+                saveString("backgroundSelection","21");
+                break;
+            case R.id.btn_wood:
+                entryRelativeLayout.setBackgroundResource(R.drawable.wood);
+                resetButtonTints();
+                btnWood.setAlpha(0.2f);
+                saveString("backgroundSelection","22");
+                break;
             case R.id.btnClose:
                 hsv.setVisibility(View.INVISIBLE);
                 btnClose.setVisibility(View.GONE);
@@ -1029,6 +1142,15 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         btnSunset.setAlpha(1.0f);
         btnTarp.setAlpha(1.0f);
         btnWheatfield.setAlpha(1.0f);
+        btnCity2.setAlpha(1.0f);
+        btnCrumbledPaper.setAlpha(1.0f);
+        btnForest.setAlpha(1.0f);
+        btnHutWall.setAlpha(1.0f);
+        btnSea4.setAlpha(1.0f);
+        btnShore.setAlpha(1.0f);
+        btnTrain.setAlpha(1.0f);
+        btnTropic2.setAlpha(1.0f);
+        btnWood.setAlpha(1.0f);
 
     }
 

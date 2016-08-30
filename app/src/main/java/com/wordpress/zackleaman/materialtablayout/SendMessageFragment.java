@@ -361,7 +361,6 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                         setDailyAlarm(type,dayNum,hour,minute,notID,fullEntry,pos);
                     }
 
-                    Toast.makeText(getContext(),fullEntry,Toast.LENGTH_LONG).show();
                     Toast.makeText(getContext(),"Entry added to " + btnCategorySub.getText().toString(),Toast.LENGTH_LONG).show();
 
                     // Close the tab once created
@@ -457,16 +456,16 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
-                if(phoneValueArr.isEmpty() && nameValueArr.isEmpty()) {
-                    readContactData();
-                    textView.setAdapter(adapter);
-                }
-                else if(adapter.isEmpty()){
-                    for(int i = 0; i < phoneValueArr.size(); i++){
-                        adapter.add(nameValueArr.get(i) + " Mobile" + " - " + phoneValueArr.get(i));
-                    }
-                    textView.setAdapter(adapter);
-                }
+//                if(phoneValueArr.isEmpty() && nameValueArr.isEmpty()) {
+//                    readContactData();
+//                    textView.setAdapter(adapter);
+//                }
+//                else if(adapter.isEmpty()){
+//                    for(int i = 0; i < phoneValueArr.size(); i++){
+//                        adapter.add(nameValueArr.get(i) + " Mobile" + " - " + phoneValueArr.get(i));
+//                    }
+//                    textView.setAdapter(adapter);
+//                }
             }
 
             @Override
@@ -479,7 +478,17 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
+                if(!textView.getText().toString().equals("")) {
+                    if (phoneValueArr.isEmpty() && nameValueArr.isEmpty()) {
+                        readContactData();
+                        textView.setAdapter(adapter);
+                    } else if (adapter.isEmpty()) {
+                        for (int i = 0; i < phoneValueArr.size(); i++) {
+                            adapter.add(nameValueArr.get(i) + " Mobile" + " - " + phoneValueArr.get(i));
+                        }
+                        textView.setAdapter(adapter);
+                    }
+                }
             }
         });
     }

@@ -4,18 +4,27 @@
         <item>Cycle Backgrounds</item>
         <item>Arid Landscape</item>
         <item>Brick Wall</item>
-        <item>City</item>
+        <item>City 1</item>
+        <item>City 2</item>
+        <item>Crumbled Paper</item>
         <item>Drapery</item>
+        <item>Forest</item>
+        <item>Hut Wall</item>
         <item>Mediterranean Roof</item>
         <item>Mountains 1</item>
         <item>Mountains 2</item>
-        <item>Sea 1</item>
-        <item>Sea 2</item>
-        <item>Sea 3</item>
+        <item>Shore 1</item>
+        <item>Shore 2</item>
+        <item>Shore 3</item>
         <item>Sunset 1</item>
         <item>Sunset 2</item>
         <item>Sunset 3</item>
+        <item>Train</item>
+        <item>Tropic 1</item>
+        <item>Tropic 2</item>
+        <item>Tropic 3</item>
         <item>Wheat Field</item>
+        <item>Wood</item>
 
     </string-array>
 
@@ -24,17 +33,26 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>14</item>
+        <item>15</item>
         <item>12</item>
+        <item>16</item>
+        <item>17</item>
         <item>5</item>
         <item>3</item>
         <item>4</item>
-        <item>6</item>
-        <item>7</item>
+        <item>19</item>
         <item>8</item>
+        <item>18</item>
         <item>9</item>
         <item>10</item>
         <item>11</item>
+        <item>20</item>
+        <item>6</item>
+        <item>7</item>
+        <item>21</item>
         <item>13</item>
+        <item>22</item>
 
     </string-array>
 

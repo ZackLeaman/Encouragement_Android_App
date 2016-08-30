@@ -58,6 +58,7 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
     private String[] subCategory;
 
 
+
     public ReviewLibrary() {
         // Required empty public constructor
     }
@@ -125,6 +126,8 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
             categoriesList.clear();
             categoriesList.add("/nEncouragement/n");
         }
+
+
 
 
         lvEncouragement=(ListView)getView().findViewById(R.id.EncouragementList);
@@ -649,35 +652,17 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                 btnAddActive = false;
                 editActive = false;
                 etCategoryEntry.setText("");
-                //btnBack.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-                //btnBack.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_menu_add, 0, 0, 0);
                 break;
             case CATEGORY:
-//                Toast.makeText(getContext().getApplicationContext(),"Entry Deleted",Toast.LENGTH_LONG).show();
                 String entry = shownEncouragementList.get(pos);
                 int entryPos = -1;
                 for(int i = 0; i < encouragementList.size(); i++){
                     if(entry.equals(encouragementList.get(i))){
                         entryPos = i;
                         i = encouragementList.size();
-//                        //This is here to delete the entry from notification list
-//                        ArrayList<String> notificationEncouragementList = new ArrayList<>();
-//                        loadArray(notificationEncouragementList,getContext(),"notificationEncouragementList");
-//                        for(int j = 0; j < notificationEncouragementList.size(); j++) {
-//                            if (notificationEncouragementList.get(j).equals(entry)) {
-////                                notificationEncouragementList.remove(j);
-//                                entryPos = j;
-////                                saveArray(notificationEncouragementList, "notificationEncouragementList");
-//                            }
-//                        }
-//
-//
-//                        encouragementList.remove(i);
-//                        saveArray(encouragementList,"encouragementList");
                     }
                 }
-//                shownEncouragementList.remove(pos);
-//                lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, shownEncouragementList));
+
 
                 DialogPopup dialog = new DialogPopup();
                 Bundle args = new Bundle();
@@ -688,9 +673,7 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                 args.putString("type","Review");
                 dialog.setArguments(args);
                 dialog.show(getFragmentManager(), "delete-record");
-//
-//                dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(neededColor);
-//                dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(neededColor);
+
                 break;
 
         }
