@@ -89,6 +89,70 @@
                         />
 
                     <ImageButton
+                        android:id="@+id/btn_city_2"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/city_2_small"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_crumbled_paper"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/crumbled_paper_small"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_tarp_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/tarp_small"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_forest"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/forest_small"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_hut_wall"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/hut_wall_small"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_roof_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/roof_small"
+                        />
+
+                    <ImageButton
                         android:id="@+id/btn_mountains1_small"
                         android:layout_width="78dp"
                         android:layout_height="109dp"
@@ -109,33 +173,14 @@
                         />
 
                     <ImageButton
-                        android:id="@+id/btn_roof_small"
+                        android:id="@+id/btn_shore"
                         android:layout_width="78dp"
                         android:layout_height="109dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/roof_small"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btn_sea1_small"
-                        android:layout_width="78dp"
-                        android:layout_height="109dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/sea1_small"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btn_sea2_small"
-                        android:layout_width="78dp"
-                        android:layout_height="109dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/sea2_small"
+                        android:src="@drawable/shore_small"
                         />
 
                     <ImageButton
@@ -146,6 +191,17 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/sea3_small"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_sea4"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/sea_4_small"
                         />
 
                     <ImageButton
@@ -179,93 +235,6 @@
                         />
 
                     <ImageButton
-                        android:id="@+id/btn_tarp_small"
-                        android:layout_width="78dp"
-                        android:layout_height="109dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/tarp_small"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btn_wheatfield_small"
-                        android:layout_width="78dp"
-                        android:layout_height="109dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/wheatfield_small"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btn_city_2"
-                        android:layout_width="78dp"
-                        android:layout_height="109dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/city_2_small"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btn_crumbled_paper"
-                        android:layout_width="78dp"
-                        android:layout_height="109dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/crumbled_paper_small"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btn_forest"
-                        android:layout_width="78dp"
-                        android:layout_height="109dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/forest_small"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btn_hut_wall"
-                        android:layout_width="78dp"
-                        android:layout_height="109dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/hut_wall_small"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btn_sea4"
-                        android:layout_width="78dp"
-                        android:layout_height="109dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/sea_4_small"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btn_shore"
-                        android:layout_width="78dp"
-                        android:layout_height="109dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/shore_small"
-                        />
-
-                    <ImageButton
                         android:id="@+id/btn_train"
                         android:layout_width="78dp"
                         android:layout_height="109dp"
@@ -277,6 +246,26 @@
                         />
 
                     <ImageButton
+                        android:id="@+id/btn_sea1_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/sea1_small"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_sea2_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/sea2_small"
+                        />
+
+                    <ImageButton
                         android:id="@+id/btn_tropic2"
                         android:layout_width="78dp"
                         android:layout_height="109dp"
@@ -285,6 +274,17 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/tropic_2_small"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_wheatfield_small"
+                        android:layout_width="78dp"
+                        android:layout_height="109dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/wheatfield_small"
                         />
 
                     <ImageButton
