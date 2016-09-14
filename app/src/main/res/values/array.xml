@@ -2,57 +2,132 @@
 <resources>
     <string-array name="background_names">
         <item>Cycle Backgrounds</item>
+        <item>Arid Cliff</item>
         <item>Arid Landscape</item>
-        <item>Brick Wall</item>
+        <item>Arid Road</item>
+        <item>Brick Wall 1</item>
+        <item>Brick Wall 2</item>
+        <item>Cement Wall</item>
         <item>City 1</item>
         <item>City 2</item>
-        <item>Crumbled Paper</item>
+        <item>City 3</item>
+        <item>Cracked Soil</item>
+        <item>Crumbled Paper 1</item>
+        <item>Crumbled Paper 2</item>
         <item>Drapery</item>
+        <item>Elephant</item>
+        <item>Emerald Brick</item>
+        <item>Fabric</item>
+        <item>Floor Tiled 1</item>
+        <item>Floor Tiled 2</item>
+        <item>Flowers</item>
         <item>Forest</item>
+        <item>Forest Mountain 1</item>
+        <item>Forest Mountain 2</item>
+        <item>Giraffe</item>
+        <item>Grunge Map</item>
         <item>Hut Wall</item>
+        <item>Jellyfish</item>
         <item>Mediterranean Roof</item>
-        <item>Mountains 1</item>
-        <item>Mountains 2</item>
+        <item>Metal Stripes</item>
+        <item>Mountain Peak 1</item>
+        <item>Mountain Peak 2</item>
+        <item>Ocean</item>
+        <item>Owl</item>
+        <item>Panda</item>
+        <item>Patterned Brick</item>
+        <item>Prairie Dog</item>
+        <item>Red Panda</item>
+        <item>Rock Formation</item>
+        <item>Savannah 1</item>
+        <item>Savannah 2</item>
         <item>Shore 1</item>
         <item>Shore 2</item>
         <item>Shore 3</item>
+        <item>Snowy Mountain 1</item>
+        <item>Snowy Mountain 2</item>
+        <item>Stone Doorway</item>
         <item>Sunset 1</item>
         <item>Sunset 2</item>
         <item>Sunset 3</item>
+        <item>Tiger</item>
         <item>Train</item>
+        <item>Tree</item>
         <item>Tropic 1</item>
         <item>Tropic 2</item>
         <item>Tropic 3</item>
+        <item>Tropic 4</item>
         <item>Wheat Field</item>
+        <item>Wild West 1</item>
+        <item>Wild West 2</item>
         <item>Wood</item>
+        <item>Wooden Doors</item>
 
     </string-array>
 
     <string-array name="background_values">
+
         <item>-1</item>
+        <item>23</item>
         <item>0</item>
+        <item>24</item>
         <item>1</item>
+        <item>25</item>
+        <item>26</item>
         <item>2</item>
         <item>14</item>
+        <item>27</item>
+        <item>28</item>
         <item>15</item>
+        <item>29</item>
         <item>12</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
         <item>16</item>
-        <item>17</item>
-        <item>5</item>
-        <item>3</item>
         <item>4</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>17</item>
+        <item>39</item>
+        <item>5</item>
+        <item>40</item>
+        <item>3</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
         <item>19</item>
         <item>8</item>
         <item>18</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
         <item>9</item>
         <item>10</item>
         <item>11</item>
+        <item>54</item>
         <item>20</item>
+        <item>55</item>
         <item>6</item>
         <item>7</item>
         <item>21</item>
+        <item>56</item>
         <item>13</item>
+        <item>57</item>
+        <item>58</item>
         <item>22</item>
+        <item>59</item>
 
     </string-array>
 

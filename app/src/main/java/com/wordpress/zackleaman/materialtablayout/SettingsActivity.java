@@ -119,6 +119,80 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.tropic_2_small);
             }else if(picChoice.equals("22")){
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.wood_small);
+            }else if(picChoice.equals("23")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.aridcliff_small);
+            }else if(picChoice.equals("24")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.aridroad_small);
+            }else if(picChoice.equals("25")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.brickwall2_small);
+            }else if(picChoice.equals("26")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.cementwall_small);
+            }else if(picChoice.equals("27")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.city3_small);
+            }else if(picChoice.equals("28")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.crackedsoil_small);
+            }else if(picChoice.equals("29")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.crumbledpaper2_small);
+            }else if(picChoice.equals("30")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.elephant_small);
+            }else if(picChoice.equals("31")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.emeraldbrick_small);
+            }else if(picChoice.equals("32")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.fabric_small);
+            }else if(picChoice.equals("33")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.floortiled1_small);
+            }else if(picChoice.equals("34")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.floortiled2_small);
+            }else if(picChoice.equals("35")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.flowers_small);
+            }else if(picChoice.equals("36")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.forestmountain2_small);
+            }else if(picChoice.equals("37")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.giraffe_small);
+            }else if(picChoice.equals("38")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.grungemap_small);
+            }else if(picChoice.equals("39")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.jellyfish_small);
+            }else if(picChoice.equals("40")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.metalstripes_small);
+            }else if(picChoice.equals("41")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.mountainpeak2_small);
+            }else if(picChoice.equals("42")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.ocean_small);
+            }else if(picChoice.equals("43")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.owl_small);
+            }else if(picChoice.equals("44")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.panda_small);
+            }else if(picChoice.equals("45")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.patternedbrick_small);
+            }else if(picChoice.equals("46")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.prairiedog_small);
+            }else if(picChoice.equals("47")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.redpanda_small);
+            }else if(picChoice.equals("48")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.rockformation_small);
+            }else if(picChoice.equals("49")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.savannah1_small);
+            }else if(picChoice.equals("50")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.savannah2_small);
+            }else if(picChoice.equals("51")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.snowymountain1_small);
+            }else if(picChoice.equals("52")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.snowymountain2_small);
+            }else if(picChoice.equals("53")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.stonedoorway_small);
+            }else if(picChoice.equals("54")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.tiger_small);
+            }else if(picChoice.equals("55")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.tree_small);
+            }else if(picChoice.equals("56")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.tropic4_small);
+            }else if(picChoice.equals("57")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.wildwest1_small);
+            }else if(picChoice.equals("58")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.wildwest2_small);
+            }else if(picChoice.equals("59")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.woodendoors_small);
             }
 
         }
@@ -192,6 +266,80 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.tropic_2_small);
             }else if(picChoice.equals("22")){
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.wood_small);
+            }else if(picChoice.equals("23")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.aridcliff_small);
+            }else if(picChoice.equals("24")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.aridroad_small);
+            }else if(picChoice.equals("25")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.brickwall2_small);
+            }else if(picChoice.equals("26")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.cementwall_small);
+            }else if(picChoice.equals("27")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.city3_small);
+            }else if(picChoice.equals("28")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.crackedsoil_small);
+            }else if(picChoice.equals("29")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.crumbledpaper2_small);
+            }else if(picChoice.equals("30")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.elephant_small);
+            }else if(picChoice.equals("31")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.emeraldbrick_small);
+            }else if(picChoice.equals("32")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.fabric_small);
+            }else if(picChoice.equals("33")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.floortiled1_small);
+            }else if(picChoice.equals("34")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.floortiled2_small);
+            }else if(picChoice.equals("35")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.flowers_small);
+            }else if(picChoice.equals("36")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.forestmountain2_small);
+            }else if(picChoice.equals("37")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.giraffe_small);
+            }else if(picChoice.equals("38")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.grungemap_small);
+            }else if(picChoice.equals("39")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.jellyfish_small);
+            }else if(picChoice.equals("40")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.metalstripes_small);
+            }else if(picChoice.equals("41")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.mountainpeak2_small);
+            }else if(picChoice.equals("42")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.ocean_small);
+            }else if(picChoice.equals("43")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.owl_small);
+            }else if(picChoice.equals("44")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.panda_small);
+            }else if(picChoice.equals("45")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.patternedbrick_small);
+            }else if(picChoice.equals("46")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.prairiedog_small);
+            }else if(picChoice.equals("47")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.redpanda_small);
+            }else if(picChoice.equals("48")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.rockformation_small);
+            }else if(picChoice.equals("49")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.savannah1_small);
+            }else if(picChoice.equals("50")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.savannah2_small);
+            }else if(picChoice.equals("51")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.snowymountain1_small);
+            }else if(picChoice.equals("52")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.snowymountain2_small);
+            }else if(picChoice.equals("53")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.stonedoorway_small);
+            }else if(picChoice.equals("54")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.tiger_small);
+            }else if(picChoice.equals("55")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.tree_small);
+            }else if(picChoice.equals("56")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.tropic4_small);
+            }else if(picChoice.equals("57")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.wildwest1_small);
+            }else if(picChoice.equals("58")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.wildwest2_small);
+            }else if(picChoice.equals("59")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.woodendoors_small);
             }
         }
 

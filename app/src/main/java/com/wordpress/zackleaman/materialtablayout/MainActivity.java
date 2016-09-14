@@ -217,7 +217,7 @@ public class MainActivity extends AbsRuntimePermission {
         }
         if(picChoice == -1) {
             Random r = new Random();
-            picChoice = r.nextInt(14);
+            picChoice = r.nextInt(60);
         }
         if(picChoice == 0){
             mainRelativeLayout.setBackgroundResource(R.drawable.ariedlandscape);
@@ -265,6 +265,80 @@ public class MainActivity extends AbsRuntimePermission {
             mainRelativeLayout.setBackgroundResource(R.drawable.tropic_2);
         }else if(picChoice == 22){
             mainRelativeLayout.setBackgroundResource(R.drawable.wood);
+        }else if(picChoice == 23){
+            mainRelativeLayout.setBackgroundResource(R.drawable.aridcliff);
+        }else if(picChoice == 24){
+            mainRelativeLayout.setBackgroundResource(R.drawable.aridroad);
+        }else if(picChoice == 25){
+            mainRelativeLayout.setBackgroundResource(R.drawable.brickwall2);
+        }else if(picChoice == 26){
+            mainRelativeLayout.setBackgroundResource(R.drawable.cementwall);
+        }else if(picChoice == 27){
+            mainRelativeLayout.setBackgroundResource(R.drawable.city3);
+        }else if(picChoice == 28){
+            mainRelativeLayout.setBackgroundResource(R.drawable.crackedsoil);
+        }else if(picChoice == 29){
+            mainRelativeLayout.setBackgroundResource(R.drawable.crumbledpaper2);
+        }else if(picChoice == 30){
+            mainRelativeLayout.setBackgroundResource(R.drawable.elephant);
+        }else if(picChoice == 31){
+            mainRelativeLayout.setBackgroundResource(R.drawable.emeraldbrick);
+        }else if(picChoice == 32){
+            mainRelativeLayout.setBackgroundResource(R.drawable.fabric);
+        }else if(picChoice == 33){
+            mainRelativeLayout.setBackgroundResource(R.drawable.floortiled1);
+        }else if(picChoice == 34){
+            mainRelativeLayout.setBackgroundResource(R.drawable.floortiled2);
+        }else if(picChoice == 35){
+            mainRelativeLayout.setBackgroundResource(R.drawable.flowers);
+        }else if(picChoice == 36){
+            mainRelativeLayout.setBackgroundResource(R.drawable.forestmountain2);
+        }else if(picChoice == 37){
+            mainRelativeLayout.setBackgroundResource(R.drawable.giraffe);
+        }else if(picChoice == 38){
+            mainRelativeLayout.setBackgroundResource(R.drawable.grungemap);
+        }else if(picChoice == 39){
+            mainRelativeLayout.setBackgroundResource(R.drawable.jellyfish);
+        }else if(picChoice == 40){
+            mainRelativeLayout.setBackgroundResource(R.drawable.metalstripes);
+        }else if(picChoice == 41){
+            mainRelativeLayout.setBackgroundResource(R.drawable.mountainpeak2);
+        }else if(picChoice == 42){
+            mainRelativeLayout.setBackgroundResource(R.drawable.ocean);
+        }else if(picChoice == 43){
+            mainRelativeLayout.setBackgroundResource(R.drawable.owl);
+        }else if(picChoice == 44){
+            mainRelativeLayout.setBackgroundResource(R.drawable.panda);
+        }else if(picChoice == 45){
+            mainRelativeLayout.setBackgroundResource(R.drawable.patternedbrick);
+        }else if(picChoice == 46){
+            mainRelativeLayout.setBackgroundResource(R.drawable.prairiedog);
+        }else if(picChoice == 47){
+            mainRelativeLayout.setBackgroundResource(R.drawable.redpanda);
+        }else if(picChoice == 48){
+            mainRelativeLayout.setBackgroundResource(R.drawable.rockformation);
+        }else if(picChoice == 49){
+            mainRelativeLayout.setBackgroundResource(R.drawable.savannah1);
+        }else if(picChoice == 50){
+            mainRelativeLayout.setBackgroundResource(R.drawable.savannah2);
+        }else if(picChoice == 51){
+            mainRelativeLayout.setBackgroundResource(R.drawable.snowymountain1);
+        }else if(picChoice == 52){
+            mainRelativeLayout.setBackgroundResource(R.drawable.snowymountain2);
+        }else if(picChoice == 53){
+            mainRelativeLayout.setBackgroundResource(R.drawable.stonedoorway);
+        }else if(picChoice == 54){
+            mainRelativeLayout.setBackgroundResource(R.drawable.tiger);
+        }else if(picChoice == 55){
+            mainRelativeLayout.setBackgroundResource(R.drawable.tree);
+        }else if(picChoice == 56){
+            mainRelativeLayout.setBackgroundResource(R.drawable.tropic4);
+        }else if(picChoice == 57){
+            mainRelativeLayout.setBackgroundResource(R.drawable.wildwest1);
+        }else if(picChoice == 58){
+            mainRelativeLayout.setBackgroundResource(R.drawable.wildwest2);
+        }else if(picChoice == 59){
+            mainRelativeLayout.setBackgroundResource(R.drawable.woodendoors);
         }
 
 

@@ -45,6 +45,12 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
     private ImageButton btnAriedLandscape, btnBrickwall, btnCity, btnMountains1, btnMountains2,
                         btnRoof, btnSea1, btnSea2, btnSea3, btnSky1, btnSky2, btnSunset, btnTarp, btnWheatfield,
                         btnCity2, btnCrumbledPaper,btnForest,btnHutWall,btnSea4,btnShore,btnTrain,btnTropic2,btnWood;
+    private ImageButton btnAridCliff, btnAridRoad, btnBrickWall2, btnCementWall, btnCity3, btnCrackedSoil,
+                        btnCrumbledPaper2, btnElephant, btnEmeraldBrick, btnFabric, btnFloorTiled1, btnFloorTiled2,
+                        btnFlowers, btnForestMountain2, btnGiraffe, btnGrungeMap, btnJellyfish, btnMetalStripes,
+                        btnMountainPeak2, btnOcean, btnOwl, btnPanda, btnPatternedBrick, btnPrairieDog, btnRedPanda,
+                        btnRockFormation, btnSavannah1, btnSavannah2, btnSnowyMountain1, btnSnowyMountain2, btnStoneDoorway,
+                        btnTiger, btnTree, btnTropic4, btnWildWest1, btnWildWest2, btnWoodenDoors;
     private Button btnClose, btnCyclePhotos;
     private HorizontalScrollView hsv;
     private String fullEntry;
@@ -122,6 +128,45 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         btnTropic2 = (ImageButton)findViewById(R.id.btn_tropic2);
         btnWood = (ImageButton)findViewById(R.id.btn_wood);
 
+        btnAridCliff = (ImageButton)findViewById(R.id.btn_aridCliff);
+        btnAridRoad = (ImageButton)findViewById(R.id.btn_aridRoad);
+        btnBrickWall2 = (ImageButton)findViewById(R.id.btn_brickwall2);
+        btnCementWall = (ImageButton)findViewById(R.id.btn_cementwall);
+        btnCity3 = (ImageButton)findViewById(R.id.btn_city3);
+        btnCrackedSoil = (ImageButton)findViewById(R.id.btn_crackedsoil);
+        btnCrumbledPaper2 = (ImageButton)findViewById(R.id.btn_crumbledpaper2);
+        btnElephant = (ImageButton)findViewById(R.id.btn_elephant);
+        btnEmeraldBrick = (ImageButton)findViewById(R.id.btn_emeraldbrick);
+        btnFabric = (ImageButton)findViewById(R.id.btn_fabric);
+        btnFloorTiled1 = (ImageButton)findViewById(R.id.btn_floortiled1);
+        btnFloorTiled2 = (ImageButton)findViewById(R.id.btn_floortiled2);
+        btnFlowers = (ImageButton)findViewById(R.id.btn_flowers);
+        btnForestMountain2 = (ImageButton)findViewById(R.id.btn_forestmountain2);
+        btnGiraffe = (ImageButton)findViewById(R.id.btn_giraffe);
+        btnGrungeMap = (ImageButton)findViewById(R.id.btn_grungemap);
+        btnJellyfish = (ImageButton)findViewById(R.id.btn_jellyfish);
+        btnMetalStripes = (ImageButton)findViewById(R.id.btn_metalstripes);
+        btnMountainPeak2 = (ImageButton)findViewById(R.id.btn_mountainpeak2);
+        btnOcean = (ImageButton)findViewById(R.id.btn_ocean);
+        btnOwl = (ImageButton)findViewById(R.id.btn_owl);
+        btnPanda = (ImageButton)findViewById(R.id.btn_panda);
+        btnPatternedBrick = (ImageButton)findViewById(R.id.btn_patternedbrick);
+        btnPrairieDog = (ImageButton)findViewById(R.id.btn_prairiedog);
+        btnRedPanda = (ImageButton)findViewById(R.id.btn_redpanda);
+        btnRockFormation = (ImageButton)findViewById(R.id.btn_rockformation);
+        btnSavannah1 = (ImageButton)findViewById(R.id.btn_savannah1);
+        btnSavannah2 = (ImageButton)findViewById(R.id.btn_savannah2);
+        btnSnowyMountain1 = (ImageButton)findViewById(R.id.btn_snowymountain1);
+        btnSnowyMountain2 = (ImageButton)findViewById(R.id.btn_snowymountain2);
+        btnStoneDoorway = (ImageButton)findViewById(R.id.btn_stonedoorway);
+        btnTree = (ImageButton)findViewById(R.id.btn_tree);
+        btnTiger = (ImageButton)findViewById(R.id.btn_tiger);
+        btnTropic4 = (ImageButton)findViewById(R.id.btn_tropic4);
+        btnWildWest1 = (ImageButton)findViewById(R.id.btn_wildwest1);
+        btnWildWest2 = (ImageButton)findViewById(R.id.btn_wildwest2);
+        btnWoodenDoors = (ImageButton)findViewById(R.id.btn_woodendoors);
+
+
         btnClose = (Button)findViewById(R.id.btnClose);
         btnCyclePhotos = (Button)findViewById(R.id.btn_cycle_pictures);
         btnAriedLandscape.setOnClickListener(this);
@@ -149,6 +194,45 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         btnTrain.setOnClickListener(this);
         btnTropic2.setOnClickListener(this);
         btnWood.setOnClickListener(this);
+
+        btnAridCliff.setOnClickListener(this);
+        btnAridRoad.setOnClickListener(this);
+        btnBrickWall2.setOnClickListener(this);
+        btnCementWall.setOnClickListener(this);
+        btnCity3.setOnClickListener(this);
+        btnCrackedSoil.setOnClickListener(this);
+        btnCrumbledPaper2.setOnClickListener(this);
+        btnElephant.setOnClickListener(this);
+        btnEmeraldBrick.setOnClickListener(this);
+        btnFabric.setOnClickListener(this);
+        btnFloorTiled1.setOnClickListener(this);
+        btnFloorTiled2.setOnClickListener(this);
+        btnFlowers.setOnClickListener(this);
+        btnForestMountain2.setOnClickListener(this);
+        btnGiraffe.setOnClickListener(this);
+        btnGrungeMap.setOnClickListener(this);
+        btnJellyfish.setOnClickListener(this);
+        btnMetalStripes.setOnClickListener(this);
+        btnMountainPeak2.setOnClickListener(this);
+        btnOcean.setOnClickListener(this);
+        btnOwl.setOnClickListener(this);
+        btnPanda.setOnClickListener(this);
+        btnPatternedBrick.setOnClickListener(this);
+        btnPrairieDog.setOnClickListener(this);
+        btnRedPanda.setOnClickListener(this);
+        btnRockFormation.setOnClickListener(this);
+        btnSavannah1.setOnClickListener(this);
+        btnSavannah2.setOnClickListener(this);
+        btnSnowyMountain1.setOnClickListener(this);
+        btnSnowyMountain2.setOnClickListener(this);
+        btnStoneDoorway.setOnClickListener(this);
+        btnTiger.setOnClickListener(this);
+        btnTree.setOnClickListener(this);
+        btnTropic4.setOnClickListener(this);
+        btnWildWest1.setOnClickListener(this);
+        btnWildWest2.setOnClickListener(this);
+        btnWoodenDoors.setOnClickListener(this);
+
 
         hsv = (HorizontalScrollView)findViewById(R.id.hsv);
         hsv.setVisibility(View.INVISIBLE);
@@ -233,10 +317,85 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
             btnTropic2.setAlpha(0.2f);
         }else if(picChoice == 22){
             btnWood.setAlpha(0.2f);
+        }else if(picChoice == 23){
+            btnAridCliff.setAlpha(0.2f);
+        }else if(picChoice == 24){
+            btnAridRoad.setAlpha(0.2f);
+        }else if(picChoice == 25){
+            btnBrickWall2.setAlpha(0.2f);
+        }else if(picChoice == 26){
+            btnCementWall.setAlpha(0.2f);
+        }else if(picChoice == 27){
+            btnCity3.setAlpha(0.2f);
+        }else if(picChoice == 28){
+            btnCrackedSoil.setAlpha(0.2f);
+        }else if(picChoice == 29){
+            btnCrumbledPaper2.setAlpha(0.2f);
+        }else if(picChoice == 30){
+            btnElephant.setAlpha(0.2f);
+        }else if(picChoice == 31){
+            btnEmeraldBrick.setAlpha(0.2f);
+        }else if(picChoice == 32){
+            btnFabric.setAlpha(0.2f);
+        }else if(picChoice == 33){
+            btnFloorTiled1.setAlpha(0.2f);
+        }else if(picChoice == 34){
+            btnFloorTiled2.setAlpha(0.2f);
+        }else if(picChoice == 35){
+            btnFlowers.setAlpha(0.2f);
+        }else if(picChoice == 36){
+            btnForestMountain2.setAlpha(0.2f);
+        }else if(picChoice == 37){
+            btnGiraffe.setAlpha(0.2f);
+        }else if(picChoice == 38){
+            btnGrungeMap.setAlpha(0.2f);
+        }else if(picChoice == 39){
+            btnJellyfish.setAlpha(0.2f);
+        }else if(picChoice == 40){
+            btnMetalStripes.setAlpha(0.2f);
+        }else if(picChoice == 41){
+            btnMountainPeak2.setAlpha(0.2f);
+        }else if(picChoice == 42){
+            btnOcean.setAlpha(0.2f);
+        }else if(picChoice == 43){
+            btnOwl.setAlpha(0.2f);
+        }else if(picChoice == 44){
+            btnPanda.setAlpha(0.2f);
+        }else if(picChoice == 45){
+            btnPatternedBrick.setAlpha(0.2f);
+        }else if(picChoice == 46){
+            btnPrairieDog.setAlpha(0.2f);
+        }else if(picChoice == 47){
+            btnRedPanda.setAlpha(0.2f);
+        }else if(picChoice == 48){
+            btnRockFormation.setAlpha(0.2f);
+        }else if(picChoice == 49){
+            btnSavannah1.setAlpha(0.2f);
+        }else if(picChoice == 50){
+            btnSavannah2.setAlpha(0.2f);
+        }else if(picChoice == 51){
+            btnSnowyMountain1.setAlpha(0.2f);
+        }else if(picChoice == 52){
+            btnSnowyMountain2.setAlpha(0.2f);
+        }else if(picChoice == 53){
+            btnStoneDoorway.setAlpha(0.2f);
+        }else if(picChoice == 54){
+            btnTiger.setAlpha(0.2f);
+        }else if(picChoice == 55){
+            btnTree.setAlpha(0.2f);
+        }else if(picChoice == 56){
+            btnTropic4.setAlpha(0.2f);
+        }else if(picChoice == 57){
+            btnWildWest1.setAlpha(0.2f);
+        }else if(picChoice == 58){
+            btnWildWest2.setAlpha(0.2f);
+        }else if(picChoice == 59){
+            btnWoodenDoors.setAlpha(0.2f);
         }
+
         if(picChoice == -1){
             Random r = new Random();
-            picChoice = r.nextInt(14);
+            picChoice = r.nextInt(60);
             btnCyclePhotos.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent3));
         }
         if(picChoice == 0){
@@ -285,6 +444,80 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
             entryRelativeLayout.setBackgroundResource(R.drawable.tropic_2);
         }else if(picChoice == 22){
             entryRelativeLayout.setBackgroundResource(R.drawable.wood);
+        }else if(picChoice == 23){
+            entryRelativeLayout.setBackgroundResource(R.drawable.aridcliff);
+        }else if(picChoice == 24){
+            entryRelativeLayout.setBackgroundResource(R.drawable.aridroad);
+        }else if(picChoice == 25){
+            entryRelativeLayout.setBackgroundResource(R.drawable.brickwall2);
+        }else if(picChoice == 26){
+            entryRelativeLayout.setBackgroundResource(R.drawable.cementwall);
+        }else if(picChoice == 27){
+            entryRelativeLayout.setBackgroundResource(R.drawable.city3);
+        }else if(picChoice == 28){
+            entryRelativeLayout.setBackgroundResource(R.drawable.crackedsoil);
+        }else if(picChoice == 29){
+            entryRelativeLayout.setBackgroundResource(R.drawable.crumbledpaper2);
+        }else if(picChoice == 30){
+            entryRelativeLayout.setBackgroundResource(R.drawable.elephant);
+        }else if(picChoice == 31){
+            entryRelativeLayout.setBackgroundResource(R.drawable.emeraldbrick);
+        }else if(picChoice == 32){
+            entryRelativeLayout.setBackgroundResource(R.drawable.fabric);
+        }else if(picChoice == 33){
+            entryRelativeLayout.setBackgroundResource(R.drawable.floortiled1);
+        }else if(picChoice == 34){
+            entryRelativeLayout.setBackgroundResource(R.drawable.floortiled2);
+        }else if(picChoice == 35){
+            entryRelativeLayout.setBackgroundResource(R.drawable.flowers);
+        }else if(picChoice == 36){
+            entryRelativeLayout.setBackgroundResource(R.drawable.forestmountain2);
+        }else if(picChoice == 37){
+            entryRelativeLayout.setBackgroundResource(R.drawable.giraffe);
+        }else if(picChoice == 38){
+            entryRelativeLayout.setBackgroundResource(R.drawable.grungemap);
+        }else if(picChoice == 39){
+            entryRelativeLayout.setBackgroundResource(R.drawable.jellyfish);
+        }else if(picChoice == 40){
+            entryRelativeLayout.setBackgroundResource(R.drawable.metalstripes);
+        }else if(picChoice == 41){
+            entryRelativeLayout.setBackgroundResource(R.drawable.mountainpeak2);
+        }else if(picChoice == 42){
+            entryRelativeLayout.setBackgroundResource(R.drawable.ocean);
+        }else if(picChoice == 43){
+            entryRelativeLayout.setBackgroundResource(R.drawable.owl);
+        }else if(picChoice == 44){
+            entryRelativeLayout.setBackgroundResource(R.drawable.panda);
+        }else if(picChoice == 45){
+            entryRelativeLayout.setBackgroundResource(R.drawable.patternedbrick);
+        }else if(picChoice == 46){
+            entryRelativeLayout.setBackgroundResource(R.drawable.prairiedog);
+        }else if(picChoice == 47){
+            entryRelativeLayout.setBackgroundResource(R.drawable.redpanda);
+        }else if(picChoice == 48){
+            entryRelativeLayout.setBackgroundResource(R.drawable.rockformation);
+        }else if(picChoice == 49){
+            entryRelativeLayout.setBackgroundResource(R.drawable.savannah1);
+        }else if(picChoice == 50){
+            entryRelativeLayout.setBackgroundResource(R.drawable.savannah2);
+        }else if(picChoice == 51){
+            entryRelativeLayout.setBackgroundResource(R.drawable.snowymountain1);
+        }else if(picChoice == 52){
+            entryRelativeLayout.setBackgroundResource(R.drawable.snowymountain2);
+        }else if(picChoice == 53){
+            entryRelativeLayout.setBackgroundResource(R.drawable.stonedoorway);
+        }else if(picChoice == 54){
+            entryRelativeLayout.setBackgroundResource(R.drawable.tiger);
+        }else if(picChoice == 55){
+            entryRelativeLayout.setBackgroundResource(R.drawable.tree);
+        }else if(picChoice == 56){
+            entryRelativeLayout.setBackgroundResource(R.drawable.tropic4);
+        }else if(picChoice == 57){
+            entryRelativeLayout.setBackgroundResource(R.drawable.wildwest1);
+        }else if(picChoice == 58){
+            entryRelativeLayout.setBackgroundResource(R.drawable.wildwest2);
+        }else if(picChoice == 59){
+            entryRelativeLayout.setBackgroundResource(R.drawable.woodendoors);
         }
 
 
@@ -968,6 +1201,228 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 btnWood.setAlpha(0.2f);
                 saveString("backgroundSelection","22");
                 break;
+            case R.id.btn_aridCliff:
+                entryRelativeLayout.setBackgroundResource(R.drawable.aridcliff);
+                resetButtonTints();
+                btnAridCliff.setAlpha(0.2f);
+                saveString("backgroundSelection","23");
+                break;
+            case R.id.btn_aridRoad:
+                entryRelativeLayout.setBackgroundResource(R.drawable.aridroad);
+                resetButtonTints();
+                btnAridRoad.setAlpha(0.2f);
+                saveString("backgroundSelection","24");
+                break;
+            case R.id.btn_brickwall2:
+                entryRelativeLayout.setBackgroundResource(R.drawable.brickwall2);
+                resetButtonTints();
+                btnBrickWall2.setAlpha(0.2f);
+                saveString("backgroundSelection","25");
+                break;
+            case R.id.btn_cementwall:
+                entryRelativeLayout.setBackgroundResource(R.drawable.cementwall);
+                resetButtonTints();
+                btnCementWall.setAlpha(0.2f);
+                saveString("backgroundSelection","26");
+                break;
+            case R.id.btn_city3:
+                entryRelativeLayout.setBackgroundResource(R.drawable.city3);
+                resetButtonTints();
+                btnCity3.setAlpha(0.2f);
+                saveString("backgroundSelection","27");
+                break;
+            case R.id.btn_crackedsoil:
+                entryRelativeLayout.setBackgroundResource(R.drawable.crackedsoil);
+                resetButtonTints();
+                btnCrackedSoil.setAlpha(0.2f);
+                saveString("backgroundSelection","28");
+                break;
+            case R.id.btn_crumbledpaper2:
+                entryRelativeLayout.setBackgroundResource(R.drawable.crumbledpaper2);
+                resetButtonTints();
+                btnCrumbledPaper2.setAlpha(0.2f);
+                saveString("backgroundSelection","29");
+                break;
+            case R.id.btn_elephant:
+                entryRelativeLayout.setBackgroundResource(R.drawable.elephant);
+                resetButtonTints();
+                btnElephant.setAlpha(0.2f);
+                saveString("backgroundSelection","30");
+                break;
+            case R.id.btn_emeraldbrick:
+                entryRelativeLayout.setBackgroundResource(R.drawable.emeraldbrick);
+                resetButtonTints();
+                btnEmeraldBrick.setAlpha(0.2f);
+                saveString("backgroundSelection","31");
+                break;
+            case R.id.btn_fabric:
+                entryRelativeLayout.setBackgroundResource(R.drawable.fabric);
+                resetButtonTints();
+                btnFabric.setAlpha(0.2f);
+                saveString("backgroundSelection","32");
+                break;
+            case R.id.btn_floortiled1:
+                entryRelativeLayout.setBackgroundResource(R.drawable.floortiled1);
+                resetButtonTints();
+                btnFloorTiled1.setAlpha(0.2f);
+                saveString("backgroundSelection","33");
+                break;
+            case R.id.btn_floortiled2:
+                entryRelativeLayout.setBackgroundResource(R.drawable.floortiled2);
+                resetButtonTints();
+                btnFloorTiled2.setAlpha(0.2f);
+                saveString("backgroundSelection","34");
+                break;
+            case R.id.btn_flowers:
+                entryRelativeLayout.setBackgroundResource(R.drawable.flowers);
+                resetButtonTints();
+                btnFlowers.setAlpha(0.2f);
+                saveString("backgroundSelection","35");
+                break;
+            case R.id.btn_forestmountain2:
+                entryRelativeLayout.setBackgroundResource(R.drawable.forestmountain2);
+                resetButtonTints();
+                btnForestMountain2.setAlpha(0.2f);
+                saveString("backgroundSelection","36");
+                break;
+            case R.id.btn_giraffe:
+                entryRelativeLayout.setBackgroundResource(R.drawable.giraffe);
+                resetButtonTints();
+                btnGiraffe.setAlpha(0.2f);
+                saveString("backgroundSelection","37");
+                break;
+            case R.id.btn_grungemap:
+                entryRelativeLayout.setBackgroundResource(R.drawable.grungemap);
+                resetButtonTints();
+                btnGrungeMap.setAlpha(0.2f);
+                saveString("backgroundSelection","38");
+                break;
+            case R.id.btn_jellyfish:
+                entryRelativeLayout.setBackgroundResource(R.drawable.jellyfish);
+                resetButtonTints();
+                btnJellyfish.setAlpha(0.2f);
+                saveString("backgroundSelection","39");
+                break;
+            case R.id.btn_metalstripes:
+                entryRelativeLayout.setBackgroundResource(R.drawable.metalstripes);
+                resetButtonTints();
+                btnMetalStripes.setAlpha(0.2f);
+                saveString("backgroundSelection","40");
+                break;
+            case R.id.btn_mountainpeak2:
+                entryRelativeLayout.setBackgroundResource(R.drawable.mountainpeak2);
+                resetButtonTints();
+                btnMountainPeak2.setAlpha(0.2f);
+                saveString("backgroundSelection","41");
+                break;
+            case R.id.btn_ocean:
+                entryRelativeLayout.setBackgroundResource(R.drawable.ocean);
+                resetButtonTints();
+                btnOcean.setAlpha(0.2f);
+                saveString("backgroundSelection","42");
+                break;
+            case R.id.btn_owl:
+                entryRelativeLayout.setBackgroundResource(R.drawable.owl);
+                resetButtonTints();
+                btnOwl.setAlpha(0.2f);
+                saveString("backgroundSelection","43");
+                break;
+            case R.id.btn_panda:
+                entryRelativeLayout.setBackgroundResource(R.drawable.panda);
+                resetButtonTints();
+                btnPanda.setAlpha(0.2f);
+                saveString("backgroundSelection","44");
+                break;
+            case R.id.btn_patternedbrick:
+                entryRelativeLayout.setBackgroundResource(R.drawable.patternedbrick);
+                resetButtonTints();
+                btnPatternedBrick.setAlpha(0.2f);
+                saveString("backgroundSelection","45");
+                break;
+            case R.id.btn_prairiedog:
+                entryRelativeLayout.setBackgroundResource(R.drawable.prairiedog);
+                resetButtonTints();
+                btnPrairieDog.setAlpha(0.2f);
+                saveString("backgroundSelection","46");
+                break;
+            case R.id.btn_redpanda:
+                entryRelativeLayout.setBackgroundResource(R.drawable.redpanda);
+                resetButtonTints();
+                btnRedPanda.setAlpha(0.2f);
+                saveString("backgroundSelection","47");
+                break;
+            case R.id.btn_rockformation:
+                entryRelativeLayout.setBackgroundResource(R.drawable.rockformation);
+                resetButtonTints();
+                btnRockFormation.setAlpha(0.2f);
+                saveString("backgroundSelection","48");
+                break;
+            case R.id.btn_savannah1:
+                entryRelativeLayout.setBackgroundResource(R.drawable.savannah1);
+                resetButtonTints();
+                btnSavannah1.setAlpha(0.2f);
+                saveString("backgroundSelection","49");
+                break;
+            case R.id.btn_savannah2:
+                entryRelativeLayout.setBackgroundResource(R.drawable.savannah2);
+                resetButtonTints();
+                btnSavannah2.setAlpha(0.2f);
+                saveString("backgroundSelection","50");
+                break;
+            case R.id.btn_snowymountain1:
+                entryRelativeLayout.setBackgroundResource(R.drawable.snowymountain1);
+                resetButtonTints();
+                btnSnowyMountain1.setAlpha(0.2f);
+                saveString("backgroundSelection","51");
+                break;
+            case R.id.btn_snowymountain2:
+                entryRelativeLayout.setBackgroundResource(R.drawable.snowymountain2);
+                resetButtonTints();
+                btnSnowyMountain2.setAlpha(0.2f);
+                saveString("backgroundSelection","52");
+                break;
+            case R.id.btn_stonedoorway:
+                entryRelativeLayout.setBackgroundResource(R.drawable.stonedoorway);
+                resetButtonTints();
+                btnStoneDoorway.setAlpha(0.2f);
+                saveString("backgroundSelection","53");
+                break;
+            case R.id.btn_tiger:
+                entryRelativeLayout.setBackgroundResource(R.drawable.tiger);
+                resetButtonTints();
+                btnTiger.setAlpha(0.2f);
+                saveString("backgroundSelection","54");
+                break;
+            case R.id.btn_tree:
+                entryRelativeLayout.setBackgroundResource(R.drawable.tree);
+                resetButtonTints();
+                btnTree.setAlpha(0.2f);
+                saveString("backgroundSelection","55");
+                break;
+            case R.id.btn_tropic4:
+                entryRelativeLayout.setBackgroundResource(R.drawable.tropic4);
+                resetButtonTints();
+                btnTropic4.setAlpha(0.2f);
+                saveString("backgroundSelection","56");
+                break;
+            case R.id.btn_wildwest1:
+                entryRelativeLayout.setBackgroundResource(R.drawable.wildwest1);
+                resetButtonTints();
+                btnWildWest1.setAlpha(0.2f);
+                saveString("backgroundSelection","57");
+                break;
+            case R.id.btn_wildwest2:
+                entryRelativeLayout.setBackgroundResource(R.drawable.wildwest2);
+                resetButtonTints();
+                btnWildWest2.setAlpha(0.2f);
+                saveString("backgroundSelection","58");
+                break;
+            case R.id.btn_woodendoors:
+                entryRelativeLayout.setBackgroundResource(R.drawable.woodendoors);
+                resetButtonTints();
+                btnWoodenDoors.setAlpha(0.2f);
+                saveString("backgroundSelection","59");
+                break;
             case R.id.btnClose:
                 hsv.setVisibility(View.INVISIBLE);
                 btnClose.setVisibility(View.GONE);
@@ -1172,6 +1627,43 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         btnTrain.setAlpha(1.0f);
         btnTropic2.setAlpha(1.0f);
         btnWood.setAlpha(1.0f);
+        btnAridCliff.setAlpha(1.0f);
+        btnAridRoad.setAlpha(1.0f);
+        btnBrickWall2.setAlpha(1.0f);
+        btnCementWall.setAlpha(1.0f);
+        btnCity3.setAlpha(1.0f);
+        btnCrackedSoil.setAlpha(1.0f);
+        btnCrumbledPaper2.setAlpha(1.0f);
+        btnElephant.setAlpha(1.0f);
+        btnEmeraldBrick.setAlpha(1.0f);
+        btnFabric.setAlpha(1.0f);
+        btnFloorTiled1.setAlpha(1.0f);
+        btnFloorTiled2.setAlpha(1.0f);
+        btnFlowers.setAlpha(1.0f);
+        btnForestMountain2.setAlpha(1.0f);
+        btnGiraffe.setAlpha(1.0f);
+        btnGrungeMap.setAlpha(1.0f);
+        btnJellyfish.setAlpha(1.0f);
+        btnMetalStripes.setAlpha(1.0f);
+        btnMountainPeak2.setAlpha(1.0f);
+        btnOcean.setAlpha(1.0f);
+        btnOwl.setAlpha(1.0f);
+        btnPanda.setAlpha(1.0f);
+        btnPatternedBrick.setAlpha(1.0f);
+        btnPrairieDog.setAlpha(1.0f);
+        btnRedPanda.setAlpha(1.0f);
+        btnRockFormation.setAlpha(1.0f);
+        btnSavannah1.setAlpha(1.0f);
+        btnSavannah2.setAlpha(1.0f);
+        btnSnowyMountain1.setAlpha(1.0f);
+        btnSnowyMountain2.setAlpha(1.0f);
+        btnStoneDoorway.setAlpha(1.0f);
+        btnTiger.setAlpha(1.0f);
+        btnTree.setAlpha(1.0f);
+        btnTropic4.setAlpha(1.0f);
+        btnWildWest1.setAlpha(1.0f);
+        btnWildWest2.setAlpha(1.0f);
+        btnWoodenDoors.setAlpha(1.0f);
 
     }
 

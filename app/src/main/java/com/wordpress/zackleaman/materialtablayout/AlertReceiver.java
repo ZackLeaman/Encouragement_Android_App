@@ -15,6 +15,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Zack on 8/1/2016.
@@ -98,7 +99,6 @@ public class AlertReceiver extends BroadcastReceiver {
             // reset the alarm
             if(category.equals("Encouragement")){
                 if(!encouragementType.equals("Off")){
-                    setDailyAlarm(encouragementType,context,intent,notificationEncouragementList.get(0));
 //                    Toast.makeText(context,"New Alarm Set",Toast.LENGTH_LONG).show();
                     createNotification(context,
                             msgFull,
@@ -112,10 +112,45 @@ public class AlertReceiver extends BroadcastReceiver {
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                     SharedPreferences.Editor mEdit1 = sp.edit();
                     mEdit1.remove("homeEncouragement");
-                    mEdit1.putString("homeEncouragement",msgFull);
+                    mEdit1.putString("homeEncouragement",notificationEncouragementList.get(0));
                     mEdit1.commit();
 
+
                     notificationEncouragementList.remove(0);
+                    if(notificationEncouragementList.isEmpty() || MainActivity.isFirstTimeOpening || notificationEncouragementList == null) {
+                        Log.d("notificationEnc", "is empty");
+                        Random r = new Random();
+                        ArrayList<String> orderedList = new ArrayList<>();
+                        for (int i = 0; i < encouragementList.size(); i++) {
+                            try {
+                                String[] entry = encouragementList.get(i).split("/n");
+                                String entry_category = entry[1];
+
+                                if (entry_category.equals("Encouragement")) {
+                                    orderedList.add(encouragementList.get(i));
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        int olSize = orderedList.size();
+                        int i1;
+                        while (olSize > 0) {
+                            if (olSize > 1) {
+                                i1 = r.nextInt(olSize);
+                                notificationEncouragementList.add(0, orderedList.get(i1));
+                                orderedList.remove(i1);
+                            } else {
+                                notificationEncouragementList.add(0, orderedList.get(0));
+                                orderedList.remove(0);
+                            }
+                            olSize--;
+
+                        }
+                    }
+                    setDailyAlarm(encouragementType,context,intent,notificationEncouragementList.get(0));
                     saveArray(notificationEncouragementList,context,"notificationEncouragementList");
                     Log.d("notifEncouragementList",notificationEncouragementList.toString());
                 }
