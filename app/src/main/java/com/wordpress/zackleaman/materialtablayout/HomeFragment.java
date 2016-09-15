@@ -504,6 +504,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     selectedEncouragement.add(0,homeEncouragement);
                     saveArray(selectedEncouragement,"selectedEncouragement");
                     Intent intent = new Intent(getContext().getApplicationContext(),CurrentEncouragement.class);
+                    getActivity().finish();
                     startActivity(intent);
                 }
             }
@@ -529,6 +530,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     selectedEncouragement.add(0,homeEncouragement);
                     saveArray(selectedEncouragement,"selectedEncouragement");
                     Intent intent = new Intent(getContext().getApplicationContext(),CurrentEncouragement.class);
+                    getActivity().finish();
                     startActivity(intent);
                 }
             }
@@ -955,11 +957,13 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             selectedEncouragement.add(0,encouragementList.get(intPrayerList.get(position)));
             saveArray(selectedEncouragement,"selectedEncouragement");
             Intent intent = new Intent(getContext(),CurrentEncouragement.class);
+            getActivity().finish();
             startActivity(intent);
         }else if(isScriptureDropDownActive){
             selectedEncouragement.add(0,encouragementList.get(intScriptureList.get(position)));
             saveArray(selectedEncouragement,"selectedEncouragement");
             Intent intent = new Intent(getContext(),CurrentEncouragement.class);
+            getActivity().finish();
             startActivity(intent);
         }
     }
@@ -1281,11 +1285,13 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                         selectedEncouragement.add(0,encouragementList.get(intPrayerList.get(position)));
                         saveArray(selectedEncouragement,"selectedEncouragement");
                         Intent intent = new Intent(getContext(),CurrentEncouragement.class);
+                        getActivity().finish();
                         startActivity(intent);
                     }else if(isScriptureDropDownActive){
                         selectedEncouragement.add(0,encouragementList.get(intScriptureList.get(position)));
                         saveArray(selectedEncouragement,"selectedEncouragement");
                         Intent intent = new Intent(getContext(),CurrentEncouragement.class);
+                        getActivity().finish();
                         startActivity(intent);
                     }
                 }

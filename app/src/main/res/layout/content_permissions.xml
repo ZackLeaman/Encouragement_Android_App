@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/svPermissions"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.wordpress.zackleaman.materialtablayout.PermissionsActivity"
+    tools:showIn="@layout/activity_permissions"
+
+    >
+
+    <LinearLayout
+        android:id="@+id/linearLayoutPermissions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:layout_weight="0.06"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="App Permissions"
+            android:textColor="#ffffff"
+            android:textSize="25dp"
+            android:textStyle="bold|italic"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.06"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Contacts"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.06"
+            android:alpha="0.75"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Uses contacts in order to assign an address to entries that are saved from the SMS inbox."
+            android:textColor="#ffffff"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.06"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Phone"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.06"
+            android:alpha="0.75"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Allows this app to read the phone&apos;s current state and own identity."
+            android:textColor="#ffffff"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.06"
+            android:alpha="0.75"
+            android:background="@color/colorPrimary"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="SMS"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="80dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.06"
+            android:alpha="0.75"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="Uses the Short Messaging Service for the user to send and receive SMS messages."
+            android:textColor="#ffffff"
+            android:textSize="16dp"/>
+    </LinearLayout>
+</ScrollView>

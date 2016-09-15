@@ -236,6 +236,7 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                             String[] subCategory = categoriesListScripture.get(positionInt).split("/n");
                             intent.putExtra("subCategory_createEntry",subCategory[1]);
                         }
+                        getActivity().finish();
                         startActivity(intent);
                         break;
                 }
@@ -371,6 +372,7 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                     selectedEncouragement.add(0,shownEncouragementList.get(position));
                     saveArray(selectedEncouragement,"selectedEncouragement");
                     Intent intent = new Intent(getContext(),CurrentEncouragement.class);
+                    getActivity().finish();
                     startActivity(intent);
                     break;
                 case INDIVIDUAL:
@@ -761,6 +763,7 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                 selectedEncouragement.add(0,shownEncouragementList.get(positionInt));
                 saveArray(selectedEncouragement,"selectedEncouragement");
                 Intent intent = new Intent(getContext(),CurrentEncouragement.class);
+                getActivity().finish();
                 startActivity(intent);
                 return true;
             case R.id.view_category_popup:

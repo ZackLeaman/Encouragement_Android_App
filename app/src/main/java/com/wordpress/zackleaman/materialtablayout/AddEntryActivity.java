@@ -271,9 +271,20 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         //NavUtils.navigateUpFromSameTask(activity);
         switch (v.getId()) {
             default:
-                NavUtils.navigateUpFromSameTask(activity);
+                //NavUtils.navigateUpFromSameTask(activity);
+                Intent intent = new Intent(this,PermissionsActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(this,PermissionsActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private int findNextNotifID(){

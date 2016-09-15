@@ -791,7 +791,7 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
     @Override
     public void onBackPressed()
     {
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,PermissionsActivity.class);
         startActivity(intent);
         finish();
     }
@@ -1429,7 +1429,7 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 break;
             default:
                 //NavUtils.navigateUpFromSameTask(activity);
-                Intent intent = new Intent(this,MainActivity.class);
+                Intent intent = new Intent(this,PermissionsActivity.class);
                 startActivity(intent);
                 finish();
                 break;
