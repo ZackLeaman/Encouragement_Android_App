@@ -112,7 +112,7 @@ public class AlertReceiver extends BroadcastReceiver {
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                     SharedPreferences.Editor mEdit1 = sp.edit();
                     mEdit1.remove("homeEncouragement");
-                    mEdit1.putString("homeEncouragement",notificationEncouragementList.get(0));
+                    mEdit1.putString("homeEncouragement",msgFull);
                     mEdit1.commit();
 
 

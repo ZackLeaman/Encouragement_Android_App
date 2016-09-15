@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,8 @@ public class MainActivity extends AbsRuntimePermission {
 
     private static final int REQUEST_PERMISSION = 10;
 
+    private boolean bPermissionGranted = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,9 @@ public class MainActivity extends AbsRuntimePermission {
         setSupportActionBar(mToolbar);
 
         svPermissions = (ScrollView)findViewById(R.id.svPermissions);
+        mTabLayout = (TabLayout)findViewById(R.id.tabLayout);
+        mViewPager = (ViewPager)findViewById(R.id.viewPager);
+        mainRelativeLayout = (RelativeLayout)findViewById(R.id.mainRelativeLayout);
 
 //        isFirstTimeOpening = false;
 //        saveBoolean("isFirstTimeOpening",isFirstTimeOpening);
@@ -200,13 +206,13 @@ public class MainActivity extends AbsRuntimePermission {
     @Override
     public void onPermissionsGranted(int requestCode) {
         // Do anything when permission granted
+        bPermissionGranted = true;
         svPermissions.setVisibility(View.GONE);
 
+        Log.d("onPermissionsGranted","212");
 //        adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_dropdown_item_1line, new ArrayList<String>());
 
-        mTabLayout = (TabLayout)findViewById(R.id.tabLayout);
-        mViewPager = (ViewPager)findViewById(R.id.viewPager);
-        mainRelativeLayout = (RelativeLayout)findViewById(R.id.mainRelativeLayout);
+
 
         int picChoice = -1;
         try {
@@ -340,21 +346,33 @@ public class MainActivity extends AbsRuntimePermission {
         }else if(picChoice == 59){
             mainRelativeLayout.setBackgroundResource(R.drawable.woodendoors);
         }
+        Log.d("onPermissionsGranted","349");
 
 
 
-        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mViewPagerAdapter = new ViewPagerAdapter(this.getSupportFragmentManager());
+        Log.d("onPermissionsGranted","354");
+
         mViewPagerAdapter.addFragments(new HomeFragment(), "Home");
         mViewPagerAdapter.addFragments(new ReviewLibrary(), "Library");
         mViewPagerAdapter.addFragments(new SendMessageFragment(), "Create");
         mViewPagerAdapter.addFragments(new NewMessages(), "Inbox");
+        Log.d("onPermissionsGranted","360");
+
         myContext = getApplicationContext();
         mViewPager.setAdapter(mViewPagerAdapter);
+        Log.d("onPermissionsGranted","364");
+
         mTabLayout.setupWithViewPager(mViewPager);
+        Log.d("onPermissionsGranted","367");
+
         mTabLayout.getTabAt(0).setIcon(R.drawable.ic_home_white_36dp);
         mTabLayout.getTabAt(1).setIcon(R.drawable.ic_view_agenda_white_36dp);
         mTabLayout.getTabAt(2).setIcon(R.drawable.ic_create_white_36dp);
         mTabLayout.getTabAt(3).setIcon(R.drawable.message);
+
+        Log.d("onPermissionsGranted","374");
+
 
 
 //        readContactData();

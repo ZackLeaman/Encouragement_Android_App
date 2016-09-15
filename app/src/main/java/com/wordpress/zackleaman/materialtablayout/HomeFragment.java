@@ -458,6 +458,17 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                         saveArray(notificationEncouragementList,"notificationEncouragementList");
                     }
 
+                    homeEncouragement = sp.getString("homeEncouragement",notificationEncouragementList.get(0));
+                    for(int l = 0; l < starterEncouragements.size(); l++){
+                        if(homeEncouragement.equals(starterEncouragements.get(l))){
+                            homeEncouragement = notificationEncouragementList.get(0);
+                            SharedPreferences.Editor mEdit1 = sp.edit();
+                            mEdit1.remove("homeEncouragement");
+                            mEdit1.putString("homeEncouragement", homeEncouragement);
+                            mEdit1.commit();
+                        }
+                    }
+
                 }
 
                 if(!encouragementList.isEmpty()) {
@@ -470,15 +481,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
 
                 homeEncouragement = sp.getString("homeEncouragement",notificationEncouragementList.get(0));
-                for(int l = 0; l < starterEncouragements.size(); l++){
-                    if(homeEncouragement.equals(starterEncouragements.get(l))){
-                        homeEncouragement = notificationEncouragementList.get(0);
-                        SharedPreferences.Editor mEdit1 = sp.edit();
-                        mEdit1.remove("homeEncouragement");
-                        mEdit1.putString("homeEncouragement", homeEncouragement);
-                        mEdit1.commit();
-                    }
-                }
                 String[] entry = homeEncouragement.split("/n");
                 String nameAddressDate = entry[2];
                 String message = entry[3];
