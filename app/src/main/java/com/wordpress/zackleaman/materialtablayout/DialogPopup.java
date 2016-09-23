@@ -191,8 +191,8 @@ public class DialogPopup extends DialogFragment {
 
             final int FragmentId = getArguments().getInt("FragmentID");
             TextView popupMessage = (TextView) view.findViewById(R.id.popup_message);
-            popupMessage.setText("File Not Found!\n\nWould you like to Sign In to a Different Account or Create a New Backup on this Account?");
-            builder.setView(view).setPositiveButton("Sign In to a Different Account", new DialogInterface.OnClickListener() {
+            popupMessage.setText("Backup Not Found!\n\nAre you a New User or are you Restoring from an existing Account?\n\nIf Restoring, please make sure you have selected the correct account.");
+            builder.setView(view).setPositiveButton("Restoring Account -- Resign-in", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     //TODO have a resign in
@@ -201,8 +201,8 @@ public class DialogPopup extends DialogFragment {
                     //MainActivity.firstTimeAppOpened = true;
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
                     SharedPreferences.Editor editor = sp.edit();
-                    editor.putBoolean("signedIn", true);
-                    editor.putBoolean("signedIn_Pressed", true);
+                    editor.putBoolean("signedIn", false);
+                    editor.putBoolean("signedIn_Pressed", false);
                     editor.putBoolean("isFirstTimeOpening",true);
                     editor.commit();
                     Intent intent = new Intent(getContext(),MainActivity.class);
@@ -213,7 +213,7 @@ public class DialogPopup extends DialogFragment {
                     startActivity(intent);
                 }
             })
-                    .setNegativeButton("Create a New Backup", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("New User", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());

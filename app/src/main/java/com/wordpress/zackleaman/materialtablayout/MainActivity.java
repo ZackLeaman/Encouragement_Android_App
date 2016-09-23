@@ -68,6 +68,7 @@ public class MainActivity extends BaseDemoDriveActivity {
     private String homeEncouragement = "";
     private Activity thisActivity;
     private boolean bIsFirstTimeAppOpened;
+    public static boolean bNeedToClear = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,23 +82,26 @@ public class MainActivity extends BaseDemoDriveActivity {
             Bundle extras = getIntent().getExtras();
             String clearGAC = "null";
             String CState = "null";
+            String cantFindDrive = "null";
             if (extras != null) {
                 clearGAC = extras.getString("clearGAC");
                 CState = extras.getString("curState");
+                cantFindDrive = extras.getString("cantFindDrive");
                 if(clearGAC != null) {
                     if (clearGAC.equals("clearGAC")) {
                         Log.d("onNewIntent", "got clearGAC and equals");
                         signedIn = false;
                         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
                         SharedPreferences.Editor editor = sp.edit();
-                        editor.putBoolean("signedIn", false);
-                        editor.putBoolean("signedIn_Pressed", false);
+                        editor.putBoolean("signedIn", true);
+                        editor.putBoolean("signedIn_Pressed", true);
                         editor.commit();
                         //encouragementList.clear();
                         notificationEncouragementList.clear();
                         //saveArray(encouragementList,"encouragementList");
                         saveArray(notificationEncouragementList, "notificationEncouragementList");
-                        clearGoogleApiClient();
+                        bNeedToClear = true;
+                        //clearGoogleApiClient();
                         Intent intent = new Intent(this, PermissionsActivity.class);
                         //intent.putExtra("clearGAC","clearedGAC");
                         startActivity(intent);
@@ -116,6 +120,24 @@ public class MainActivity extends BaseDemoDriveActivity {
 //
                     }
                 }
+                if(cantFindDrive != null){
+                    if(cantFindDrive.equals("cantFindDrive")){
+                        try{
+                            DialogPopup dialog = new DialogPopup();
+                            Bundle args = new Bundle();
+                            args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.CANT_FIND_DRIVE);
+                            //args.putInt("FragmentID",this.getId());
+                            dialog.setArguments(args);
+                            dialog.setCancelable(false);
+                            //dialog.setCanceledOnTouchOutside(false);
+                            dialog.show(getSupportFragmentManager(), "cant-find-drive");
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -601,6 +623,12 @@ public class MainActivity extends BaseDemoDriveActivity {
     @Override
     public void onConnected(Bundle connectionHint) {
         super.onConnected(connectionHint);
+        if(bNeedToClear){
+            clearGoogleApiClient();
+            Log.d("MainActivity","bNeedToClear");
+            //reconnectGoogleApiClient();
+
+        }
         if(isJustOpened) {
             isJustOpened = false;
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -610,7 +638,7 @@ public class MainActivity extends BaseDemoDriveActivity {
 
                 if (Cur_State == Query_State) {
                     Query query = new Query.Builder()
-                            .addFilter(Filters.contains(SearchableField.TITLE, "D"))
+                            .addFilter(Filters.contains(SearchableField.TITLE, ""))
                             .build();
                     Drive.DriveApi.query(getGoogleApiClient(), query)
                             .setResultCallback(metadataCallback);
@@ -656,6 +684,7 @@ public class MainActivity extends BaseDemoDriveActivity {
                     int count = result.getMetadataBuffer().getCount() - 1;
                     for(int i = 0; i < count; i++){
                         Metadata metadata = result.getMetadataBuffer().get(i);
+                        Log.d("MainActivity",metadata.getTitle());
                         if(metadata.getTitle().equals("DailyEncList")) {
                             MainActivity.EXISTING_FILE_ID = metadata.getDriveId().getResourceId();
                             foundFile = true;
@@ -704,21 +733,38 @@ public class MainActivity extends BaseDemoDriveActivity {
                     if(!foundFile){
                         //TODO cant find file popup sign in to different account or create new backup
                         //TODO ask are you sure?
+                        signedIn = false;
+                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putBoolean("signedIn", false);
+                        editor.putBoolean("signedIn_Pressed", false);
+                        editor.commit();
+                        //encouragementList.clear();
+                        notificationEncouragementList.clear();
+                        //saveArray(encouragementList,"encouragementList");
+                        saveArray(notificationEncouragementList,"notificationEncouragementList");
+                        //clearGoogleApiClient();
+                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                        intent.putExtra("cantFindDrive","cantFindDrive");
+                        startActivity(intent);
+                        finish();
 //                        DialogPopup dialog = new DialogPopup();
 //                        Bundle args = new Bundle();
 //                        args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.CANT_FIND_DRIVE);
 //                        //args.putInt("FragmentID",this.getId());
 //                        dialog.setArguments(args);
+//                        dialog.setCancelable(false);
+//                        //dialog.setCanceledOnTouchOutside(false);
 //                        dialog.show(getSupportFragmentManager(), "cant-find-drive");
+                        Log.d("MainActivity","in !foundFile");
 
 
 
 
-
-                        showMessage("Creating Contents");
-                        Cur_State = Create_State;
-                        Drive.DriveApi.newDriveContents(getGoogleApiClient())
-                                .setResultCallback(driveContentsCallback);
+//                        showMessage("Creating Contents");
+//                        Cur_State = Create_State;
+//                        Drive.DriveApi.newDriveContents(getGoogleApiClient())
+//                                .setResultCallback(driveContentsCallback);
 
 
                     }

@@ -27,6 +27,8 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.drive.Drive;
 
 /**
@@ -295,11 +297,28 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
                 Log.d("onNewIntent", "in the mgoogleconnected to clear it");
                 mGoogleApiClient2.unregisterConnectionCallbacks(this);
                 mGoogleApiClient2.unregisterConnectionFailedListener(this);
-                mGoogleApiClient2.clearDefaultAccountAndReconnect();
+                mGoogleApiClient2.clearDefaultAccountAndReconnect().setResultCallback(new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        if(status.isSuccess()){
+                            Log.d("onNewIntent", "in success and bNeedToClear = " + MainActivity.bNeedToClear);
+                            if(MainActivity.bNeedToClear) {
+                                Log.d("onNewIntent", "in success and bNeedToClear");
+                                MainActivity.bNeedToClear = false;
+                                mGoogleApiClient2.disconnect();
+                                reconnectGoogleApiClient();
+                                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                finish();
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                });
+
             }
         }
 
-        mGoogleApiClient2 = null;
+        //mGoogleApiClient2 = null;
 
         if(mGoogleApiClient2 == null){
             showMessage("mGoogleApiClient2 is null");
