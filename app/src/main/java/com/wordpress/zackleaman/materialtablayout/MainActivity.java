@@ -827,12 +827,28 @@ public class MainActivity extends BaseDemoDriveActivity {
             }
             showMessage("Retrieved contents: " + result);
             try {
-                String[] myResult = result.split("/m/");
+                String[] totalResult = result.split("/t/");
+                String[] encouragementResult = totalResult[0].split("/m/");
+                String[] prayerResult = totalResult[1].split("/m/");
+                String[] scriptureResult = totalResult[2].split("/m/");
+
+                ArrayList<String> categoriesListPrayer = new ArrayList<String>();
+                ArrayList<String> categoriesListScripture = new ArrayList<String>();
+
 
                 encouragementList.clear();
-                for (int z = 0; z < myResult.length; z++) {
-                    encouragementList.add(myResult[z]);
+                for (int z = 0; z < encouragementResult.length; z++) {
+                    encouragementList.add(encouragementResult[z]);
                 }
+
+                for (int z = 0; z < prayerResult.length; z++) {
+                    categoriesListPrayer.add(prayerResult[z]);
+                }
+
+                for (int z = 0; z < scriptureResult.length; z++) {
+                    categoriesListScripture.add(scriptureResult[z]);
+                }
+
                 notificationEncouragementList.clear();
                 if(!encouragementList.isEmpty()) {
                     for(int i = 0; i < encouragementList.size(); i++){
@@ -852,6 +868,8 @@ public class MainActivity extends BaseDemoDriveActivity {
                 }
 
                 saveArray(encouragementList,"encouragementList");
+                saveArray(categoriesListPrayer,"categoriesListPrayer");
+                saveArray(categoriesListScripture,"categoriesListScripture");
                 saveArray(notificationEncouragementList,"notificationEncouragementList");
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = sp.edit();
@@ -891,11 +909,31 @@ public class MainActivity extends BaseDemoDriveActivity {
                             OutputStream outputStream = driveContents.getOutputStream();
                             Writer writer = new OutputStreamWriter(outputStream);
                             try {
-                                //writer.write(myList.toString());
+                                ArrayList<String> categoriesListPrayer = new ArrayList<String>();
+                                ArrayList<String> categoriesListScripture = new ArrayList<String>();
+                                loadArray(categoriesListPrayer,getApplicationContext(),"categoriesListPrayer");
+                                loadArray(categoriesListScripture,getApplicationContext(),"categoriesListScripture");
+
+
+                                // write encouragementList
                                 for(int x = 0; x < encouragementList.size(); x++){
                                     writer.write(encouragementList.get(x) + "/m/");
                                 }
+                                writer.write("/t/");
+
+                                // write categoriesListPrayer
+                                for(int y = 0; y < categoriesListPrayer.size(); y++){
+                                    writer.write(categoriesListPrayer.get(y) + "/m/");
+                                }
+                                writer.write("/t/");
+
+                                // write categoriesListScripture
+                                for(int y = 0; y < categoriesListScripture.size(); y++){
+                                    writer.write(categoriesListScripture.get(y) + "/m/");
+                                }
+
                                 writer.close();
+
                             } catch (IOException e) {
                                 Log.e("Create_File", e.getMessage());
                             }
