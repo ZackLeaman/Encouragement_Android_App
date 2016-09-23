@@ -636,6 +636,17 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                     e.printStackTrace();
                 }
             }
+            if(extras.containsKey("homeEncouragement")){
+                try {
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.remove("homeEncouragement");
+                    editor.putString("homeEncouragement",extras.getString("homeEncouragement"));
+                    editor.commit();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
 
         if(!selectedEncouragement.isEmpty()) {
@@ -792,6 +803,10 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
     public void onBackPressed()
     {
         Intent intent = new Intent(this,PermissionsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        Random r = new Random();
+        int ID = r.nextInt(10000);
+        intent.setAction("com.wordpress.zackleaman.materialtablayout.intent.action.ACTION_NAME" + ID);
         startActivity(intent);
         finish();
     }
@@ -1430,6 +1445,10 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
             default:
                 //NavUtils.navigateUpFromSameTask(activity);
                 Intent intent = new Intent(this,PermissionsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                Random r = new Random();
+                int ID = r.nextInt(10000);
+                intent.setAction("com.wordpress.zackleaman.materialtablayout.intent.action.ACTION_NAME" + ID);
                 startActivity(intent);
                 finish();
                 break;

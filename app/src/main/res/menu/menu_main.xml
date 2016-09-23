@@ -9,8 +9,14 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_sign_in"
+        android:orderInCategory="150"
+        android:title="Sign In"
+        app:showAsAction= "never"/>
+
+    <item
         android:id="@+id/action_sign_out"
         android:orderInCategory="200"
-        android:title="Sign out"
+        android:title="Sign Out"
         app:showAsAction= "never"/>
 </menu>

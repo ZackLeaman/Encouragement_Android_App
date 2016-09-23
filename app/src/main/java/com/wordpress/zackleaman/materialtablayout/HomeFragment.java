@@ -163,6 +163,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         }
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         wantsStarterEncouragement = sp.getBoolean("wantsStarterEncouragement", true);
+        homeEncouragement = sp.getString("homeEncouragement",notificationEncouragementList.get(0));
         //String wSE = loadString("wantsStarterEncouragements",getContext());
 //        if(!wSE.isEmpty()){
 //            try{
@@ -370,6 +371,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             mEdit1.remove("homeEncouragement");
             mEdit1.putString("homeEncouragement",notificationEncouragementList.get(0));
             mEdit1.commit();
+            Log.d("AlertReceiver","notifEnt.isEmpty and encouragements.isempty homeEn = notfi(0)");
         }
         if(notificationEncouragementList.size() == 1 && !encouragements.isEmpty()){
             if(notificationEncouragementList.get(0).equals("/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off")){
@@ -378,6 +380,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 SharedPreferences.Editor mEdit1 = sp.edit();
                 mEdit1.remove("homeEncouragement");
                 mEdit1.commit();
+                Log.d("AlertReceiver","notifEnt.size 1 and !encouragements.isempty homeEn = removed");
             }
         }
         if(notificationEncouragementList.isEmpty() || MainActivity.isFirstTimeOpening || notificationEncouragementList == null){
@@ -425,6 +428,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 String[] entry = homeEncouragement.split("/n");
                 String nameAddressDate = entry[2];
                 String message = entry[3];
+                Log.d("AlertReceiver","notifEnt.isEmpty or firstopened homeEn = " + homeEncouragement);
 
                 tvEncouragementMessage.setText(message);
                 tvEncouragementFrom.setText(nameAddressDate);
@@ -466,6 +470,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                             mEdit1.remove("homeEncouragement");
                             mEdit1.putString("homeEncouragement", homeEncouragement);
                             mEdit1.commit();
+                            Log.d("AlertReceiver","!wantstarter homeEn = " + homeEncouragement);
                         }
                     }
 
@@ -484,6 +489,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 String[] entry = homeEncouragement.split("/n");
                 String nameAddressDate = entry[2];
                 String message = entry[3];
+                Log.d("AlertReceiver","!notifEnt.isEmpty homeEn = " + homeEncouragement);
 
                 tvEncouragementMessage.setText(message);
                 tvEncouragementFrom.setText(nameAddressDate);
@@ -494,25 +500,29 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
 
         }
+        Log.d("ListValues","notif list " + notificationEncouragementList.toString());
+        Log.d("ListValues","enc list " + encouragementList.toString());
 
         relativeLayoutEncouragementEntry = (RelativeLayout)getView().findViewById(R.id.relativeLayoutEncouragementEntry);
         relativeLayoutEncouragementEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!notificationEncouragementList.get(0).equals("/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off")){
-                    selectedEncouragement.clear();
-                    selectedEncouragement.add(0,homeEncouragement);
-                    saveArray(selectedEncouragement,"selectedEncouragement");
-                    Intent intent = new Intent(getContext().getApplicationContext(),CurrentEncouragement.class);
-                    getActivity().finish();
-                    startActivity(intent);
+                    if(!homeEncouragement.equals("")) {
+                        selectedEncouragement.clear();
+                        selectedEncouragement.add(0, homeEncouragement);
+                        saveArray(selectedEncouragement, "selectedEncouragement");
+                        Intent intent = new Intent(getContext().getApplicationContext(), CurrentEncouragement.class);
+                        getActivity().finish();
+                        startActivity(intent);
+                    }
                 }
             }
         });
 
         btnEncouragementEntry = (Button)getView().findViewById(R.id.btnEncouragementEntry);
         if(!notificationEncouragementList.isEmpty()) {
-            if (!notificationEncouragementList.get(0).equals("/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off")) {
+            if (!homeEncouragement.equals("/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off")) {
                 btnEncouragementEntry.setVisibility(View.VISIBLE);
                 Log.d("NotifIf",notificationEncouragementList.get(0));
             } else {
@@ -923,7 +933,9 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 }
             }
         });
-
+        if(homeEncouragement.equals("")){
+            btnEncouragementEntry.setVisibility(View.GONE);
+        }
 
         // This is switch that will appear if Prayer and Scripture Categories are turned off
         tvPrayerAndScripture = (TextView) getView().findViewById(R.id.tvPrayerAndScripture);
@@ -950,6 +962,38 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         }
 
     }
+
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("Alert","onResume");
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
+        homeEncouragement = sp.getString("homeEncouragement","/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off");
+        loadArray(notificationEncouragementList,getContext(),"notificationEncouragementList");
+        try {
+            String[] entry = homeEncouragement.split("/n");
+            String nameAddressDate = entry[2];
+            String message = entry[3];
+            tvEncouragementMessage.setText(message);
+            tvEncouragementFrom.setText(nameAddressDate);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(!notificationEncouragementList.isEmpty()) {
+            if (!homeEncouragement.equals("/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off")) {
+                btnEncouragementEntry.setVisibility(View.VISIBLE);
+            } else {
+                btnEncouragementEntry.setVisibility(View.INVISIBLE);
+            }
+        }else{
+            btnEncouragementEntry.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
 
     @Override
     public void onItemClick(AdapterView<?>parent,View view,int position,long id){

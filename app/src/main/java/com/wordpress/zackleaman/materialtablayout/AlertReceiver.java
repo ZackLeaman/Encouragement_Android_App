@@ -29,7 +29,8 @@ public class AlertReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d("AlertReceiver","in On Receive");
         loadArray(notificationEncouragementList,context,"notificationEncouragementList");
-
+        Log.d("AlertReceiver",notificationEncouragementList.toString());
+        Log.d("AlertReceiver","32");
         String msgFull = intent.getStringExtra("msg");
         String msgTitle = intent.getStringExtra("msgTitle");
         String msgAlarmString = "Alarm Off";
@@ -39,13 +40,16 @@ public class AlertReceiver extends BroadcastReceiver {
         String encouragementType = loadString("encouragementType",context);
 
 //        Toast.makeText(context,msgFull,Toast.LENGTH_LONG).show();
-
+        Log.d("AlertReceiver","42");
         if(intent.getStringExtra("msgCategory").equals("Encouragement")) {
             saveString("needUpdateNotificationEncouragement", context, "true");
         }
         try {
             // handle if entry has been moved
+            Log.d("AlertReceiver","48");
             loadArray(encouragementList, context, "encouragementList");
+            Log.d("AlertReceiver",encouragementList.toString());
+
             if (!encouragementList.isEmpty()) {
                 String[] msg = intent.getStringExtra("msg").split("/n");
                 String msgCat = msg[1];
@@ -55,6 +59,7 @@ public class AlertReceiver extends BroadcastReceiver {
                 String msgNotifID = msg[5];
                 String msgNotifString = msg[6];
                 String msgCompare = msgCat + msgFrom + msgText + msgNotifID;
+                Log.d("AlertReceiver","59");
 
                 for (int i = 0; i < encouragementList.size(); i++) {
                     String[] entry = encouragementList.get(i).split("/n");
@@ -65,12 +70,17 @@ public class AlertReceiver extends BroadcastReceiver {
                     String entryNotifID = entry[5];
                     String entryNotifString = entry[6];
                     String entryCompare = entryCat + entryFrom + entryText + entryNotifID;
+                    Log.d("AlertReceiver","70");
 
                     if (msgCompare.equals(entryCompare)) {
                         foundMessage = true;
-                        String[] type = entryNotifString.split(" ");
-                        alarmType = type[1];
-                        category = entryCat;
+                        if(!entryNotifString.equals("none")) {
+                            String[] type = entryNotifString.split(" ");
+                            alarmType = type[1];
+                        }else{
+                            alarmType = "Off";
+                        }
+                        category = msgCat;
                         msgAlarmString = entryNotifString;
                         if (!msgSubCat.equals(entrySubCat)) {
                             msgSubCat = entrySubCat;
@@ -80,6 +90,9 @@ public class AlertReceiver extends BroadcastReceiver {
 
                             i = encouragementList.size();
                         }
+                        Log.d("AlertReceiver", "86");
+
+
                     }
                 }
             }else{
@@ -97,9 +110,17 @@ public class AlertReceiver extends BroadcastReceiver {
 
 
             // reset the alarm
+            Log.d("AlertReceiver","105");
+            Log.d("AlertReceiver",category);
+            Log.d("AlertReceiver","homeEncouragement = " + msgFull);
+            Log.d("AlertReceiver",encouragementType);
             if(category.equals("Encouragement")){
+                Log.d("AlertReceiver","113");
                 if(!encouragementType.equals("Off")){
 //                    Toast.makeText(context,"New Alarm Set",Toast.LENGTH_LONG).show();
+                    Log.d("AlertReceiver","116");
+
+
                     createNotification(context,
                             msgFull,
                             intent.getStringExtra("msgCategory"),
@@ -108,12 +129,14 @@ public class AlertReceiver extends BroadcastReceiver {
                             intent.getStringExtra("msgAlert"),
                             intent.getStringExtra("msgPos"),
                             intent.getIntExtra("notifyID", 999));
+                    Log.d("AlertReceiver","125");
 
-                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
                     SharedPreferences.Editor mEdit1 = sp.edit();
                     mEdit1.remove("homeEncouragement");
                     mEdit1.putString("homeEncouragement",msgFull);
                     mEdit1.commit();
+                    Log.d("AlertReceiver","131");
 
 
                     notificationEncouragementList.remove(0);
@@ -220,7 +243,6 @@ public class AlertReceiver extends BroadcastReceiver {
 
     public void createNotification(Context context, String msg, String msgCategory, String msgTitle,String msgText, String msgAlert, String msgPos, int notifyID){
 
-
         Intent intent = new Intent(context, CurrentEncouragement.class);
 
         //intent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -239,6 +261,7 @@ public class AlertReceiver extends BroadcastReceiver {
         intent.putExtra("msgText",msgText);
         intent.putExtra("msgAlert",msgAlert);
         intent.putExtra("msgPos",msgPos);
+        intent.putExtra("homeEncouragement",msg);
 
         intent.setAction("com.wordpress.zackleaman.materialtablayout.intent.action.ACTION_NAME" + notifyID);
 

@@ -30,6 +30,11 @@ public class DialogPopup extends DialogFragment {
     public static final String DIALOG_TYPE = "command";
     public static final String DELETE_RECORD = "deleteRecord";
     public static final String OTHER_CATEGORIES = "otherCategories";
+    public static final String FIRST_FOUND_DRIVE  = "firstFoundDrive";
+    public static final String NEXT_FOUND_DRIVE = "nextFoundDrive";
+    public static final String CANT_FIND_DRIVE = "cantFindDrive";
+    public static final String RESTORE_BACKUP_CONFIRM = "restoreBackupConfirm";
+    public static final String BACKUP_DRIVE_CONFIRM = "backupDriveConfirm";
     private ArrayList<String> encouragementList = new ArrayList<>();
     private ArrayList<String> shownEncouragementList = new ArrayList<>();
 
@@ -137,6 +142,9 @@ public class DialogPopup extends DialogFragment {
                     SharedPreferences.Editor mEdit1 = sp.edit();
                     mEdit1.putBoolean("wantsPrayerAndScripture",true);
                     mEdit1.commit();
+//                    Intent intent = new Intent(getContext(),MainActivity.class);
+//                    getActivity().finish();
+//                    startActivity(intent);
                 }
             })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -152,7 +160,135 @@ public class DialogPopup extends DialogFragment {
                         }
                     });
 
-        } else {
+        }else if(command.equals(FIRST_FOUND_DRIVE)) {
+
+            final int FragmentId = getArguments().getInt("FragmentID");
+            TextView popupMessage = (TextView) view.findViewById(R.id.popup_message);
+            popupMessage.setText("File Found!\n\nWould you like to Restore from Backup or Override Backup on Drive?");
+            builder.setView(view).setPositiveButton("Restore Backup", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    DialogPopup dialog = new DialogPopup();
+                    Bundle args = new Bundle();
+                    args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.RESTORE_BACKUP_CONFIRM);
+                    dialog.setArguments(args);
+                    dialog.show(getFragmentManager(), "restore-backup-confirm");
+                }
+            })
+                    .setNegativeButton("Override Backup", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            DialogPopup dialog = new DialogPopup();
+                            Bundle args = new Bundle();
+                            args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.BACKUP_DRIVE_CONFIRM);
+                            dialog.setArguments(args);
+                            dialog.show(getFragmentManager(), "backup-drive-confirm");
+                        }
+                    });
+
+
+        }else if(command.equals(CANT_FIND_DRIVE)) {
+
+            final int FragmentId = getArguments().getInt("FragmentID");
+            TextView popupMessage = (TextView) view.findViewById(R.id.popup_message);
+            popupMessage.setText("File Not Found!\n\nWould you like to Sign In to a Different Account or Create a New Backup on this Account?");
+            builder.setView(view).setPositiveButton("Sign In to a Different Account", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //TODO have a resign in
+                    //signedIn = true;
+                    //isFirstTimeOpening = true;
+                    //MainActivity.firstTimeAppOpened = true;
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putBoolean("signedIn", true);
+                    editor.putBoolean("signedIn_Pressed", true);
+                    editor.putBoolean("isFirstTimeOpening",true);
+                    editor.commit();
+                    Intent intent = new Intent(getContext(),MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("clearGAC","clearGAC");
+                    intent.setAction("com.wordpress.zackleaman.materialtablayout.intent.action.ACTION_NAME" + 758520);
+                    getActivity().finish();
+                    startActivity(intent);
+                }
+            })
+                    .setNegativeButton("Create a New Backup", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putBoolean("signedIn", true);
+                            editor.commit();
+                            MainActivity.myOptionMenu.getItem(1).setVisible(false);
+                            MainActivity.myOptionMenu.getItem(2).setVisible(true);
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("curState","3");
+                            intent.setAction("com.wordpress.zackleaman.materialtablayout.intent.action.ACTION_NAME" + 758520);
+                            getActivity().finish();
+                            startActivity(intent);
+                        }
+                    });
+
+
+        }else if(command.equals(RESTORE_BACKUP_CONFIRM)) {
+
+            final int FragmentId = getArguments().getInt("FragmentID");
+            TextView popupMessage = (TextView) view.findViewById(R.id.popup_message);
+            popupMessage.setText("Are you sure you wish to Restore from Drive Backup?");
+            builder.setView(view).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putBoolean("signedIn", true);
+                    editor.commit();
+                    MainActivity.myOptionMenu.getItem(1).setVisible(false);
+                    MainActivity.myOptionMenu.getItem(2).setVisible(true);
+                }
+            })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            DialogPopup dialog = new DialogPopup();
+                            Bundle args = new Bundle();
+                            args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.FIRST_FOUND_DRIVE);
+                            dialog.setArguments(args);
+                            dialog.show(getFragmentManager(), "first_found_drive");
+                        }
+                    });
+
+
+        }else if(command.equals(BACKUP_DRIVE_CONFIRM)) {
+
+            final int FragmentId = getArguments().getInt("FragmentID");
+            TextView popupMessage = (TextView) view.findViewById(R.id.popup_message);
+            popupMessage.setText("Are you sure you wish to Backup Local to Drive? This will override Drive Backup.");
+            builder.setView(view).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putBoolean("signedIn", true);
+                    editor.commit();
+                    MainActivity.myOptionMenu.getItem(1).setVisible(false);
+                    MainActivity.myOptionMenu.getItem(2).setVisible(true);
+                }
+            })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            DialogPopup dialog = new DialogPopup();
+                            Bundle args = new Bundle();
+                            args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.FIRST_FOUND_DRIVE);
+                            dialog.setArguments(args);
+                            dialog.show(getFragmentManager(), "first_found_drive");
+                        }
+                    });
+
+
+        }else {
             Log.d(LOG_TAG, "Invalid command passed as parameter");
         }
 

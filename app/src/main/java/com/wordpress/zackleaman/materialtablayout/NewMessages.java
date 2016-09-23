@@ -398,7 +398,7 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
                     String smsMessage = smsMessages[1];
 
 
-                    String smsMessageStr = "/n" + title + "/n" + nameAddressDate + "/n" + smsMessage + "/nnone" + "/nnone"  + "/nnone";
+                    String smsMessageStr = "/n" + title + "/n" + nameAddressDate + "/n" + smsMessage + "/nnone" + "/n3"  + "/nAlarm Off";
                     Toast.makeText(getActivity().getApplicationContext(),"Entry Saved to " + title,Toast.LENGTH_SHORT).show();
 
                     encouragementList.add(0,smsMessageStr);

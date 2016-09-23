@@ -37,4 +37,20 @@ public class PermissionsActivity extends AbsRuntimePermission {
         startActivity(intent);
         finish();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requestAppPermissions(new String[]{
+                        Manifest.permission.READ_SMS,
+                        Manifest.permission.SEND_SMS,
+                        Manifest.permission.RECEIVE_SMS,
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.RECEIVE_BOOT_COMPLETED,
+                        Manifest.permission.SET_ALARM,
+                },
+                R.string.msg_enable_permissions,
+                REQUEST_PERMISSION);
+    }
 }
