@@ -296,6 +296,8 @@ public class MainActivity extends BaseDemoDriveActivity {
             mainRelativeLayout.setBackgroundResource(R.drawable.wildwest2);
         }else if(picChoice == 59){
             mainRelativeLayout.setBackgroundResource(R.drawable.woodendoors);
+        }else if(picChoice == 60){
+            mainRelativeLayout.setBackgroundResource(R.drawable.plain);
         }
 
 
@@ -471,6 +473,8 @@ public class MainActivity extends BaseDemoDriveActivity {
             mainRelativeLayout.setBackgroundResource(R.drawable.wildwest2);
         }else if(picChoice == 59){
             mainRelativeLayout.setBackgroundResource(R.drawable.woodendoors);
+        }else if(picChoice == 60){
+            mainRelativeLayout.setBackgroundResource(R.drawable.plain);
         }
 
 
@@ -633,7 +637,7 @@ public class MainActivity extends BaseDemoDriveActivity {
             isJustOpened = false;
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             signedIn = sp.getBoolean("signedIn", false);
-            showMessage("in on connected signedIn = " + signedIn);
+            //showMessage("in on connected signedIn = " + signedIn);
             if (signedIn) {
 
                 if (Cur_State == Query_State) {
@@ -642,7 +646,7 @@ public class MainActivity extends BaseDemoDriveActivity {
                             .build();
                     Drive.DriveApi.query(getGoogleApiClient(), query)
                             .setResultCallback(metadataCallback);
-                    showMessage("Query State");
+                    //showMessage("Query State");
 
                     //TODO make this to where if this is first time then it does this:
 //                    SharedPreferences.Editor editor = sp.edit();
@@ -656,12 +660,12 @@ public class MainActivity extends BaseDemoDriveActivity {
                 if (Cur_State == Retrieve_State) {
                     Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
                             .setResultCallback(idCallback);
-                    showMessage("Retrieve State");
+                    //showMessage("Retrieve State");
                 }
                 if (Cur_State == Create_State) {
                     Drive.DriveApi.newDriveContents(getGoogleApiClient())
                             .setResultCallback(driveContentsCallback);
-                    showMessage("Create State");
+                    //showMessage("Create State");
                 }
             }
         }
@@ -676,7 +680,7 @@ public class MainActivity extends BaseDemoDriveActivity {
                     if (!result.getStatus().isSuccess()) {
                         myOptionMenu.getItem(1).setVisible(true);
                         myOptionMenu.getItem(2).setVisible(false);
-                        showMessage("Problem while retrieving results");
+                        //showMessage("Problem while retrieving results");
                         return;
                     }
 
@@ -710,7 +714,7 @@ public class MainActivity extends BaseDemoDriveActivity {
 
 
 
-                                showMessage("Retrieving Contents");
+                                //showMessage("Retrieving Contents");
                                 Cur_State = Retrieve_State;
                                 Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
                                         .setResultCallback(idCallback);
@@ -719,7 +723,7 @@ public class MainActivity extends BaseDemoDriveActivity {
                                 //TODO Change contents / override backup with local
                                 //TODO ask are you sure?
 
-                                showMessage("Changing Contents");
+                                //showMessage("Changing Contents");
                                 Cur_State = Create_State;
                                 Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
                                         .setResultCallback(idCallbackEdit);
@@ -822,10 +826,10 @@ public class MainActivity extends BaseDemoDriveActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             if (result == null) {
-                showMessage("Error while reading from the file");
+                //showMessage("Error while reading from the file");
                 return;
             }
-            showMessage("Retrieved contents: " + result);
+            //showMessage("Retrieved contents: " + result);
             try {
                 String[] totalResult = result.split("/t/");
                 String[] encouragementResult = totalResult[0].split("/m/");
@@ -896,7 +900,7 @@ public class MainActivity extends BaseDemoDriveActivity {
                 @Override
                 public void onResult(DriveApi.DriveContentsResult result) {
                     if (!result.getStatus().isSuccess()) {
-                        showMessage("Error while trying to create new file contents");
+                        //showMessage("Error while trying to create new file contents");
                         return;
                     }
                     final DriveContents driveContents = result.getDriveContents();
@@ -957,10 +961,10 @@ public class MainActivity extends BaseDemoDriveActivity {
                 @Override
                 public void onResult(DriveFolder.DriveFileResult result) {
                     if (!result.getStatus().isSuccess()) {
-                        showMessage("Error while trying to create the file");
+                        //showMessage("Error while trying to create the file");
                         return;
                     }
-                    showMessage("Created a file with content: " + result.getDriveFile().getDriveId());
+                    //showMessage("Created a file with content: " + result.getDriveFile().getDriveId());
 
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor editor = sp.edit();
@@ -975,7 +979,7 @@ public class MainActivity extends BaseDemoDriveActivity {
         @Override
         public void onResult(DriveApi.DriveIdResult result) {
             if (!result.getStatus().isSuccess()) {
-                showMessage("Cannot find DriveId. Are you authorized to view this file?");
+                //showMessage("Cannot find DriveId. Are you authorized to view this file?");
                 return;
             }
 

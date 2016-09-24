@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="background_names">
+        <item>Plain</item>
         <item>Cycle Backgrounds</item>
         <item>Arid Cliff</item>
         <item>Arid Landscape</item>
@@ -66,7 +67,7 @@
     </string-array>
 
     <string-array name="background_values">
-
+        <item>60</item>
         <item>-1</item>
         <item>23</item>
         <item>0</item>

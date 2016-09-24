@@ -193,6 +193,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.wildwest2_small);
             }else if(picChoice.equals("59")){
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.woodendoors_small);
+            }else if(picChoice.equals("60")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.plain_small);
             }
 
         }
@@ -340,6 +342,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.wildwest2_small);
             }else if(picChoice.equals("59")){
                 imageViewBackgroundPreview.setBackgroundResource(R.drawable.woodendoors_small);
+            }else if(picChoice.equals("60")){
+                imageViewBackgroundPreview.setBackgroundResource(R.drawable.plain_small);
             }
         }
 

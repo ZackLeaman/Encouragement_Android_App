@@ -117,14 +117,14 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        showMessage("On Resume");
+        //showMessage("On Resume");
 
 //        mGoogleApiClient2.hasConnectedApi(Drive.API);
 
 
         if (mGoogleApiClient2 != null) {
-            showMessage("onResume mGoogle");
-            showMessage("onResume connect");
+            //showMessage("onResume mGoogle");
+            //showMessage("onResume connect");
             mGoogleApiClient2.connect();
         }
 
@@ -164,7 +164,7 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
             Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        showMessage("onActivityResult");
+        //showMessage("onActivityResult");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             if (sp.getBoolean("signedIn", true)) {
                 Log.d(TAG,"onActivity signedIn true");
@@ -321,7 +321,7 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
         //mGoogleApiClient2 = null;
 
         if(mGoogleApiClient2 == null){
-            showMessage("mGoogleApiClient2 is null");
+            //showMessage("mGoogleApiClient2 is null");
         }
 
     }

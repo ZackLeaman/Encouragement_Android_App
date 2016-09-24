@@ -50,7 +50,7 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                         btnFlowers, btnForestMountain2, btnGiraffe, btnGrungeMap, btnJellyfish, btnMetalStripes,
                         btnMountainPeak2, btnOcean, btnOwl, btnPanda, btnPatternedBrick, btnPrairieDog, btnRedPanda,
                         btnRockFormation, btnSavannah1, btnSavannah2, btnSnowyMountain1, btnSnowyMountain2, btnStoneDoorway,
-                        btnTiger, btnTree, btnTropic4, btnWildWest1, btnWildWest2, btnWoodenDoors;
+                        btnTiger, btnTree, btnTropic4, btnWildWest1, btnWildWest2, btnWoodenDoors, btnPlain;
     private Button btnClose, btnCyclePhotos;
     private HorizontalScrollView hsv;
     private String fullEntry;
@@ -103,6 +103,7 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         categoriesListScripture = new ArrayList<>();
         tvEncouragementMessage = (TextView)findViewById(R.id.tvEncouragementMessage);
         tvEncouragementFrom = (TextView)findViewById(R.id.tvEncouragementFrom);
+        btnPlain = (ImageButton)findViewById(R.id.btn_plain);
         btnAriedLandscape = (ImageButton)findViewById(R.id.btn_ariedlandscape_small);
         btnBrickwall  = (ImageButton)findViewById(R.id.btn_brickwall_small);
         btnCity  = (ImageButton)findViewById(R.id.btn_city_small);
@@ -168,6 +169,7 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
 
 
         btnClose = (Button)findViewById(R.id.btnClose);
+        btnPlain.setOnClickListener(this);
         btnCyclePhotos = (Button)findViewById(R.id.btn_cycle_pictures);
         btnAriedLandscape.setOnClickListener(this);
         btnBrickwall.setOnClickListener(this);
@@ -391,6 +393,8 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
             btnWildWest2.setAlpha(0.2f);
         }else if(picChoice == 59){
             btnWoodenDoors.setAlpha(0.2f);
+        }else if(picChoice == 60){
+            btnPlain.setAlpha(0.2f);
         }
 
         if(picChoice == -1){
@@ -518,6 +522,8 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
             entryRelativeLayout.setBackgroundResource(R.drawable.wildwest2);
         }else if(picChoice == 59){
             entryRelativeLayout.setBackgroundResource(R.drawable.woodendoors);
+        }else if(picChoice == 60){
+            entryRelativeLayout.setBackgroundResource(R.drawable.plain);
         }
 
 
@@ -1011,6 +1017,12 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 Toast.makeText(getApplicationContext(),
                         "Notification Settings Saved",
                         Toast.LENGTH_LONG).show();
+                break;
+            case R.id.btn_plain:
+                entryRelativeLayout.setBackgroundResource(R.drawable.plain);
+                resetButtonTints();
+                btnPlain.setAlpha(0.2f);
+                saveString("backgroundSelection","60");
                 break;
             case R.id.btn_cycle_pictures:
                 resetButtonTints();
@@ -1622,6 +1634,7 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
     }
 
     public void resetButtonTints(){
+        btnPlain.setAlpha(1.0f);
         btnCyclePhotos.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent2));
         btnAriedLandscape.setAlpha(1.0f);
         btnBrickwall.setAlpha(1.0f);
