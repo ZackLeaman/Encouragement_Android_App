@@ -1002,6 +1002,7 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         alertIntent.putExtra("msgAlert","New " + category + " Notification");
         alertIntent.putExtra("msgPos",pos);
         alertIntent.putExtra("notifyID",notifyID);
+        alertIntent.putStringArrayListExtra("encouragementList",encouragementList);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getContext(),notifyID,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 

@@ -1916,6 +1916,7 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         alertIntent.putExtra("msgAlert","New " + category + " Notification");
         alertIntent.putExtra("msgPos",pos);
         alertIntent.putExtra("notifyID",notifyID);
+        alertIntent.putStringArrayListExtra("encouragementList",encouragementList);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(),notifyID,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 

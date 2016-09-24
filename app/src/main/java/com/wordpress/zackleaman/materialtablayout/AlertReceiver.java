@@ -49,6 +49,11 @@ public class AlertReceiver extends BroadcastReceiver {
             Log.d("AlertReceiver","48");
             loadArray(encouragementList, context, "encouragementList");
             Log.d("AlertReceiver",encouragementList.toString());
+            try{
+                encouragementList = intent.getStringArrayListExtra("encouragementList");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
             if (!encouragementList.isEmpty()) {
                 String[] msg = intent.getStringExtra("msg").split("/n");
@@ -261,7 +266,9 @@ public class AlertReceiver extends BroadcastReceiver {
         intent.putExtra("msgText",msgText);
         intent.putExtra("msgAlert",msgAlert);
         intent.putExtra("msgPos",msgPos);
-        intent.putExtra("homeEncouragement",msg);
+        if(msgCategory.equals("Encouragement")) {
+            intent.putExtra("homeEncouragement", msg);
+        }
 
         intent.setAction("com.wordpress.zackleaman.materialtablayout.intent.action.ACTION_NAME" + notifyID);
 

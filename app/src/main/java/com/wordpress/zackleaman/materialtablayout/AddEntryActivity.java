@@ -454,6 +454,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         alertIntent.putExtra("msgAlert","New " + category + " Notification");
         alertIntent.putExtra("msgPos",pos);
         alertIntent.putExtra("notifyID",notifyID);
+        alertIntent.putStringArrayListExtra("encouragementList",encouragementList);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(),notifyID,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
