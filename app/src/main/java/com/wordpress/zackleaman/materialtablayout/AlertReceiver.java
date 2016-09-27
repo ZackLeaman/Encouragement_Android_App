@@ -50,7 +50,9 @@ public class AlertReceiver extends BroadcastReceiver {
             loadArray(encouragementList, context, "encouragementList");
             Log.d("AlertReceiver",encouragementList.toString());
             try{
-                encouragementList = intent.getStringArrayListExtra("encouragementList");
+                if(intent.getStringExtra("encouragementList") != null) {
+                    encouragementList = intent.getStringArrayListExtra("encouragementList");
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }

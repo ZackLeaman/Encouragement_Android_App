@@ -835,6 +835,7 @@ public class MainActivity extends BaseDemoDriveActivity {
                 String[] encouragementResult = totalResult[0].split("/m/");
                 String[] prayerResult = totalResult[1].split("/m/");
                 String[] scriptureResult = totalResult[2].split("/m/");
+                boolean rWantsStarterEncouragement = Boolean.parseBoolean(totalResult[3]);
 
                 ArrayList<String> categoriesListPrayer = new ArrayList<String>();
                 ArrayList<String> categoriesListScripture = new ArrayList<String>();
@@ -842,6 +843,20 @@ public class MainActivity extends BaseDemoDriveActivity {
 
                 encouragementList.clear();
                 for (int z = 0; z < encouragementResult.length; z++) {
+
+                    // If alarm is not off make it off when retrieving
+                    try{
+                        String[] entry = encouragementResult[z].split("/n");
+                        String entryNotifString = entry[6];
+                        if(!entryNotifString.equals("Alarm Off")){
+                            entryNotifString = "Alarm Off";
+                            encouragementResult[z] = "/n" + entry[1] + "/n" + entry[2] + "/n" + entry[3] + "/n" +
+                                    entry[4] + "/n" + entry[5] + "/n" + entryNotifString;
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                     encouragementList.add(encouragementResult[z]);
                 }
 
@@ -880,6 +895,7 @@ public class MainActivity extends BaseDemoDriveActivity {
                 editor.remove("homeEncouragement");
                 editor.putString("homeEncouragement",homeEncouragement);
                 editor.putBoolean("bIsFirstTimeAppOpened",false);
+                editor.putBoolean("wantsStarterEncouragement",rWantsStarterEncouragement);
                 editor.commit();
 
                 Cur_State = 0;
@@ -935,6 +951,12 @@ public class MainActivity extends BaseDemoDriveActivity {
                                 for(int y = 0; y < categoriesListScripture.size(); y++){
                                     writer.write(categoriesListScripture.get(y) + "/m/");
                                 }
+                                writer.write("/t/");
+
+                                // write wantsStarterEncouragement
+                                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                boolean wantsStarterEncouragement = sp.getBoolean("wantsStarterEncouragement",true);
+                                writer.write(Boolean.toString(wantsStarterEncouragement));
 
                                 writer.close();
 
