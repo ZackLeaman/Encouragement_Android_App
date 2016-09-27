@@ -100,9 +100,94 @@ public class AlertReceiver extends BroadcastReceiver {
 
                     }
                 }
-            }else{
-//                Toast.makeText(context,"encouragementList empty",Toast.LENGTH_LONG).show();
+
+                // If NotifEncouragement not found go to the next until found
+                if(!foundMessage){
+                    if(msgCat.equals("Encouragement")){
+                        int remove = -1;
+                        if(!notificationEncouragementList.isEmpty() && !encouragementList.isEmpty()) {
+                            for (int x = 0; x < notificationEncouragementList.size(); x++) {
+                                String[] notifMsg = notificationEncouragementList.get(x).split("/n");
+                                String notifMsgCat = notifMsg[1];
+                                String notifMsgFrom = notifMsg[2];
+                                String notifMsgText = notifMsg[3];
+                                String notifMsgSubCat = notifMsg[4];
+                                String notifMsgNotifID = notifMsg[5];
+                                String notifMsgNotifString = notifMsg[6];
+                                String notifMsgCompare = notifMsgCat + notifMsgFrom + notifMsgText + notifMsgNotifID;
+
+                                for (int i = 0; i < encouragementList.size(); i++) {
+                                    String[] entry = encouragementList.get(i).split("/n");
+                                    String entryCat = entry[1];
+                                    String entryFrom = entry[2];
+                                    String entryText = entry[3];
+                                    String entrySubCat = entry[4];
+                                    String entryNotifID = entry[5];
+                                    String entryNotifString = entry[6];
+                                    String entryCompare = entryCat + entryFrom + entryText + entryNotifID;
+
+                                    if (notifMsgCompare.equals(entryCompare)) {
+                                        foundMessage = true;
+                                        if (!entryNotifString.equals("none")) {
+                                            String[] type = entryNotifString.split(" ");
+                                            alarmType = type[1];
+                                        } else {
+                                            alarmType = "Off";
+                                        }
+                                        category = msgCat;
+                                        msgAlarmString = entryNotifString;
+                                        if (!msgSubCat.equals(entrySubCat)) {
+                                            msgSubCat = entrySubCat;
+                                            msgFull = "/n" + entryCat + "/n" + entryFrom + "/n" + entryText + "/n" +
+                                                    entrySubCat + "/n" + entryNotifID + "/n" + entryNotifString;
+                                            msgTitle = entryCat + " - " + entrySubCat;
+
+                                        }
+                                        i = encouragementList.size();
+                                        x = notificationEncouragementList.size();
+
+                                    }
+
+                                }
+
+                                remove++;
+                            }
+
+                            for(int r = remove; r >= 0; r--){
+                                notificationEncouragementList.remove(r);
+                            }
+
+                            saveArray(notificationEncouragementList,context,"notificationEncouragementList");
+
+
+
+                        }
+                        // If still not found then grab the first encouragement from list
+                        if(!foundMessage && !encouragementList.isEmpty()){
+                            for (int i = 0; i < encouragementList.size(); i++) {
+                                String[] entry = encouragementList.get(i).split("/n");
+                                String entryCat = entry[1];
+                                String entrySubCat = entry[4];
+
+                                if(entryCat.equals("Encouragement")){
+                                    foundMessage = true;
+                                    msgSubCat = entrySubCat;
+                                    msgFull = encouragementList.get(i);
+                                    msgTitle = entryCat;
+                                    i = encouragementList.size();
+                                }
+                            }
+
+                        }
+
+
+                    }
+                }
+
             }
+//            else{
+////                Toast.makeText(context,"encouragementList empty",Toast.LENGTH_LONG).show();
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,7 +210,6 @@ public class AlertReceiver extends BroadcastReceiver {
 //                    Toast.makeText(context,"New Alarm Set",Toast.LENGTH_LONG).show();
                     Log.d("AlertReceiver","116");
 
-
                     createNotification(context,
                             msgFull,
                             intent.getStringExtra("msgCategory"),
@@ -143,8 +227,9 @@ public class AlertReceiver extends BroadcastReceiver {
                     mEdit1.commit();
                     Log.d("AlertReceiver","131");
 
-
-                    notificationEncouragementList.remove(0);
+                    if(!notificationEncouragementList.isEmpty()) {
+                        notificationEncouragementList.remove(0);
+                    }
                     if(notificationEncouragementList.isEmpty() || MainActivity.isFirstTimeOpening || notificationEncouragementList == null) {
                         Log.d("notificationEnc", "is empty");
                         Random r = new Random();
@@ -347,6 +432,7 @@ public class AlertReceiver extends BroadcastReceiver {
         alertIntent.putExtra("msgAlert","New " + category + " Notification");
         alertIntent.putExtra("msgPos",0);
         alertIntent.putExtra("notifyID",notifyID);
+        // TODO maybe add put Extra for string array list for encouragement List for encouragement category
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(),notifyID,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
