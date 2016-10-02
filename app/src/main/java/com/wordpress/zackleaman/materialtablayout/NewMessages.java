@@ -52,6 +52,7 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
     private int inboxAmount;
     private int mainCategory;
     private boolean isLastMessagesPressed;
+    private String name;
 
     //TODO List created ReceiveSMSActivity
     private ArrayList<String> encouragementList;
@@ -142,115 +143,64 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
     }
 
     public void refreshSmsInbox(){
-        //TODO poss prob
-//        if(ContextCompat.checkSelfPermission(getActivity().getBaseContext(), "android.permission.READ_SMS") != PackageManager.PERMISSION_GRANTED ||
-//                ContextCompat.checkSelfPermission(getActivity().getBaseContext(), "android.permission.READ_CONTACTS") != PackageManager.PERMISSION_GRANTED ||
-//                ContextCompat.checkSelfPermission(getActivity().getBaseContext(), "android.permission.WRITE_CONTACTS") != PackageManager.PERMISSION_GRANTED
-//                ) {
-//
-//            ActivityCompat.requestPermissions(getActivity(), new String[]{"android.permission.READ_SMS"}, REQUEST_CODE_READ_SMS);
-//            ActivityCompat.requestPermissions(getActivity(), new String[]{"android.permission.READ_CONTACTS"}, REQUEST_CODE_READ_CONTACTS);
-//            ActivityCompat.requestPermissions(getActivity(), new String[]{"android.permission.WRITE_CONTACTS"}, REQUEST_CODE_WRITE_CONTACTS);
-//
-//        }else {
-            ContentResolver contentResolver = getActivity().getContentResolver();
-            Cursor smsInboxCursor = contentResolver.query(Uri.parse("content://sms/inbox"), null, null, null, null);
-            int indexBody = smsInboxCursor.getColumnIndex("body");
-            int indexAddress = smsInboxCursor.getColumnIndex("address");
-            int indexName = smsInboxCursor.getColumnIndex("Name");
-            Log.d("indexName", Integer.toString(indexName));
-            int timeMillis = smsInboxCursor.getColumnIndex("date");
+
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        Cursor smsInboxCursor = contentResolver.query(Uri.parse("content://sms/inbox"), null, null, null, null);
+        int indexBody = smsInboxCursor.getColumnIndex("body");
+        int indexAddress = smsInboxCursor.getColumnIndex("address");
+        int indexName = smsInboxCursor.getColumnIndex("Name");
+        Log.d("indexName", Integer.toString(indexName));
+        int timeMillis = smsInboxCursor.getColumnIndex("date");
 
 
-            if (indexBody < 0 || !smsInboxCursor.moveToFirst()) return;
-            mMyListAdapter.clear();
-            int curIndex = 0;
-            do {
-                long indexTimeMillis = Long.parseLong(smsInboxCursor.getString(timeMillis));
-                Date date = new Date(indexTimeMillis);
-                SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-                String dateText = format.format(date);
+        if (indexBody < 0 || !smsInboxCursor.moveToFirst()) return;
+        mMyListAdapter.clear();
+        int curIndex = 0;
+        do {
+            long indexTimeMillis = Long.parseLong(smsInboxCursor.getString(timeMillis));
+            Date date = new Date(indexTimeMillis);
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+            String dateText = format.format(date);
 
-                String contactName = null;
-                contactName = getContactName(getActivity().getApplicationContext(),
-                        smsInboxCursor.getString(smsInboxCursor.getColumnIndexOrThrow("address")));
-                String str = "";
-                if (contactName != null) {
-                    str = contactName + " on " + dateText + "/n" + smsInboxCursor.getString(indexBody);
-                } else {
-                    str = smsInboxCursor.getString(indexAddress) + " on " + dateText + "/n" + smsInboxCursor.getString(indexBody);
-                }
+            String contactName = null;
+            contactName = getContactName(getActivity().getApplicationContext(),
+                    smsInboxCursor.getString(smsInboxCursor.getColumnIndexOrThrow("address")));
+            String str = "";
+            if (contactName != null) {
+                str = contactName + " on " + dateText + "/n" + smsInboxCursor.getString(indexBody);
+                name = contactName;
+            } else {
+                str = smsInboxCursor.getString(indexAddress) + " on " + dateText + "/n" + smsInboxCursor.getString(indexBody);
+                name = smsInboxCursor.getString(indexAddress);
+            }
 
-                mMyListAdapter.add(str);
-                curIndex++;
-            } while (smsInboxCursor.moveToNext() && curIndex < inboxAmount);
-//        }
+            mMyListAdapter.add(str);
+            curIndex++;
+        } while (smsInboxCursor.moveToNext() && curIndex < inboxAmount);
+
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode,
-//                                           String permissions[], int[] grantResults) {
-//        if(requestCode == REQUEST_CODE_READ_SMS){
-//            if (grantResults.length > 0
-//                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                refreshSmsInbox();
-//                // permission was granted, yay! Do the
-//                // contacts-related task you need to do.
-//
-//            }
-//        }
-//
-////        switch (requestCode) {
-////            case REQUEST_CODE_READ_SMS: {
-////                // If request is cancelled, the result arrays are empty.
-////                if (grantResults.length > 0
-////                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-////
-////                    // permission was granted, yay! Do the
-////                    // contacts-related task you need to do.
-////
-////                } else {
-////
-////                    // permission denied, boo! Disable the
-////                    // functionality that depends on this permission.
-////                }
-////                return;
-////            }
-////
-////            // other 'case' lines to check for other
-////            // permissions this app might request
-////        }
-//    }
 
     public String getContactName(Context context, String phoneNumber) {
-//        if(ContextCompat.checkSelfPermission(getActivity().getBaseContext(), "android.permission.READ_SMS") != PackageManager.PERMISSION_GRANTED ||
-//                ContextCompat.checkSelfPermission(getActivity().getBaseContext(), "android.permission.READ_CONTACTS") != PackageManager.PERMISSION_GRANTED ||
-//                ContextCompat.checkSelfPermission(getActivity().getBaseContext(), "android.permission.WRITE_CONTACTS") != PackageManager.PERMISSION_GRANTED
-//                ) {
-//
-//            ActivityCompat.requestPermissions(getActivity(), new String[]{"android.permission.READ_SMS"}, REQUEST_CODE_READ_SMS);
-//            ActivityCompat.requestPermissions(getActivity(), new String[]{"android.permission.READ_CONTACTS"}, REQUEST_CODE_READ_CONTACTS);
-//            ActivityCompat.requestPermissions(getActivity(), new String[]{"android.permission.WRITE_CONTACTS"}, REQUEST_CODE_WRITE_CONTACTS);
-//
-//        }else {
-            ContentResolver cr = context.getContentResolver();
-            Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
-                    Uri.encode(phoneNumber));
-            Cursor cursor = cr.query(uri,
-                    new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
-            if (cursor == null) {
-                return null;
-            }
-            String contactName = null;
-            if (cursor.moveToFirst()) {
-                contactName = cursor.getString(cursor
-                        .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
-            }
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-            return contactName;
-//        }return "";
+
+        ContentResolver cr = context.getContentResolver();
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                Uri.encode(phoneNumber));
+        Cursor cursor = cr.query(uri,
+                new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        String contactName = null;
+        if (cursor.moveToFirst()) {
+            contactName = cursor.getString(cursor
+                    .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        return contactName;
+
     }
 
     public void updateList(final String smsMessage){
@@ -261,30 +211,7 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//        try{
-//            String[] smsMessages = smsMessageList.get(position).split("/n");
-//            String nameAddress = smsMessages[0];
-//            //String address = smsMessages[1];
-//            String date = smsMessages[1];
-//            String smsMessage = "";
-//
-//            for(int i = 2; i < smsMessages.length; i++){
-//                smsMessage += smsMessages[i];
-//            }
-//
-//            String smsMessageStr = nameAddress + "/n" + date + "/n" + smsMessage;
-//            Toast.makeText(getActivity().getApplicationContext(),smsMessageStr + "/nSaved to Encouragements",Toast.LENGTH_SHORT).show();
-//
-//            //TODO Add to encouragementList
-//            encouragementList.add(0,smsMessageStr);
-//            saveArray(encouragementList,"encouragementList");
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
     }
-
-
 
 
     private boolean saveArray(List<String> sKey, String arrayName) {
@@ -400,6 +327,11 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
 
                     String smsMessageStr = "/n" + title + "/n" + nameAddressDate + "/n" + smsMessage + "/nnone" + "/n3"  + "/nAlarm Off";
                     Toast.makeText(getActivity().getApplicationContext(),"Entry Saved to " + title,Toast.LENGTH_SHORT).show();
+
+                    // Prompt user to send a reply SMS
+                    if(name != null) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Reply to " + name + " by going to Send Message in the Create Tab", Toast.LENGTH_SHORT).show();
+                    }
 
                     encouragementList.add(0,smsMessageStr);
                     saveArray(encouragementList,"encouragementList");

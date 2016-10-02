@@ -382,6 +382,12 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                     notifAlarmString = "Alarm Off";
                     btnCategorySub.setText(category);
                     etMessageAdd.setText(message);
+
+                    // Restart MainActivity
+                    Intent intent = new Intent(getContext(),MainActivity.class);
+                    getActivity().finish();
+                    startActivity(intent);
+
                 }else{
                     Toast.makeText(getContext(),"Please enter a message to create", Toast.LENGTH_LONG).show();
                 }

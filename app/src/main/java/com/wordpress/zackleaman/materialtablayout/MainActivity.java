@@ -904,6 +904,8 @@ public class MainActivity extends BaseDemoDriveActivity {
                 thisActivity.finish();
                 startActivity(intent);
 
+                showMessage("Restoration Successful!\nPlease note alarms have been turned off.");
+
             }catch (Exception e){
                 e.printStackTrace();
             }

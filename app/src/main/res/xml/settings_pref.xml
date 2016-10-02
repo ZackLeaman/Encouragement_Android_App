@@ -52,7 +52,7 @@
 
         <Preference
             android:key="aboutPreference"
-            android:title="Thinking of You"
+            android:title="@string/app_name"
             android:summary="Encouragement notification service that allows users to either create their own entries or save entries from their own short messaging service. Encouragements get recycled so that the user will never get the same notification entry twice until all encouragements have been shown. Prayer and Scripture categories can be added with the ability to set individual alarms on those entries. Users can also send SMS messages."
             />
 
