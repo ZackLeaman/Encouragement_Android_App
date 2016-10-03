@@ -165,6 +165,11 @@ public class NewMessages extends Fragment implements
             contactName = getContactName(getActivity().getApplicationContext(),
                     smsInboxCursor.getString(smsInboxCursor.getColumnIndexOrThrow("address")));
             String str = "";
+            if(contactName != null){
+                str = contactName + " on " + dateText + "/n" + smsInboxCursor.getString(indexBody);
+            }else{
+                str = smsInboxCursor.getString(indexAddress) + " on " + dateText + "/n" + smsInboxCursor.getString(indexBody);
+            }
 
             mMyListAdapter.add(str);
             curIndex++;
@@ -327,9 +332,9 @@ public class NewMessages extends Fragment implements
                     if(name != null) {
                         Toast.makeText(getActivity().getApplicationContext(), "Reply to " + name + " by going to Send Message in the Create Tab", Toast.LENGTH_SHORT).show();
                     }
-                    ArrayList<String> recentSenders = new ArrayList<>();
-                    loadArray(recentSenders,getContext(),"recentSenders");
-                    recentSenders.add(smsMessageStr);
+                    //ArrayList<String> recentSenders = new ArrayList<>();
+                    //loadArray(recentSenders,getContext(),"recentSenders");
+                    //recentSenders.add(smsMessageStr);
                     encouragementList.add(0,smsMessageStr);
                     saveArray(encouragementList,"encouragementList");
 

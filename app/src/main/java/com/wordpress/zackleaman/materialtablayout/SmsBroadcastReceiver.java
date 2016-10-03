@@ -25,33 +25,40 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent){
         Bundle intentExtras = intent.getExtras();
-        SmsMessage[] smsMessage = null;
+        //SmsMessage[] smsMessage = null;
+        SmsMessage smsMessage = null;
 
         if(intentExtras != null){
             Object[] sms = (Object[]) intentExtras.get(SMS_BUNDLE);
             String smsMessageStr = "";
-            smsMessage = new SmsMessage[sms.length];
+            //smsMessage = new SmsMessage[sms.length];
 
             for(int i = 0; i < sms.length; i++){
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     String format = intentExtras.getString("format");
-                    smsMessage[i] = SmsMessage.createFromPdu((byte[]) sms[i], format);
+                    smsMessage = SmsMessage.createFromPdu((byte[]) sms[i], format);
                 } else {
-                    smsMessage[i] = SmsMessage.createFromPdu((byte[]) sms[i]);
+                    smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
                 }
-                //SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
+//                smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
 
-                String smsBody = smsMessage[i].getMessageBody().toString();
-                String address = smsMessage[i].getOriginatingAddress();
-                long timeMillis = smsMessage[i].getTimestampMillis();
+                String smsBody = smsMessage.getMessageBody().toString();
+                String address = smsMessage.getOriginatingAddress();
+                long timeMillis = smsMessage.getTimestampMillis();
 
                 Date date = new Date(timeMillis);
                 SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
                 String dateText = format.format(date);
 
-                smsMessageStr += getContactName(context , address) + "\n" + address + " at " + dateText + "\n";
-                smsMessageStr += smsBody + "\n";
+                //smsMessageStr += getContactName(context , address) + "\n" + address + " at " + dateText + "\n";
+                //smsMessageStr += smsBody + "\n";
+
+                if(getContactName(context, address) != null) {
+                    smsMessageStr += getContactName(context, address) + " on " + dateText + "/n" + smsBody;
+                }else{
+                    smsMessageStr += address + " on " + dateText + "/n" + smsBody;
+                }
 
             }
 
