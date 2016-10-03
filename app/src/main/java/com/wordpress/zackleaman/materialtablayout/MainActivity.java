@@ -85,11 +85,13 @@ public class MainActivity extends BaseDemoDriveActivity {
             String CState = "null";
             String cantFindDrive = "null";
             String startPage = "null";
+            String signOut = "null";
             if (extras != null) {
                 clearGAC = extras.getString("clearGAC");
                 CState = extras.getString("curState");
                 cantFindDrive = extras.getString("cantFindDrive");
                 startPage = extras.getString("startPage");
+                signOut = extras.getString("signOut");
                 if(clearGAC != null) {
                     if (clearGAC.equals("clearGAC")) {
                         Log.d("onNewIntent", "got clearGAC and equals");
@@ -149,6 +151,11 @@ public class MainActivity extends BaseDemoDriveActivity {
                         pageIndex = 2;
                     }else if(startPage.equals("Inbox")){
                         pageIndex = 3;
+                    }
+                }
+                if(signOut != null){
+                    if(signOut.equals("true")){
+                        //clearGoogleApiClient();
                     }
                 }
 
@@ -592,20 +599,28 @@ public class MainActivity extends BaseDemoDriveActivity {
         }
 
         if (id == R.id.action_sign_out) {
-            signedIn = false;
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putBoolean("signedIn", false);
-            editor.putBoolean("signedIn_Pressed", false);
-            editor.commit();
-            //encouragementList.clear();
-            notificationEncouragementList.clear();
-            //saveArray(encouragementList,"encouragementList");
-            saveArray(notificationEncouragementList,"notificationEncouragementList");
-            clearGoogleApiClient();
-            Intent intent = new Intent(this,MainActivity.class);
-            startActivity(intent);
-            finish();
+
+            DialogPopup dialog = new DialogPopup();
+            Bundle args = new Bundle();
+            args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.SIGN_OUT);
+            dialog.setArguments(args);
+            dialog.show(getSupportFragmentManager(), "sign-out");
+
+            
+//            signedIn = false;
+//            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putBoolean("signedIn", false);
+//            editor.putBoolean("signedIn_Pressed", false);
+//            editor.commit();
+//            //encouragementList.clear();
+//            notificationEncouragementList.clear();
+//            //saveArray(encouragementList,"encouragementList");
+//            saveArray(notificationEncouragementList,"notificationEncouragementList");
+//            clearGoogleApiClient();
+//            Intent intent = new Intent(this,MainActivity.class);
+//            startActivity(intent);
+//            finish();
             return true;
         }
 

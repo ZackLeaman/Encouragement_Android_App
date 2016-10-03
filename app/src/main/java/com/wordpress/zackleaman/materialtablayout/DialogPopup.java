@@ -36,6 +36,7 @@ public class DialogPopup extends DialogFragment {
     public static final String RESTORE_BACKUP_CONFIRM = "restoreBackupConfirm";
     public static final String BACKUP_DRIVE_CONFIRM = "backupDriveConfirm";
     public static final String DELETE_SUBCATEGORY = "deleteSubcategory";
+    public static final String SIGN_OUT = "signOut";
     private ArrayList<String> encouragementList = new ArrayList<>();
     private ArrayList<String> categoriesListPrayer = new ArrayList<>();
     private ArrayList<String> categoriesListScripture = new ArrayList<>();
@@ -344,6 +345,40 @@ public class DialogPopup extends DialogFragment {
                     intent.putExtra("startPage","Library");
                     getActivity().finish();
                     startActivity(intent);
+                }
+            })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+
+
+        }else if(command.equals(SIGN_OUT)) {
+
+            //final int FragmentId = getArguments().getInt("FragmentID");
+            TextView popupMessage = (TextView) view.findViewById(R.id.popup_message);
+            popupMessage.setText("Are you sure you wish to Sign Out of Google Drive?");
+            builder.setView(view).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //signedIn = false;
+
+//                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+//                    SharedPreferences.Editor editor = sp.edit();
+//                    editor.putBoolean("signedIn", false);
+//                    editor.putBoolean("signedIn_Pressed", false);
+//                    editor.commit();
+
+                    //encouragementList.clear();
+                    //notificationEncouragementList.clear();
+                    //saveArray(encouragementList,"encouragementList");
+                    //saveArray(notificationEncouragementList,"notificationEncouragementList");
+                    BaseDemoDriveActivity.clearGACOnConnected();
+                    Intent intent = new Intent(getContext(),MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {

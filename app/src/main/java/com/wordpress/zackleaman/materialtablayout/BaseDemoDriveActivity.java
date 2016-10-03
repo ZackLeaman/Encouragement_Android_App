@@ -78,6 +78,8 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
     private boolean onActivityResult;
     private int numOfConnectionFailed = 0;
 
+    public static boolean NEED_CLEAR_GAC = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -208,7 +210,24 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
     @Override
     public void onConnected(Bundle connectionHint) {
         Log.i(TAG, "GoogleApiClient connected");
-
+        if(NEED_CLEAR_GAC){
+            Log.d(TAG,"In NEED CLEAR GAC");
+            clearGoogleApiClient();
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean("signedIn", false);
+            editor.putBoolean("signedIn_Pressed", false);
+            editor.commit();
+            try{
+                if(myOptionMenu != null){
+                    myOptionMenu.getItem(1).setVisible(true);
+                    myOptionMenu.getItem(2).setVisible(false);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            NEED_CLEAR_GAC = false;
+        }
 
     }
 
@@ -289,6 +308,9 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
       return mGoogleApiClient2;
     }
 
+    public static void clearGACOnConnected(){
+        NEED_CLEAR_GAC = true;
+    }
 
     public void clearGoogleApiClient(){
 
