@@ -63,6 +63,8 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
     private TextView tvNotificationTitleAdd;
     private TimePicker timePickerNotificationAdd;
 
+    private Button btnRR1, btnRR2, btnRR3, btnRR4, btnRR5;
+
     private Boolean isSendActive, isAddActive;
 
 
@@ -78,6 +80,7 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
     private ArrayList<String> categoriesListPrayer = new ArrayList<>();
     private ArrayList<String> categoriesListScripture = new ArrayList<>();
     private ArrayList<String> alarmList = new ArrayList<>();
+    private ArrayList<String> recentSenders = new ArrayList<>();
     private enum Notification{DAILY,WEEKLY,NONE}
     private enum NotificationDay{SUNDAY,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY}
     private Notification mNotification;
@@ -136,6 +139,12 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         etMessageAdd = (EditText)getView().findViewById(R.id.etMessageAdd);
         tvNotificationTitleAdd = (TextView)getView().findViewById(R.id.tvNotificationTitleAdd);
         timePickerNotificationAdd = (TimePicker)getView().findViewById(R.id.timePickerNotificationAdd);
+        btnRR1 = (Button)getView().findViewById(R.id.btnRR1);
+        btnRR2 = (Button)getView().findViewById(R.id.btnRR2);
+        btnRR3 = (Button)getView().findViewById(R.id.btnRR3);
+        btnRR4 = (Button)getView().findViewById(R.id.btnRR4);
+        btnRR5 = (Button)getView().findViewById(R.id.btnRR5);
+
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         wantsPrayerAndScripture = sp.getBoolean("wantsPrayerAndScripture",true);

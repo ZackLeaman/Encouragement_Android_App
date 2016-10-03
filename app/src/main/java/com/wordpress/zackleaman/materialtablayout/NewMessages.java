@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewMessages extends Fragment implements AdapterView.OnItemClickListener,
+public class NewMessages extends Fragment implements
         View.OnClickListener, PopupMenu.OnMenuItemClickListener{
 
 
@@ -98,7 +98,7 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
         categoriesListScripture = new ArrayList<>();
         mMyListAdapter = new MyListAdapter(getActivity().getApplicationContext(), R.layout.list_add, smsMessageList);
         smsListView.setAdapter(mMyListAdapter);
-        smsListView.setOnItemClickListener(this);
+        //smsListView.setOnItemClickListener(this);
         smsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -108,7 +108,6 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
             }
         });
 
-        //TODO load Array into encouragementList
         loadArray(encouragementList,getContext().getApplicationContext(),"encouragementList");
         loadArray(categoriesList,getContext().getApplicationContext(),"categoriesList");
         loadArray(categoriesListPrayer,getContext().getApplicationContext(), "categoriesListPrayer");
@@ -166,13 +165,6 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
             contactName = getContactName(getActivity().getApplicationContext(),
                     smsInboxCursor.getString(smsInboxCursor.getColumnIndexOrThrow("address")));
             String str = "";
-            if (contactName != null) {
-                str = contactName + " on " + dateText + "/n" + smsInboxCursor.getString(indexBody);
-                name = contactName;
-            } else {
-                str = smsInboxCursor.getString(indexAddress) + " on " + dateText + "/n" + smsInboxCursor.getString(indexBody);
-                name = smsInboxCursor.getString(indexAddress);
-            }
 
             mMyListAdapter.add(str);
             curIndex++;
@@ -208,10 +200,6 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
         mMyListAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-    }
 
 
     private boolean saveArray(List<String> sKey, String arrayName) {
@@ -328,11 +316,20 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
                     String smsMessageStr = "/n" + title + "/n" + nameAddressDate + "/n" + smsMessage + "/nnone" + "/n3"  + "/nAlarm Off";
                     Toast.makeText(getActivity().getApplicationContext(),"Entry Saved to " + title,Toast.LENGTH_SHORT).show();
 
+                    try{
+                        String[] entry = nameAddressDate.split(" on ");
+                        name = entry[0];
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                     // Prompt user to send a reply SMS
                     if(name != null) {
                         Toast.makeText(getActivity().getApplicationContext(), "Reply to " + name + " by going to Send Message in the Create Tab", Toast.LENGTH_SHORT).show();
                     }
-
+                    ArrayList<String> recentSenders = new ArrayList<>();
+                    loadArray(recentSenders,getContext(),"recentSenders");
+                    recentSenders.add(smsMessageStr);
                     encouragementList.add(0,smsMessageStr);
                     saveArray(encouragementList,"encouragementList");
 
@@ -355,11 +352,22 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
                     String nameAddressDate = smsMessages[0];
                     //String date = smsMessages[1];
                     String smsMessage = smsMessages[1];
+                    try{
+                        String[] entry = nameAddressDate.split(" on ");
+                        name = entry[0];
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
 
                     if(mainCategory == 2) {
                         int notifID = findNextNotifID();
                         String smsMessageStr = "/n" + "Prayer" + "/n" + nameAddressDate + "/n" + smsMessage + "/n" + subTitle + "/n" + notifID  + "/nnew";
                         Toast.makeText(getActivity().getApplicationContext(), "Entry Saved to Prayer - " + subTitle, Toast.LENGTH_SHORT).show();
+                        // Prompt user to send a reply SMS
+                        if(name != null) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Reply to " + name + " by going to Send Message in the Create Tab", Toast.LENGTH_SHORT).show();
+                        }
                         encouragementList.add(0,smsMessageStr);
                         saveArray(encouragementList,"encouragementList");
                         ArrayList<String> selectedEncouragement = new ArrayList<>();
@@ -372,6 +380,10 @@ public class NewMessages extends Fragment implements AdapterView.OnItemClickList
                         int notifID = findNextNotifID();
                         String smsMessageStr = "/n" + "Scripture" + "/n" + nameAddressDate + "/n" + smsMessage + "/n" + subTitle + "/n" + notifID  + "/nnew";
                         Toast.makeText(getActivity().getApplicationContext(), "Entry Saved to Scripture - " + subTitle, Toast.LENGTH_SHORT).show();
+                        // Prompt user to send a reply SMS
+                        if(name != null) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Reply to " + name + " by going to Send Message in the Create Tab", Toast.LENGTH_SHORT).show();
+                        }
                         encouragementList.add(0,smsMessageStr);
                         saveArray(encouragementList,"encouragementList");
                         ArrayList<String> selectedEncouragement = new ArrayList<>();

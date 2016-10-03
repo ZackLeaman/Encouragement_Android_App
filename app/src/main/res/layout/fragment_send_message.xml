@@ -59,6 +59,94 @@
                     android:background="@color/colorPrimary"
                     android:visibility="visible">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Recently Received"
+                        android:id="@+id/tvRecentlyReceived"
+                        android:textColor="#ffffff"
+                        android:textStyle="italic"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="20dp"
+                        android:background="@color/colorPrimaryDark"
+                        android:visibility="gone"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/horizontalScrollView"
+                        android:layout_below="@+id/tvRecentlyReceived"
+                        android:background="@color/colorPrimaryDark"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Blank"
+                                android:id="@+id/btnRR1"
+                                android:background="#ffffff"
+                                android:padding="20dp"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"/>
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Blank"
+                                android:id="@+id/btnRR2"
+                                android:background="#ffffff"
+                                android:padding="20dp"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"/>
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Blank"
+                                android:id="@+id/btnRR3"
+                                android:background="#ffffff"
+                                android:padding="20dp"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"/>
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Blank"
+                                android:id="@+id/btnRR4"
+                                android:background="#ffffff"
+                                android:padding="20dp"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"/>
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Blank"
+                                android:id="@+id/btnRR5"
+                                android:background="#ffffff"
+                                android:padding="20dp"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"/>
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
                     <AutoCompleteTextView
                         android:id="@+id/toNumber"
                         android:layout_width="match_parent"
@@ -72,7 +160,7 @@
                         android:popupTheme="@style/PopupMenu"
                         android:textColor="#ffffff"
                         android:textColorHint="#ffffff"
-                        />
+                        android:layout_below="@+id/horizontalScrollView"/>
 
                     <Button
                         android:id="@+id/btnCancelContact"
@@ -81,7 +169,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
+                        android:layout_alignParentTop="false"
                         android:gravity="top|end"
                         android:paddingRight="16dp"
                         android:paddingTop="20dp"
@@ -89,7 +177,8 @@
                         android:textColor="#ffffff"
                         android:textSize="20sp"
                         android:visibility="visible"
-                        />
+                        android:layout_alignBottom="@+id/toNumber"
+                        android:layout_alignTop="@+id/toNumber"/>
 
                     <EditText
                         android:id="@+id/editTextMessage"
