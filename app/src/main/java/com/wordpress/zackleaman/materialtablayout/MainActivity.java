@@ -606,7 +606,7 @@ public class MainActivity extends BaseDemoDriveActivity {
             dialog.setArguments(args);
             dialog.show(getSupportFragmentManager(), "sign-out");
 
-            
+
 //            signedIn = false;
 //            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 //            SharedPreferences.Editor editor = sp.edit();
