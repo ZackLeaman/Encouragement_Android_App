@@ -565,6 +565,17 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                                         ContactsContract.CommonDataKinds.Phone.NUMBER));
                                 switch (phoneType) {
                                     case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
+                                        // take out the dashes so easier to find
+                                        try{
+                                            String[] numberEntry = phoneNumber.split("-");
+                                            phoneNumber = "";
+                                            for(int n = 0; n < numberEntry.length; n++){
+                                                phoneNumber += numberEntry[n];
+                                            }
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
+
                                         adapter.add(name + " Mobile" + " - " + phoneNumber);
                                         phoneValueArr.add(phoneNumber.toString());
                                         nameValueArr.add(name.toString());
