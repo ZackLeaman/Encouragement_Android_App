@@ -574,6 +574,12 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
 
                         // show popup asking if sure
                         String sCategory = categoriesListPrayer.get(pos);
+                        try{
+                            String[] entry = sCategory.split("/n");
+                            sCategory = entry[1];
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         DialogPopup dialog = new DialogPopup();
                         Bundle args = new Bundle();
                         args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.DELETE_SUBCATEGORY);
@@ -607,6 +613,12 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
 
                         // show popup asking if sure
                         String sCategory = categoriesListScripture.get(pos);
+                        try{
+                            String[] entry = sCategory.split("/n");
+                            sCategory = entry[1];
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         DialogPopup dialog = new DialogPopup();
                         Bundle args = new Bundle();
                         args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.DELETE_SUBCATEGORY);
