@@ -38,7 +38,6 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
 
     private ArrayList<String> encouragementList;
     private ArrayList<String> shownEncouragementList;
-    private ArrayList<String> starterEncouragements;
     private ArrayList<String> selectedEncouragement;
     private ArrayList<String> categoriesList;
     private ArrayList<String> categoriesListPrayer;
@@ -81,44 +80,15 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
         editActive = false;
         encouragementList=new ArrayList<>();
         shownEncouragementList = new ArrayList<>();
-//        starterEncouragements = new ArrayList<>();
         categoriesList = new ArrayList<>();
         categoriesListPrayer = new ArrayList<>();
         categoriesListScripture = new ArrayList<>();
         selectedEncouragement = new ArrayList<>();
         loadArray(encouragementList,getContext().getApplicationContext(),"encouragementList");
-//        starterEncouragements.clear();
-//        for(int i = 0; i < 30; i++){
-//            //TODO set up 30 starter encouragements
-//            starterEncouragements.add("/nOther/n" + "NameAddressDate" + "/n" +
-//                    "Starter Encouragement " + i);
-//        }
-//
-//        if(encouragementList.size() < 30){
-//            int needSize = starterEncouragements.size() - encouragementList.size();
-//            for(int j = 0; j < needSize; j++){
-//                Random r = new Random();
-//                int i1 = r.nextInt(30-j);
-//                encouragementList.add(starterEncouragements.get(i1));
-//                starterEncouragements.remove(i1);
-//            }
-//            saveArray(encouragementList,"encouragementList");
-//        }
 
-        //categoriesList.clear();
         loadArray(categoriesList,getContext().getApplicationContext(),"categoriesList");
         loadArray(categoriesListPrayer,getContext().getApplicationContext(),"categoriesListPrayer");
         loadArray(categoriesListScripture,getContext().getApplicationContext(),"categoriesListScripture");
-//        if(categoriesList == null || categoriesList.isEmpty()) {
-//            categoriesList.add("/nChurch/n");
-//            categoriesList.add("/nFamily/n");
-//            categoriesList.add("/nFriends/n");
-//            categoriesList.add("/nWork/n");
-//            categoriesList.add("/nMissions/n");
-//            categoriesList.add("/nPrayer Requests/n");
-//            categoriesList.add("/nOther/n");
-//            saveArray(categoriesList,"categoriesList");
-//        }
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         boolean wantsPrayerAndScripture = sp.getBoolean("wantsPrayerAndScripture",true);
@@ -143,17 +113,10 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
             public void onClick(View view) {
                 switch (reviewState){
                     case MAIN_CATEGORIES:
-//                        btnBackActive = false;
-//                        btnBack.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_menu_revert, 0, 0, 0);
-//                        btnCategoryCreate.setText("Create");
-//                        editActive = false;
-//                        btnBack.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-//                        btnBack.setVisibility(View.INVISIBLE);
-//                        linearLayoutAddCategory.setVisibility(View.GONE);
+
                         break;
                     case CATEGORIES:
                         btnAddActive = false;
-                        //btnBack.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_launcher, 0, 0, 0);
                         btnBack.setVisibility(View.GONE);
                         btnAdd.setVisibility(View.INVISIBLE);
                         btnCategoryCreate.setText("Create");
@@ -161,18 +124,12 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                         tvTitle.setText("Categories");
                         mainCategory = 0;
                         lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, categoriesList));
-//                        if(btnBackActive){
-//                            btnBack.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-//                            linearLayoutAddCategory.setVisibility(View.VISIBLE);
-//                        }else{
                         btnAdd.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                         btnAdd.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_menu_add, 0, 0, 0);
                         linearLayoutAddCategory.setVisibility(View.GONE);
-//                        }
                         reviewState = ReviewState.MAIN_CATEGORIES;
                         break;
                     case CATEGORY:
-                        //btnBack.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_launcher, 0, 0, 0);
                         btnBack.setVisibility(View.VISIBLE);
                         if(mainCategory == 1) {
                             tvTitle.setText("Categories");
@@ -306,8 +263,6 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
             switch (reviewState){
                 case MAIN_CATEGORIES:
                     String[] main_category = categoriesList.get(position).split("/n");
-//                    shownEncouragementList.clear();
-//                    shownEncouragementList = sortEntriesByCategory(main_category[1],encouragementList);
                     btnBack.setVisibility(View.VISIBLE);
                     if(main_category[1].equals("Encouragement")){
                         mainCategory = 1;
@@ -317,12 +272,10 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                         reviewState = ReviewState.CATEGORY;
                     }else if(main_category[1].equals("Prayer")){
                         mainCategory = 2;
-                        //loadArray(categoriesListPrayer,getContext().getApplicationContext(),"categoriesListPrayer");
                         lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, categoriesListPrayer));
                         reviewState = ReviewState.CATEGORIES;
                     }else if(main_category[1].equals("Scripture")){
                         mainCategory = 3;
-                        //loadArray(categoriesListScripture,getContext().getApplicationContext(),"categoriesListScripture");
                         lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, categoriesListScripture));
                         reviewState = ReviewState.CATEGORIES;
                     }
@@ -350,11 +303,6 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                         tvTitle.setText(" - " + subCategory[1]);
                     }
 
-//                    String[] category = categoriesList.get(position).split("/n");
-//
-//                    shownEncouragementList.clear();
-//                    shownEncouragementList = sortEntriesByCategory(category[1],encouragementList);
-//                    lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, shownEncouragementList));
                     positionInt = position;
                     btnAdd.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     btnAdd.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_menu_add, 0, 0, 0);
@@ -510,7 +458,6 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
 
 
     public class ViewHolder{
-        //ImageView thumbnail;
         TextView title;
         TextView title2;
         Button button;
@@ -577,7 +524,6 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
 
         }catch(Exception e){
             e.printStackTrace();
-            //Toast.makeText(getContext().getApplicationContext(),"error in editList",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -607,48 +553,74 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
             case CATEGORIES:
                 try{
                     if(mainCategory == 2) {
-                        String subCategory = categoriesListPrayer.get(pos);
-                        Toast.makeText(getContext().getApplicationContext(), "Entries being moved to the Other Category", Toast.LENGTH_LONG).show();
+//                        String subCategory = categoriesListPrayer.get(pos);
+//                        Toast.makeText(getContext().getApplicationContext(), "Entries being moved to the Other Category", Toast.LENGTH_LONG).show();
+//
+//                        for (int j = 0; j < encouragementList.size(); j++) {
+//                            String[] entry = encouragementList.get(j).split("/n");
+//                            String entryCategory = "/n" + entry[1] + "/n";
+//                            String entrySubCategory = "/n" + entry[4];
+//                            String newEntry = "/nOther";
+//                            if (subCategory.equals(entrySubCategory) && entryCategory.equals("/nPrayer/n")) {
+//                                //newEntry = newEntry + entry[2] + "/n" + entry[3];
+//                                encouragementList.set(j, entryCategory + entry[2] + "/n" + entry[3] + newEntry + "/n" + entry[5] + "/n" + entry[6]);
+//                            }
+//                        }
+//
+//                        categoriesListPrayer.remove(pos);
+//                        saveArray(encouragementList, "encouragementList");
+//                        saveArray(categoriesListPrayer, "categoriesListPrayer");
+//                        lvEncouragement.setAdapter(new MyListAdapter(getActivity().getBaseContext(), R.layout.list_options, categoriesListPrayer));
 
-                        for (int j = 0; j < encouragementList.size(); j++) {
-                            String[] entry = encouragementList.get(j).split("/n");
-                            String entryCategory = "/n" + entry[1] + "/n";
-                            String entrySubCategory = "/n" + entry[4];
-                            String newEntry = "/nOther";
-                            if (subCategory.equals(entrySubCategory) && entryCategory.equals("/nPrayer/n")) {
-                                //newEntry = newEntry + entry[2] + "/n" + entry[3];
-                                encouragementList.set(j, entryCategory + entry[2] + "/n" + entry[3] + newEntry + "/n" + entry[5] + "/n" + entry[6]);
-                            }
-                        }
+                        // show popup asking if sure
+                        String sCategory = categoriesListPrayer.get(pos);
+                        DialogPopup dialog = new DialogPopup();
+                        Bundle args = new Bundle();
+                        args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.DELETE_SUBCATEGORY);
+                        args.putInt("entryPos", pos);
+                        args.putInt("FragmentID",this.getId());
+                        args.putString("subCategory", sCategory);
+                        args.putString("category","Prayer");
+                        args.putString("type","Review");
+                        dialog.setArguments(args);
+                        dialog.show(getFragmentManager(), "delete-subcategory");
 
-                        categoriesListPrayer.remove(pos);
-                        saveArray(encouragementList, "encouragementList");
-                        saveArray(categoriesListPrayer, "categoriesListPrayer");
-                        lvEncouragement.setAdapter(new MyListAdapter(getActivity().getBaseContext(), R.layout.list_options, categoriesListPrayer));
                     }else if(mainCategory == 3){
-                        String subCategory = categoriesListScripture.get(pos);
-                        Toast.makeText(getContext().getApplicationContext(), "Entries being moved to the Other Category", Toast.LENGTH_LONG).show();
+//                        String subCategory = categoriesListScripture.get(pos);
+//                        Toast.makeText(getContext().getApplicationContext(), "Entries being moved to the Other Category", Toast.LENGTH_LONG).show();
+//
+//                        for (int j = 0; j < encouragementList.size(); j++) {
+//                            String[] entry = encouragementList.get(j).split("/n");
+//                            String entryCategory = "/n" + entry[1] + "/n";
+//                            String entrySubCategory = "/n" + entry[4];
+//                            String newEntry = "/nOther";
+//                            if (subCategory.equals(entrySubCategory) && entryCategory.equals("/nScripture/n")) {
+//                                //newEntry = newEntry + entry[2] + "/n" + entry[3];
+//                                encouragementList.set(j, entryCategory + entry[2] + "/n" + entry[3] + newEntry + "/n" + entry[5] + "/n" + entry[6]);
+//                            }
+//                        }
+//
+//                        categoriesListScripture.remove(pos);
+//                        saveArray(encouragementList, "encouragementList");
+//                        saveArray(categoriesListScripture, "categoriesListScripture");
+//                        lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, categoriesListScripture));
 
-                        for (int j = 0; j < encouragementList.size(); j++) {
-                            String[] entry = encouragementList.get(j).split("/n");
-                            String entryCategory = "/n" + entry[1] + "/n";
-                            String entrySubCategory = "/n" + entry[4];
-                            String newEntry = "/nOther";
-                            if (subCategory.equals(entrySubCategory) && entryCategory.equals("/nScripture/n")) {
-                                //newEntry = newEntry + entry[2] + "/n" + entry[3];
-                                encouragementList.set(j, entryCategory + entry[2] + "/n" + entry[3] + newEntry + "/n" + entry[5] + "/n" + entry[6]);
-                            }
-                        }
-
-                        categoriesListScripture.remove(pos);
-                        saveArray(encouragementList, "encouragementList");
-                        saveArray(categoriesListScripture, "categoriesListScripture");
-                        lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, categoriesListScripture));
+                        // show popup asking if sure
+                        String sCategory = categoriesListScripture.get(pos);
+                        DialogPopup dialog = new DialogPopup();
+                        Bundle args = new Bundle();
+                        args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.DELETE_SUBCATEGORY);
+                        args.putInt("entryPos", pos);
+                        args.putInt("FragmentID",this.getId());
+                        args.putString("subCategory", sCategory);
+                        args.putString("category","Scripture");
+                        args.putString("type","Review");
+                        dialog.setArguments(args);
+                        dialog.show(getFragmentManager(), "delete-subcategory");
 
                     }
                 }catch(Exception e){
                     e.printStackTrace();
-                    //Toast.makeText(getContext(),"error in deleteListEntry",Toast.LENGTH_LONG).show();
                 }
                 linearLayoutAddCategory.setVisibility(View.GONE);
                 btnAddActive = false;
@@ -782,12 +754,6 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                     tvTitle.setText(" - " + subCategory[1]);
                 }
 
-//                    String[] category = categoriesList.get(position).split("/n");
-//
-//                    shownEncouragementList.clear();
-//                    shownEncouragementList = sortEntriesByCategory(category[1],encouragementList);
-//                    lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, shownEncouragementList));
-
                 btnAdd.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                 btnAdd.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_menu_add, 0, 0, 0);
                 linearLayoutAddCategory.setVisibility(View.GONE);
@@ -806,13 +772,9 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                     String[] entry = shownEncouragementList.get(positionInt).split("/n");
                     String category = entry[1];
                     String nameAddressDate = entry[2];
-                    //String date = smsMessages[1];
                     String smsMessage = entry[3];
                     String lastTitle = entry[4];
 
-//                    for(int i = 3; i < entry.length; i++){
-//                        smsMessage += entry[i];
-//                    }
                     if(!title.equals(lastTitle)) {
                         String smsMessageStr = "/n" + category + "/n" + nameAddressDate + "/n" + smsMessage + "/n" + title + "/n" + entry[5] + "/n" + entry[6];
                         Toast.makeText(getActivity().getApplicationContext(), "Entry Moved to " + title, Toast.LENGTH_SHORT).show();
@@ -826,8 +788,6 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                         shownEncouragementList.remove(positionInt);
                         lvEncouragement.setAdapter(new MyListAdapter(getActivity().getApplicationContext(), R.layout.list_options, shownEncouragementList));
 
-
-                        //encouragementList.add(0, smsMessageStr);
                         saveArray(encouragementList, "encouragementList");
                     }else{
                         Toast.makeText(getActivity().getApplicationContext(),"Entry already in selected category",Toast.LENGTH_SHORT).show();
@@ -842,11 +802,9 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
 
     private class MyListAdapter extends ArrayAdapter<String>{
         private int layout;
-        private List<String> mObjects;
 
         public MyListAdapter(Context context, int resource, List<String> objects) {
             super(context, resource, objects);
-            mObjects = objects;
             layout = resource;
         }
 
@@ -874,8 +832,7 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                     switch (reviewState){
                         case MAIN_CATEGORIES:
                             String[] main_category = categoriesList.get(position).split("/n");
-//                    shownEncouragementList.clear();
-//                    shownEncouragementList = sortEntriesByCategory(main_category[1],encouragementList);
+
                             btnBack.setVisibility(View.VISIBLE);
                             if(main_category[1].equals("Encouragement")){
                                 mainCategory = 1;
@@ -885,12 +842,10 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                                 reviewState = ReviewState.CATEGORY;
                             }else if(main_category[1].equals("Prayer")){
                                 mainCategory = 2;
-                                //loadArray(categoriesListPrayer,getContext().getApplicationContext(),"categoriesListPrayer");
                                 lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, categoriesListPrayer));
                                 reviewState = ReviewState.CATEGORIES;
                             }else if(main_category[1].equals("Scripture")){
                                 mainCategory = 3;
-                                //loadArray(categoriesListScripture,getContext().getApplicationContext(),"categoriesListScripture");
                                 lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, categoriesListScripture));
                                 reviewState = ReviewState.CATEGORIES;
                             }
@@ -923,21 +878,16 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                         String[] message1 = getItem(position).split("/n");
                         String subBody1 = message1[1];
                         String mainTitle1 = "";
-                        //subBody = subBody +  "/n";
-//                        if(subBody1.equals("Encouragement") ||
-//                                subBody1.equals("Prayer") ||
-//                                subBody1.equals("Scripture")){
+
                         int numEntries = getNumberEntriesCategory(subBody1,encouragementList);
                         if (numEntries != 1) {
                             mainTitle1 = Integer.toString(numEntries) + " Entries";
                         } else {
                             mainTitle1 = Integer.toString(numEntries) + " Entry";
                         }
-                        //mainViewHolder.button.setVisibility(View.INVISIBLE);
+
                         mainViewHolder.button.setCompoundDrawablesWithIntrinsicBounds(0,0,0, android.R.drawable.ic_media_play);
-//                        }else{
-//                            mainViewHolder.button.setVisibility(View.VISIBLE);
-//                        }
+
                         mainViewHolder.title.setText(subBody1);
                         mainViewHolder.title2.setText(mainTitle1);
                         mainViewHolder.title.setTypeface(null, Typeface.BOLD_ITALIC);
@@ -958,7 +908,7 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                         } else {
                             mainTitle2 = Integer.toString(numEntries2) + " Entry";
                         }
-                        //subBody = subBody +  "/n";
+
                         if (subBody2.equals("Other")) {
                             mainViewHolder.button.setVisibility(View.INVISIBLE);
                         } else {
@@ -978,7 +928,7 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
                         }
 
                         String subBody3 = message3[3];
-                        //Toast.makeText(getContext(),mainTitle2,Toast.LENGTH_LONG).show();
+
                         mainViewHolder.title.setText(subBody3);
                         mainViewHolder.title2.setText(mainTitle3);
                         break;

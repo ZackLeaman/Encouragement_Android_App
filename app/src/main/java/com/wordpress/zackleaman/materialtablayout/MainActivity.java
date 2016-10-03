@@ -69,6 +69,7 @@ public class MainActivity extends BaseDemoDriveActivity {
     private Activity thisActivity;
     private boolean bIsFirstTimeAppOpened;
     public static boolean bNeedToClear = false;
+    private int pageIndex = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +84,12 @@ public class MainActivity extends BaseDemoDriveActivity {
             String clearGAC = "null";
             String CState = "null";
             String cantFindDrive = "null";
+            String startPage = "null";
             if (extras != null) {
                 clearGAC = extras.getString("clearGAC");
                 CState = extras.getString("curState");
                 cantFindDrive = extras.getString("cantFindDrive");
+                startPage = extras.getString("startPage");
                 if(clearGAC != null) {
                     if (clearGAC.equals("clearGAC")) {
                         Log.d("onNewIntent", "got clearGAC and equals");
@@ -135,6 +138,17 @@ public class MainActivity extends BaseDemoDriveActivity {
                         }catch (Exception e){
                             e.printStackTrace();
                         }
+                    }
+                }
+                if(startPage != null){
+                    if(startPage.equals("Home")){
+                        pageIndex = 0;
+                    }else if(startPage.equals("Library")){
+                        pageIndex = 1;
+                    }else if(startPage.equals("Create")){
+                        pageIndex = 2;
+                    }else if(startPage.equals("Inbox")){
+                        pageIndex = 3;
                     }
                 }
 
@@ -318,6 +332,11 @@ public class MainActivity extends BaseDemoDriveActivity {
         mTabLayout.getTabAt(2).setIcon(R.drawable.ic_create_white_36dp);
         mTabLayout.getTabAt(3).setIcon(R.drawable.message);
 
+        // Set the page to start on
+        if(pageIndex != -1){
+            selectPage(pageIndex);
+        }
+
     }
 
 
@@ -494,6 +513,12 @@ public class MainActivity extends BaseDemoDriveActivity {
         mTabLayout.getTabAt(1).setIcon(R.drawable.ic_view_agenda_white_36dp);
         mTabLayout.getTabAt(2).setIcon(R.drawable.ic_create_white_36dp);
         mTabLayout.getTabAt(3).setIcon(R.drawable.message);
+
+    }
+
+    void selectPage(int pageIndex){
+        mTabLayout.setScrollPosition(pageIndex,0f,true);
+        mViewPager.setCurrentItem(pageIndex);
     }
 
     @Override
@@ -694,8 +719,6 @@ public class MainActivity extends BaseDemoDriveActivity {
                             foundFile = true;
                             Log.d("MainActivity","foundFile = True");
                             if (bIsFirstTimeAppOpened) {
-                                //TODO show popup asking if want to restore from backup or override backup with local
-                                //TODO ask are you sure?
 //                                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 //                                SharedPreferences.Editor editor = sp.edit();
 //                                editor.putBoolean("signedIn", false);
@@ -720,8 +743,6 @@ public class MainActivity extends BaseDemoDriveActivity {
                                         .setResultCallback(idCallback);
 
                             } else {
-                                //TODO Change contents / override backup with local
-                                //TODO ask are you sure?
 
                                 //showMessage("Changing Contents");
                                 Cur_State = Create_State;
@@ -735,8 +756,7 @@ public class MainActivity extends BaseDemoDriveActivity {
                     }
 
                     if(!foundFile){
-                        //TODO cant find file popup sign in to different account or create new backup
-                        //TODO ask are you sure?
+
                         signedIn = false;
                         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sp.edit();

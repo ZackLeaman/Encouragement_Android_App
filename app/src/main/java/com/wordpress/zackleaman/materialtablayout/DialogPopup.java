@@ -35,7 +35,10 @@ public class DialogPopup extends DialogFragment {
     public static final String CANT_FIND_DRIVE = "cantFindDrive";
     public static final String RESTORE_BACKUP_CONFIRM = "restoreBackupConfirm";
     public static final String BACKUP_DRIVE_CONFIRM = "backupDriveConfirm";
+    public static final String DELETE_SUBCATEGORY = "deleteSubcategory";
     private ArrayList<String> encouragementList = new ArrayList<>();
+    private ArrayList<String> categoriesListPrayer = new ArrayList<>();
+    private ArrayList<String> categoriesListScripture = new ArrayList<>();
     private ArrayList<String> shownEncouragementList = new ArrayList<>();
 
     @NonNull
@@ -43,6 +46,8 @@ public class DialogPopup extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 //        setStyle(DialogFragment.STYLE_NORMAL,R.style.AppTheme);
         loadArray(encouragementList,getContext(),"encouragementList");
+        loadArray(categoriesListPrayer,getContext(),"categoriesListPrayer");
+        loadArray(categoriesListScripture,getContext(),"categoriesListScripture");
         loadArray(shownEncouragementList,getContext(),"shownEncouragementList");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         mLayoutInflater = getActivity().getLayoutInflater();
@@ -120,6 +125,8 @@ public class DialogPopup extends DialogFragment {
                     Toast.makeText(getContext().getApplicationContext(),"Entry Deleted",Toast.LENGTH_LONG).show();
 
                     Intent intent = new Intent(getActivity(),MainActivity.class);
+                    intent.putExtra("startPage","Library");
+                    getActivity().finish();
                     startActivity(intent);
                 }
             })
@@ -288,7 +295,70 @@ public class DialogPopup extends DialogFragment {
                     });
 
 
-        }else {
+        }else if(command.equals(DELETE_SUBCATEGORY)) {
+            final int entryPos = getArguments().getInt("entryPos");
+            final String category = getArguments().getString("category");
+            final String subCategory = getArguments().getString("subCategory");
+            final String type = getArguments().getString("type");
+            final int FragmentId = getArguments().getInt("FragmentID");
+            TextView popupMessage = (TextView) view.findViewById(R.id.popup_message);
+            popupMessage.setText("Are you sure you want to delete category " + subCategory + "?");
+            builder.setView(view).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if(category.equals("Prayer")){
+                        for (int j = 0; j < encouragementList.size(); j++) {
+                            String[] entry = encouragementList.get(j).split("/n");
+                            String entryCategory = "/n" + entry[1] + "/n";
+                            String entrySubCategory = "/n" + entry[4];
+                            String newEntry = "/nOther";
+                            if (subCategory.equals(entrySubCategory) && entryCategory.equals("/nPrayer/n")) {
+                                //newEntry = newEntry + entry[2] + "/n" + entry[3];
+                                encouragementList.set(j, entryCategory + entry[2] + "/n" + entry[3] + newEntry + "/n" + entry[5] + "/n" + entry[6]);
+                            }
+                        }
+
+                        categoriesListPrayer.remove(entryPos);
+                        saveArray(encouragementList, "encouragementList");
+                        saveArray(categoriesListPrayer, "categoriesListPrayer");
+
+                    }else if(category.equals("Scripture")){
+                        for (int j = 0; j < encouragementList.size(); j++) {
+                            String[] entry = encouragementList.get(j).split("/n");
+                            String entryCategory = "/n" + entry[1] + "/n";
+                            String entrySubCategory = "/n" + entry[4];
+                            String newEntry = "/nOther";
+                            if (subCategory.equals(entrySubCategory) && entryCategory.equals("/nScripture/n")) {
+                                //newEntry = newEntry + entry[2] + "/n" + entry[3];
+                                encouragementList.set(j, entryCategory + entry[2] + "/n" + entry[3] + newEntry + "/n" + entry[5] + "/n" + entry[6]);
+                            }
+                        }
+
+                        categoriesListScripture.remove(entryPos);
+                        saveArray(encouragementList, "encouragementList");
+                        saveArray(categoriesListScripture, "categoriesListScripture");
+                    }
+                    Toast.makeText(getContext().getApplicationContext(), "Entries being moved to the Other Category", Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(getContext(),MainActivity.class);
+                    intent.putExtra("startPage","Library");
+                    getActivity().finish();
+                    startActivity(intent);
+                }
+            })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+
+
+        }
+
+
+
+        else {
             Log.d(LOG_TAG, "Invalid command passed as parameter");
         }
 
