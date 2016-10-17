@@ -42,7 +42,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
     private ArrayList<String> encouragementList,starterEncouragements,categoriesList,selectedEncouragement;
     private ArrayList<String> categoriesListPrayer;
     private ArrayList<String> categoriesListScripture;
-    private Button btnFiveSecondAlarm, btnTenSecondAlarm;
     private boolean wantsStarterEncouragement = true, addedStarterEncouragements;
 
     private int positionEncouragement;
@@ -52,7 +51,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
     private Button btnInfoEncouragement, btnNotificationFreqEncouragement, btnDayWeekEncouragement,btnSaveEncouragement;
     private TimePicker timePickerEncouragement;
     private boolean isEncouragementInfoActive, isEncouragementNotiFreqActive, isEncouragementDayActive;
-    private boolean needUpdateNotificationEncouragement = false;
     private Button btnEncouragementEntry;
     private enum EncouragementNotification{DAILY,WEEKLY,NONE}
     private enum EncouragementDay{SUNDAY,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY}
@@ -60,32 +58,10 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
     private EncouragementDay mEncouragementDay;
     private ArrayList<String> notificationEncouragementList;
 
-    private int positionPrayer;
-    private RelativeLayout relativeLayoutPrayerEntry;
-    private TextView tvPrayerMessage, tvPrayerFrom;
-    private TextView tvPrayer;
-    private Button btnInfoPrayer, btnNotificationFreqPrayer, btnDayWeekPrayer,btnSavePrayer;
-    private TimePicker timePickerPrayer;
-    private boolean isPrayerInfoActive, isPrayerNotiFreqActive, isPrayerDayActive;
-    private boolean needUpdateNotificationPrayer = false;
-    private enum PrayerNotification{DAILY,WEEKLY,NONE}
-    private enum PrayerDay{SUNDAY,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY}
-    private PrayerNotification mPrayerNotification;
-    private PrayerDay mPrayerDay;
+    private boolean isPrayerNotiFreqActive, isPrayerDayActive;
     private ArrayList<String> notificationPrayerList;
 
-    private int positionScripture;
-    private RelativeLayout relativeLayoutScriptureEntry;
-    private TextView tvScriptureMessage, tvScriptureFrom;
-    private TextView tvScripture;
-    private Button btnInfoScripture, btnNotificationFreqScripture, btnDayWeekScripture,btnSaveScripture;
-    private TimePicker timePickerScripture;
-    private boolean isScriptureInfoActive, isScriptureNotiFreqActive, isScriptureDayActive;
-    private boolean needUpdateNotificationScripture = false;
-    private enum ScriptureNotification{DAILY,WEEKLY,NONE}
-    private enum ScriptureDay{SUNDAY,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY}
-    private ScriptureNotification mScriptureNotification;
-    private ScriptureDay mScriptureDay;
+    private boolean isScriptureNotiFreqActive, isScriptureDayActive;
     private ArrayList<String> notificationScriptureList;
 
     private boolean isEncouragementDropDownActive, isPrayerDropDownActive, isScriptureDropDownActive;
@@ -99,6 +75,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
     private TextView tvPrayerAndScripture;
     private String homeEncouragement = "";
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -127,24 +104,27 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         intPrayerList = new ArrayList<>();
         intScriptureList = new ArrayList<>();
         positionEncouragement = 0;
-        positionPrayer = 0;
-        positionScripture = 0;
         isEncouragementDropDownActive = true;
         isPrayerDropDownActive = false;
         isScriptureDropDownActive = false;
         addedStarterEncouragements = false;
+
+        // load all array list
         loadArray(notificationEncouragementList,getActivity().getApplicationContext(),"notificationEncouragementList");
         loadArray(notificationPrayerList,getActivity().getApplicationContext(),"notificationPrayerList");
         loadArray(notificationScriptureList,getActivity().getApplicationContext(),"notificationScriptureList");
         loadArray(encouragementList,getActivity().getApplicationContext(),"encouragementList");
 
+        // On first time app opened
         if(MainActivity.isFirstTimeOpening){
+            // Save that the app has been opened for the first time
             MainActivity.isFirstTimeOpening = false;
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
             SharedPreferences.Editor mEdit1 = sp.edit();
             mEdit1.remove("SMS_isFirstTimeOpening");
             mEdit1.putBoolean("SMS_isFirstTimeOpening",false);
             mEdit1.commit();
+            // Popup dialog asking if want prayer and scripture categories
             DialogPopup dialog = new DialogPopup();
             Bundle args = new Bundle();
             args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.OTHER_CATEGORIES);
@@ -154,24 +134,98 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         }
 
 
-
+        // Setting up the 40 starter encouragements
         starterEncouragements.clear();
-        for(int i = 0; i < 30; i++){
-            //TODO set up 30 starter encouragements
-            starterEncouragements.add("/nEncouragement/n" + "NameAddressDate" + "/n" +
-                    "Starter Encouragement " + i + "/nnone" + "/n3"  + "/nAlarm Off");
-        }
+        starterEncouragements.add("/nEncouragement/n" + "Unknown" + "/n" +
+                "In essentials unity, in non-essentials liberty, in all things charity." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Lamplighter Theatre ~ The Basket of Flowers" + "/n" +
+                "Though sorrow endures for the night, the healing balm of truth brings joy in morning." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Lamplighter Theatre ~ Charlie’s Choice" + "/n" +
+                "The most important journey in life is not about what you get, it’s about what you become." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Lamplighter Theatre ~ Charlie’s Choice" + "/n" +
+                "The goals you set for tomorrow shape who you are today." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Lamplighter Theatre ~ Charlie’s Choice" + "/n" +
+                "It is not until we change that others can follow." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Lamplighter Theatre ~ Sir Malcolm and the Missing Prince" + "/n" +
+                "Not eating, drinking, or small thinking beyond this point." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Lamplighter Theatre ~ The White Gypsy" + "/n" +
+                "It is often when tragedy strikes that we discover our true identity." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Tracy McNair" + "/n" +
+                "Accept the past for what it was. Acknowledge the present for what it is. Anticipate the future for what it can become." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
+                "Never put off until tomorrow what you can do today." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
+                "Never trouble another for what you can do yourself." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
+                "Never spend money before you have earned it." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
+                "Never buy what you don’t want because it is cheap." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
+                "Pride costs more than hunger, thirst and cold." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
+                "We seldom repent of having eaten to little." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
+                "Nothing is troublesome that we do willingly." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
+                "When angry, count ten before you speak; if very angry, count a hundred. " + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Unknown" + "/n" +
+                "Sin will take you farther than you want to go, keep you longer than you want to stay, and cost you more than you want to pay." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "George Washington" + "/n" +
+                "It is better to offer no excuse than a bad one." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "George Washington" + "/n" +
+                "It is better to be alone than in bad company." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Unknown" + "/n" +
+                "Be courteous to all, but intimate with few, and let those few be well tried before you give them your confidence. True friendship is a plant of slow growth, and must undergo and withstand the shocks of adversity before it is entitled to appellation." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Edmund Burke" + "/n" +
+                "The only thing necessary for the triumph of evil is that good men do nothing. " + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Aesop" + "/n" +
+                "Do not say anything at any time that you would not say at all times." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Aesop" + "/n" +
+                "It is one thing to say that something should be done, but quite a different matter to do it." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Aesop" + "/n" +
+                "Expect no reward for serving the wicked." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Aesop" + "/n" +
+                "A kindness is never wasted." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Aesop" + "/n" +
+                "Our best blessings are often the least appreciated." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Aesop" + "/n" +
+                "Precious things are without value to those who cannot prize them." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Aesop" + "/n" +
+                "Do not stop to argue with temptation." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Aesop" + "/n" +
+                "Goodwill is worth nothing unless it is accompanies by good acts." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
+                "Tell me and I forget. Teach me and I remember. Involve me and I learn. " + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
+                "Money has never made man happy, nor will it, there is nothing in its nature to produce happiness. The more of it one has the more one wants." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
+                "It takes many good deeds to build a good reputation, and only one bad one to lose it." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
+                "They who can give up essential liberty to obtain a little temporary safety deserve neither liberty nor safety." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
+                "The Constitution only gives people the right to pursue happiness. You have to catch it yourself." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
+                "Lost time is never found again." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
+                "Anger is never without a reason, but seldom with a good one." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
+                "When you are good to others you are best to yourself." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
+                "Would you live with ease, do what you ought and not what you please. " + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Unknown" + "/n" +
+                "By failing to prepare, you are preparing to fail." + "/nnone/n3/nAlarm Off");
+        starterEncouragements.add("/nEncouragement/n" + "Charles R. Swindoll" + "/n" +
+                "We are all faced with a series of great opportunities brilliantly disguised as impossible situations." + "/nnone/n3/nAlarm Off");
+//        for(int i = 0; i < 30; i++){
+//            starterEncouragements.add("/nEncouragement/n" + "NameAddressDate" + "/n" +
+//                    "Starter Encouragement " + i + "/nnone" + "/n3"  + "/nAlarm Off");
+//        }
+
+        // Get the wantsStarterEncouragement boolean from shared preferences
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         wantsStarterEncouragement = sp.getBoolean("wantsStarterEncouragement", true);
-        //homeEncouragement = sp.getString("homeEncouragement",notificationEncouragementList.get(0));
-        //String wSE = loadString("wantsStarterEncouragements",getContext());
-//        if(!wSE.isEmpty()){
-//            try{
-//                wantsStarterEncouragement = Boolean.parseBoolean(wSE);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
+
+        // Determine whether starter encouragements has been add already
         String aSE = loadString("addedStarterEncouragements",getContext());
         if(!aSE.isEmpty()){
             try{
@@ -181,35 +235,20 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             }
         }
 
-        //TODO setup settings menu to be able to either wantStarterEncouragement or not
+        // Add starter encouragements
         if(wantsStarterEncouragement){
+            // if want starters add them
             if(!addedStarterEncouragements){
                 for(int i = 0; i < starterEncouragements.size(); i++){
                     encouragementList.add(i,starterEncouragements.get(i));
                 }
-//                if(!encouragementList.isEmpty()){
-//                    for(int z = 0; z < encouragementList.size(); z++){
-//                        if(encouragementList.get(z).equals("/nEncouragement/n/nNo Entries in Encouragement/nnone/n3/nAlarm Off")){
-//                            encouragementList.remove(z);
-//                            saveArray(encouragementList,"encouragementList");
-//                            z = encouragementList.size();
-//                        }
-//                    }
-//                }
-//                if(!notificationEncouragementList.isEmpty()){
-//                    for(int z = 0; z < notificationEncouragementList.size(); z++){
-//                        if(notificationEncouragementList.get(z).equals("/nEncouragement/n/nNo Entries in Encouragement/nnone/n3/nAlarm Off")){
-//                            notificationEncouragementList.remove(z);
-//                            saveArray(notificationEncouragementList,"notificationEncouragementList");
-//                            z = notificationEncouragementList.size();
-//                        }
-//                    }
-//                }
+
                 saveArray(encouragementList,"encouragementList");
                 addedStarterEncouragements = true;
                 saveString("addedStarterEncouragements",Boolean.toString(addedStarterEncouragements));
             }
         }else{
+            // else if don't want starters remove them
             if(addedStarterEncouragements){
                 ArrayList<Integer> index = new ArrayList<>();
                 for(int i = 0; i < encouragementList.size(); i++){
@@ -227,31 +266,13 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     }
                 }
 
-                //            if(encouragementList.isEmpty()){
-    //                encouragementList.add(0,"/nEncouragement/n/nNo Entries in Encouragement/nnone/n3/nAlarm Off");
-    //                saveArray(encouragementList,"encouragementList");
-    //            }
-    //            index.clear();
-    //            for(int k = 0; k < notificationEncouragementList.size(); k++){
-    //                for(int r = 0; r < starterEncouragements.size(); r++){
-    //                    if(notificationEncouragementList.get(k).equals(starterEncouragements.get(r))){
-    //                        index.add(r);
-    //                    }
-    //                }
-    //            }
-    //            for(int x = index.size(); x >= 1; x--){
-    //                int pos = x -1;
-    //                notificationEncouragementList.remove(index.get(pos).intValue());
-    //            }
-    //
-    //            saveArray(notificationEncouragementList,"notificationEncouragementList");
                 saveArray(encouragementList,"encouragementList");
                 addedStarterEncouragements = false;
                 saveString("addedStarterEncouragements",Boolean.toString(addedStarterEncouragements));
             }
         }
 
-        //categoriesList.clear();
+        // Load main categoriesList if null or empty add them
         loadArray(categoriesList,getContext().getApplicationContext(),"categoriesList");
         if(categoriesList == null || categoriesList.isEmpty()) {
             categoriesList.add("/nEncouragement/n");
@@ -259,6 +280,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             categoriesList.add("/nScripture/n");
             saveArray(categoriesList,"categoriesList");
         }
+        // Load prayer categories if null or empty add them
         loadArray(categoriesListPrayer,getContext().getApplicationContext(),"categoriesListPrayer");
         if(categoriesListPrayer == null || categoriesListPrayer.isEmpty()){
             categoriesListPrayer.add("/nChurch");
@@ -269,6 +291,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             categoriesListPrayer.add("/nOther");
             saveArray(categoriesListPrayer,"categoriesListPrayer");
         }
+        // Load scripture categories if null or empty add them
         loadArray(categoriesListScripture,getContext().getApplicationContext(),"categoriesListScripture");
         if(categoriesListScripture == null || categoriesListScripture.isEmpty()){
             categoriesListScripture.add("/nHope");
@@ -280,79 +303,15 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             saveArray(categoriesListScripture,"categoriesListScripture");
         }
 
-//        btnFiveSecondAlarm = (Button)getView().findViewById(R.id.btnFiveSecondAlarm);
-//        btnFiveSecondAlarm.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                setAlarm1(view);
-//            }
-//        });
-//
-//        btnTenSecondAlarm = (Button)getView().findViewById(R.id.btnTenSecondAlarm);
-//        btnTenSecondAlarm.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                setAlarm2(view);
-//            }
-//        });
-
-
-
 
         /// THIS IS THE START OF ENCOURAGEMENT NOTIFICATION INITIALIZATION
 
         tvEncouragementMessage = (TextView)getView().findViewById(R.id.tvEncouragementMessage);
         tvEncouragementFrom = (TextView)getView().findViewById(R.id.tvEncouragementFrom);
-//        int size = encouragementList.size()-1;
-//        if(size > 0) {
-//            try {
-//                Random r = new Random();
-//                int i1 = r.nextInt(size);
-//                String[] entry = encouragementList.get(i1).split("/n");
-//                position = i1;
-//                String category = entry[1];
-//                String nameAddressDate = entry[2];
-//                String message = entry[3];
-//
-//                tvEncouragementMessage.setText(message);
-//                tvEncouragementFrom.setText(nameAddressDate);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }else if(size == 0){
-//            try {
-//                String[] entry = encouragementList.get(0).split("/n");
-//                position = 0;
-//                String category = entry[1];
-//                String nameAddressDate = entry[2];
-//                String message = entry[3];
-//
-//                tvEncouragementMessage.setText(message);
-//                tvEncouragementFrom.setText(nameAddressDate);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-
-        // Sets up the Encouragement notification array list that is random
-//        String updateEnc = loadString("needUpdateNotificationEncouragement",getContext());
-//        if(!updateEnc.isEmpty()){
-//            try{
-//                needUpdateNotificationEncouragement = Boolean.parseBoolean(updateEnc);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        if(needUpdateNotificationEncouragement){
-//            notificationEncouragementList.remove(0);
-//            needUpdateNotificationEncouragement = false;
-//            saveString("needUpdateNotificationEncouragement","false");
-//            saveArray(notificationEncouragementList,"notificationEncouragementList");
-//        }
 
         ArrayList<String> encouragements = new ArrayList<>();
         try{
+            // Add the encouragements from encouragementList into their own array encouragements
             if(!encouragementList.isEmpty()){
                 for(int w = 0; w < encouragementList.size(); w++){
                     String[] entry = encouragementList.get(w).split("/n");
@@ -364,16 +323,17 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         }catch (Exception e){
             e.printStackTrace();
         }
+        // If notificationEncouragementList is empty and encouragemetns is empty display a blank encouragement on home tab
         if(notificationEncouragementList.isEmpty() && encouragements.isEmpty()){
             notificationEncouragementList.add(0,"/nEncouragement/n /n /nnone/n3/nAlarm Off");
             saveArray(notificationEncouragementList,"notificationEncouragementList");
             SharedPreferences.Editor mEdit1 = sp.edit();
             mEdit1.remove("homeEncouragement");
-            //TODO fix this
             mEdit1.putString("homeEncouragement",notificationEncouragementList.get(0));
             mEdit1.commit();
             Log.d("AlertReceiver","notifEnt.isEmpty and encouragements.isempty homeEn = notfi(0)");
         }
+        // If notificationEncouragementList is still displaying a blank encouragement even though encouragements have been added to encouragements remove the blank
         if(notificationEncouragementList.size() == 1 && !encouragements.isEmpty()){
             if(notificationEncouragementList.get(0).equals("/nEncouragement/n /n /nnone/n3/nAlarm Off")){
                 notificationEncouragementList.remove(0);
@@ -384,6 +344,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 Log.d("AlertReceiver","notifEnt.size 1 and !encouragements.isempty homeEn = removed");
             }
         }
+        // Generate a random list of encouragement notifications if its empty, null, or first time opening app
         if(notificationEncouragementList.isEmpty() || MainActivity.isFirstTimeOpening || notificationEncouragementList == null){
             Log.d("notificationEnc", "is empty");
             Random r = new Random();
@@ -437,7 +398,9 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 e.printStackTrace();
             }
 
-        }else{
+        }
+        // Check to make sure entries from encouragement list match the randomized notification encouragement list
+        else{
             try{
                 if(!wantsStarterEncouragement) {
                     if(!notificationEncouragementList.isEmpty() && !starterEncouragements.isEmpty()) {
@@ -781,8 +744,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     stringMinute = Integer.toString(minute);
                 }
 
-                //Toast.makeText(getContext(),notificationEncouragementList.get(0),Toast.LENGTH_LONG).show();
-
                 switch (mEncouragementNotification){
                     case DAILY:
                         saveString("EncouragementNotiFreq","Daily");
@@ -846,7 +807,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 isEncouragementDropDownActive = !isEncouragementDropDownActive;
                 if(isEncouragementDropDownActive){
                     relativeLayoutEncouragementEntry.setVisibility(View.VISIBLE);
-                    //btnEncouragementDropdown.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
                     btnEncouragementDropdown.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, android.R.drawable.arrow_up_float);
                     isPrayerDropDownActive = false;
                     isScriptureDropDownActive = false;
@@ -856,7 +816,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     listViewScripture.setVisibility(View.GONE);
                 }else{
                     relativeLayoutEncouragementEntry.setVisibility(View.GONE);
-                    //btnEncouragementDropdown.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     btnEncouragementDropdown.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, android.R.drawable.arrow_down_float);
                 }
             }
@@ -867,7 +826,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 isPrayerDropDownActive = !isPrayerDropDownActive;
                 if(isPrayerDropDownActive){
                     listViewPrayer.setVisibility(View.VISIBLE);
-                    //btnPrayerDropdown.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
                     ArrayList<String> alarmNotifications = new ArrayList<>();
                     try {
                         intPrayerList.clear();
@@ -893,7 +851,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
                 }else{
                     listViewPrayer.setVisibility(View.GONE);
-                    //btnPrayerDropdown.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     btnPrayerDropdown.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, android.R.drawable.arrow_down_float);
                 }
             }
@@ -904,7 +861,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 isScriptureDropDownActive = !isScriptureDropDownActive;
                 if(isScriptureDropDownActive){
                     listViewScripture.setVisibility(View.VISIBLE);
-                    //btnScriptureDropdown.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
                     ArrayList<String> alarmNotifications = new ArrayList<>();
                     try {
                         intScriptureList.clear();
@@ -929,7 +885,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                     listViewPrayer.setVisibility(View.GONE);
                 }else{
                     listViewScripture.setVisibility(View.GONE);
-                    //btnScriptureDropdown.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     btnScriptureDropdown.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, android.R.drawable.arrow_down_float);
                 }
             }
@@ -1015,13 +970,11 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
     public void setDailyAlarm(String notificationType, int day, int hour, int minute, int notifyID, String msg, String pos){
         String category = "";
-        String nameAddressDate = "";
         String message = "";
         String subCategory = "";
         try{
             String[] entry = msg.split("/n");
             category = entry[1];
-            nameAddressDate = entry[2];
             message = entry[3];
             subCategory = entry[4];
         }catch (Exception e){
@@ -1057,18 +1010,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext().getApplicationContext(),notifyID,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         try {
-            // TODO get rid of this cause causing problems different than actual encouragements
-//            if(!notificationEncouragementList.get(0).equals("/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off")) {
-//                for (int l = 0; l < notificationEncouragementList.size(); l++) {
-//                    String[] encEntry = notificationEncouragementList.get(l).split("/n");
-//                    encEntry[6] = "Alarm " + notificationType;
-//                    String revisedMsg = "/n" + encEntry[1] + "/n" + encEntry[2] + "/n" + encEntry[3] +
-//                            "/n" + encEntry[4] + "/n" + encEntry[5] + "/n" + encEntry[6];
-//                    notificationEncouragementList.set(l, revisedMsg);
-//                }
-//                saveArray(notificationEncouragementList, "notificationEncouragementList");
-//            }
-            // TODO end of section to get rid of
 
             loadArray(alarmList, getContext(), "alarmList");
             boolean newEntry = true;
@@ -1287,7 +1228,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
 
     public class ViewHolder{
-        //ImageView thumbnail;
         TextView title;
         TextView title2;
         Button button;
@@ -1295,11 +1235,9 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
     private class MyListAdapter extends ArrayAdapter<String> {
         private int layout;
-        private List<String> mObjects;
 
         public MyListAdapter(Context context, int resource, List<String> objects) {
             super(context, resource, objects);
-            mObjects = objects;
             layout = resource;
         }
 
@@ -1317,9 +1255,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 viewHolder.button = (Button)convertView.findViewById(R.id.list_item_btn);
                 convertView.setTag(viewHolder);
             }
-
-
-
 
             mainViewHolder = (ViewHolder)convertView.getTag();
             mainViewHolder.button.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, android.R.drawable.ic_media_play);
