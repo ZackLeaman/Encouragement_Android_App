@@ -1107,7 +1107,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         switch (item.getItemId()){
             case R.id.popup_dailyNotification:
                 if(isEncouragementNotiFreqActive) {
-                    tvEncouragement.setText("Daily Encouragement");
+                    //tvEncouragement.setText("Daily Encouragement");
                     mEncouragementNotification = EncouragementNotification.DAILY;
                     btnNotificationFreqEncouragement.setText("Daily Notification");
                     btnDayWeekEncouragement.setVisibility(View.GONE);
@@ -1117,7 +1117,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 return true;
             case R.id.popup_weeklyNotification:
                 if(isEncouragementNotiFreqActive) {
-                    tvEncouragement.setText("Weekly Encouragement");
+                    //tvEncouragement.setText("Weekly Encouragement");
                     mEncouragementNotification = EncouragementNotification.WEEKLY;
                     btnNotificationFreqEncouragement.setText("Weekly Notification");
                     btnDayWeekEncouragement.setVisibility(View.VISIBLE);
@@ -1127,7 +1127,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 return true;
             case R.id.popup_noNotification:
                 if(isEncouragementNotiFreqActive) {
-                    tvEncouragement.setText("Encouragement");
+                    //tvEncouragement.setText("Encouragement");
                     mEncouragementNotification = EncouragementNotification.NONE;
                     btnNotificationFreqEncouragement.setText("No Notification");
                     btnDayWeekEncouragement.setVisibility(View.GONE);
