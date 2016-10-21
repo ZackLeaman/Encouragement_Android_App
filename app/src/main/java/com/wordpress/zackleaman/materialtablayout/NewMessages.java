@@ -330,7 +330,7 @@ public class NewMessages extends Fragment implements
 
                     // Prompt user to send a reply SMS
                     if(name != null) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Reply to " + name + " by going to Send Message in the Create Tab", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "Reply to " + name + " by going to Send Message in the Create Tab", Toast.LENGTH_LONG).show();
                     }
                     //ArrayList<String> recentSenders = new ArrayList<>();
                     //loadArray(recentSenders,getContext(),"recentSenders");

@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -231,6 +232,76 @@ public class ReviewLibrary extends Fragment implements AdapterView.OnItemClickLi
         tvTitle.setText("Categories");
         Log.d("encouragementList",encouragementList.toString());
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(getView() == null){
+            return;
+        }
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+                if(keyEvent.getAction() == keyEvent.ACTION_UP && i == keyEvent.KEYCODE_BACK){
+                    switch (reviewState) {
+                        case MAIN_CATEGORIES:
+                            //MainActivity.super.onBackPressed();
+                            //getFragmentManager().popBackStackImmediate();
+                            //getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            //NavUtils.navigateUpFromSameTask(getActivity().getParent());
+                            getActivity().finish();
+                            break;
+                        case CATEGORIES:
+                            btnAddActive = false;
+                            btnBack.setVisibility(View.GONE);
+                            btnAdd.setVisibility(View.INVISIBLE);
+                            btnCategoryCreate.setText("Create");
+                            editActive = false;
+                            tvTitle.setText("Categories");
+                            mainCategory = 0;
+                            lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, categoriesList));
+                            btnAdd.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                            btnAdd.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_menu_add, 0, 0, 0);
+                            linearLayoutAddCategory.setVisibility(View.GONE);
+                            reviewState = ReviewState.MAIN_CATEGORIES;
+                            break;
+                        case CATEGORY:
+                            btnBack.setVisibility(View.VISIBLE);
+                            if (mainCategory == 1) {
+                                tvTitle.setText("Categories");
+                                lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, categoriesList));
+                                reviewState = ReviewState.MAIN_CATEGORIES;
+                                btnBack.setVisibility(View.GONE);
+                                btnAdd.setVisibility(View.INVISIBLE);
+                                btnAdd.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                                btnAdd.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_menu_add, 0, 0, 0);
+                            } else if (mainCategory == 2) {
+                                tvTitle.setText(" - Prayer");
+                                lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, categoriesListPrayer));
+                                reviewState = ReviewState.CATEGORIES;
+                            } else if (mainCategory == 3) {
+                                tvTitle.setText(" - Scripture");
+                                lvEncouragement.setAdapter(new MyListAdapter(getContext(), R.layout.list_options, categoriesListScripture));
+                                reviewState = ReviewState.CATEGORIES;
+                            }
+                            break;
+                        case INDIVIDUAL:
+                            reviewState = ReviewState.CATEGORY;
+                            break;
+                        default:
+                            break;
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override

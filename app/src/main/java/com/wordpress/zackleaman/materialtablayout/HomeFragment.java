@@ -529,15 +529,15 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         String encNotFreq = loadString("EncouragementNotiFreq",getActivity().getApplicationContext());
 
         if(encNotFreq.equals("Daily")){
-            tvEncouragement.setText("Daily Encouragement");
+            //tvEncouragement.setText("Daily Encouragement");
             mEncouragementNotification = EncouragementNotification.DAILY;
             btnNotificationFreqEncouragement.setText("Daily Notification");
         }else if(encNotFreq.equals("Weekly")){
-            tvEncouragement.setText("Weekly Encouragement");
+            //tvEncouragement.setText("Weekly Encouragement");
             mEncouragementNotification = EncouragementNotification.WEEKLY;
             btnNotificationFreqEncouragement.setText("Weekly Notification");
         }else if(encNotFreq.equals("None")){
-            tvEncouragement.setText("Encouragement");
+            //tvEncouragement.setText("Encouragement");
             mEncouragementNotification = EncouragementNotification.NONE;
             btnNotificationFreqEncouragement.setText("No Notification");
         }
@@ -750,6 +750,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                         setDailyAlarm("Daily",day,hour,minute,3,notificationEncouragementList.get(0),Integer.toString(positionEncouragement));
                         encouragementAlarmString = "Alarm Daily at " +
                                 amOrPmHour + ":" + stringMinute + " " + amOrPm;
+                        tvEncouragement.setText("Daily Encouragement");
                         saveString("encouragementAlarmString", encouragementAlarmString);
                         saveString("encouragementType","Daily");
                         break;
@@ -758,11 +759,13 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                         setDailyAlarm("Weekly",day,hour,minute,3,notificationEncouragementList.get(0),Integer.toString(positionEncouragement));
                         encouragementAlarmString = "Alarm Weekly on " + dayString + " " +
                                 amOrPmHour + ":" + stringMinute + " " + amOrPm;
+                        tvEncouragement.setText("Weekly Encouragement");
                         saveString("encouragementAlarmString", encouragementAlarmString);
                         saveString("encouragementType","Weekly");
                         break;
                     case NONE:
                         encouragementAlarmString = "Alarm Off";
+                        tvEncouragement.setText("Encouragement");
                         saveString("encouragementAlarmString", encouragementAlarmString);
                         saveString("EncouragementNotiFreq","None");
                         saveString("encouragementType","Off");

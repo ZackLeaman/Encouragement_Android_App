@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -129,7 +128,11 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavUtils.navigateUpFromSameTask(activity);
+                //NavUtils.navigateUpFromSameTask(activity);
+                Intent intent = new Intent(getApplicationContext(),PermissionsActivity.class);
+                intent.putExtra("startPage","Library");
+                startActivity(intent);
+                finish();
             }
         });
         btnCreate.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +234,11 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                     }
 
                     Toast.makeText(getApplicationContext(),"Entry added to " + tvCategoryTitle.getText().toString(),Toast.LENGTH_LONG).show();
-                    NavUtils.navigateUpFromSameTask(activity);
+                    //NavUtils.navigateUpFromSameTask(activity);
+                    Intent intent = new Intent(getApplicationContext(),PermissionsActivity.class);
+                    intent.putExtra("startPage","Library");
+                    startActivity(intent);
+                    finish();
                 }else{
                     Toast.makeText(getApplicationContext(),"Please enter a message to create", Toast.LENGTH_LONG).show();
                 }
@@ -272,7 +279,8 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             default:
                 //NavUtils.navigateUpFromSameTask(activity);
-                Intent intent = new Intent(this,PermissionsActivity.class);
+                Intent intent = new Intent(this,MainActivity.class);
+                intent.putExtra("startPage","Library");
                 startActivity(intent);
                 finish();
                 break;
@@ -282,7 +290,8 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed()
     {
-        Intent intent = new Intent(this,PermissionsActivity.class);
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.putExtra("startPage","Library");
         startActivity(intent);
         finish();
     }

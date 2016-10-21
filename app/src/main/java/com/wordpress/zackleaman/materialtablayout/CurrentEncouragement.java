@@ -808,11 +808,12 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
     @Override
     public void onBackPressed()
     {
-        Intent intent = new Intent(this,PermissionsActivity.class);
+        Intent intent = new Intent(this,MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         Random r = new Random();
         int ID = r.nextInt(10000);
         intent.setAction("com.wordpress.zackleaman.materialtablayout.intent.action.ACTION_NAME" + ID);
+        intent.putExtra("startPage","Library");
         startActivity(intent);
         finish();
     }
@@ -1456,11 +1457,12 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 break;
             default:
                 //NavUtils.navigateUpFromSameTask(activity);
-                Intent intent = new Intent(this,PermissionsActivity.class);
+                Intent intent = new Intent(this,MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 Random r = new Random();
                 int ID = r.nextInt(10000);
                 intent.setAction("com.wordpress.zackleaman.materialtablayout.intent.action.ACTION_NAME" + ID);
+                intent.putExtra("startPage","Library");
                 startActivity(intent);
                 finish();
                 break;
