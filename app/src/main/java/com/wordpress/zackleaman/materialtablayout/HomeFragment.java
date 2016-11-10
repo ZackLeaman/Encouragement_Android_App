@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         starterEncouragements.add("/nEncouragement/n" + "Lamplighter Theatre ~ Charlie’s Choice" + "/n" +
                 "It is not until we change that others can follow." + "/nnone/n3/nAlarm Off");
         starterEncouragements.add("/nEncouragement/n" + "Lamplighter Theatre ~ Sir Malcolm and the Missing Prince" + "/n" +
-                "Not eating, drinking, or small thinking beyond this point." + "/nnone/n3/nAlarm Off");
+                "No eating, drinking, or small thinking beyond this point." + "/nnone/n3/nAlarm Off");
         starterEncouragements.add("/nEncouragement/n" + "Lamplighter Theatre ~ The White Gypsy" + "/n" +
                 "It is often when tragedy strikes that we discover our true identity." + "/nnone/n3/nAlarm Off");
         starterEncouragements.add("/nEncouragement/n" + "Tracy McNair" + "/n" +
@@ -163,7 +163,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
                 "Pride costs more than hunger, thirst and cold." + "/nnone/n3/nAlarm Off");
         starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
-                "We seldom repent of having eaten to little." + "/nnone/n3/nAlarm Off");
+                "We seldom repent of having eaten too little." + "/nnone/n3/nAlarm Off");
         starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
                 "Nothing is troublesome that we do willingly." + "/nnone/n3/nAlarm Off");
         starterEncouragements.add("/nEncouragement/n" + "Thomas Jefferson" + "/n" +
@@ -193,7 +193,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         starterEncouragements.add("/nEncouragement/n" + "Aesop" + "/n" +
                 "Do not stop to argue with temptation." + "/nnone/n3/nAlarm Off");
         starterEncouragements.add("/nEncouragement/n" + "Aesop" + "/n" +
-                "Goodwill is worth nothing unless it is accompanies by good acts." + "/nnone/n3/nAlarm Off");
+                "Goodwill is worth nothing unless it is accompanied by good acts." + "/nnone/n3/nAlarm Off");
         starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
                 "Tell me and I forget. Teach me and I remember. Involve me and I learn. " + "/nnone/n3/nAlarm Off");
         starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
