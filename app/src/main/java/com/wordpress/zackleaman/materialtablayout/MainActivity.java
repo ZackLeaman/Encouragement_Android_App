@@ -667,28 +667,35 @@ public class MainActivity extends BaseDemoDriveActivity {
     @Override
     public void onConnected(Bundle connectionHint) {
         super.onConnected(connectionHint);
-        if(bNeedToClear){
-            clearGoogleApiClient();
-            Log.d("MainActivity","bNeedToClear");
-            //reconnectGoogleApiClient();
+        Log.d("MainActivity", "in on connected");
+        if(getGoogleApiClient() != null) {
+            if (bNeedToClear) {
+                clearGoogleApiClient();
+                Log.d("MainActivity", "bNeedToClear");
+                //reconnectGoogleApiClient();
 
-        }
-        if(isJustOpened) {
-            isJustOpened = false;
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-            signedIn = sp.getBoolean("signedIn", false);
-            //showMessage("in on connected signedIn = " + signedIn);
-            if (signedIn) {
+            }
+            if (isJustOpened) {
+                Log.d("MainActivity", "in on connected");
 
-                if (Cur_State == Query_State) {
-                    Query query = new Query.Builder()
-                            .addFilter(Filters.contains(SearchableField.TITLE, ""))
-                            .build();
-                    Drive.DriveApi.query(getGoogleApiClient(), query)
-                            .setResultCallback(metadataCallback);
-                    //showMessage("Query State");
+                isJustOpened = false;
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+                signedIn = sp.getBoolean("signedIn", false);
+                //showMessage("in on connected signedIn = " + signedIn);
+                if (signedIn) {
+                    Log.d("MainActivity", "in on connected");
 
-                    //TODO make this to where if this is first time then it does this:
+                    if (Cur_State == Query_State) {
+                        Log.d("MainActivity", "in on connected");
+
+                        Query query = new Query.Builder()
+                                .addFilter(Filters.contains(SearchableField.TITLE, ""))
+                                .build();
+                        Drive.DriveApi.query(getGoogleApiClient(), query)
+                                .setResultCallback(metadataCallback);
+                        //showMessage("Query State");
+
+                        //TODO make this to where if this is first time then it does this:
 //                    SharedPreferences.Editor editor = sp.edit();
 //                    editor.putBoolean("signedIn", false);
 //                    editor.commit();
@@ -696,16 +703,21 @@ public class MainActivity extends BaseDemoDriveActivity {
 //                    myOptionMenu.getItem(2).setVisible(false);
 
 
-                }
-                if (Cur_State == Retrieve_State) {
-                    Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
-                            .setResultCallback(idCallback);
-                    //showMessage("Retrieve State");
-                }
-                if (Cur_State == Create_State) {
-                    Drive.DriveApi.newDriveContents(getGoogleApiClient())
-                            .setResultCallback(driveContentsCallback);
-                    //showMessage("Create State");
+                    }
+                    if (Cur_State == Retrieve_State) {
+                        Log.d("MainActivity", "in on connected");
+
+                        Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
+                                .setResultCallback(idCallback);
+                        //showMessage("Retrieve State");
+                    }
+                    if (Cur_State == Create_State) {
+                        Log.d("MainActivity", "in on connected");
+
+                        Drive.DriveApi.newDriveContents(getGoogleApiClient())
+                                .setResultCallback(driveContentsCallback);
+                        //showMessage("Create State");
+                    }
                 }
             }
         }
@@ -717,23 +729,30 @@ public class MainActivity extends BaseDemoDriveActivity {
             new ResultCallback<DriveApi.MetadataBufferResult>() {
                 @Override
                 public void onResult(DriveApi.MetadataBufferResult result) {
-                    if (!result.getStatus().isSuccess()) {
-                        myOptionMenu.getItem(1).setVisible(true);
-                        myOptionMenu.getItem(2).setVisible(false);
-                        //showMessage("Problem while retrieving results");
-                        return;
-                    }
+                    if(getGoogleApiClient() != null) {
+                        Log.d("MainActivty", getGoogleApiClient().toString());
+                        if (result != null) {
+                            if (!result.getStatus().isSuccess()) {
+                                Log.d("MainActivty", "result is success");
 
-                    boolean foundFile = false;
-                    int count = result.getMetadataBuffer().getCount() - 1;
-                    for(int i = 0; i < count; i++){
-                        Metadata metadata = result.getMetadataBuffer().get(i);
-                        Log.d("MainActivity",metadata.getTitle());
-                        if(metadata.getTitle().equals("DailyEncList")) {
-                            MainActivity.EXISTING_FILE_ID = metadata.getDriveId().getResourceId();
-                            foundFile = true;
-                            Log.d("MainActivity","foundFile = True");
-                            if (bIsFirstTimeAppOpened) {
+                                myOptionMenu.getItem(1).setVisible(true);
+                                myOptionMenu.getItem(2).setVisible(false);
+                                //showMessage("Problem while retrieving results");
+                                return;
+                            }
+                            Log.d("MainActivty", result.toString());
+
+                            boolean foundFile = false;
+                            int count = result.getMetadataBuffer().getCount() - 1;
+                            for (int i = 0; i < count; i++) {
+                                Metadata metadata = result.getMetadataBuffer().get(i);
+                                Log.d("MainActivity", metadata.getTitle());
+                                if (metadata.getTitle().equals("DailyEncList")) {
+                                    MainActivity.EXISTING_FILE_ID = metadata.getDriveId().getResourceId();
+                                    foundFile = true;
+                                    Log.d("MainActivity", "foundFile = True");
+                                    Log.d("MainActivity", Boolean.toString(bIsFirstTimeAppOpened));
+                                    if (bIsFirstTimeAppOpened) {
 //                                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 //                                SharedPreferences.Editor editor = sp.edit();
 //                                editor.putBoolean("signedIn", false);
@@ -747,46 +766,52 @@ public class MainActivity extends BaseDemoDriveActivity {
 //                                dialog.setArguments(args);
 //                                dialog.show(getSupportFragmentManager(), "first-found-drive");
 
+                                        Log.d("MainActivty", getGoogleApiClient().toString());
+
+                                        //showMessage("Retrieving Contents");
+                                        Cur_State = Retrieve_State;
+                                        if(getGoogleApiClient() != null && MainActivity.EXISTING_FILE_ID != null) {
+                                            Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
+                                                    .setResultCallback(idCallback);
+                                        }
+
+                                    } else {
+                                        Log.d("MainActivity","before cur state");
+                                        //showMessage("Changing Contents");
+                                        Cur_State = Create_State;
+                                        Log.d("MainActivity","mid cur state");
+                                        if(getGoogleApiClient() != null && MainActivity.EXISTING_FILE_ID != null) {
+                                            Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
+                                                    .setResultCallback(idCallbackEdit);
+                                        }
+                                        Log.d("MainActivity","after cur state");
 
 
+                                    }
 
+                                    i = count;
 
-
-                                //showMessage("Retrieving Contents");
-                                Cur_State = Retrieve_State;
-                                Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
-                                        .setResultCallback(idCallback);
-
-                            } else {
-
-                                //showMessage("Changing Contents");
-                                Cur_State = Create_State;
-                                Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
-                                        .setResultCallback(idCallbackEdit);
+                                }
 
                             }
 
-                            i = count;
-                        }
-                    }
+                            if (!foundFile) {
 
-                    if(!foundFile){
-
-                        signedIn = false;
-                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putBoolean("signedIn", false);
-                        editor.putBoolean("signedIn_Pressed", false);
-                        editor.commit();
-                        //encouragementList.clear();
-                        notificationEncouragementList.clear();
-                        //saveArray(encouragementList,"encouragementList");
-                        saveArray(notificationEncouragementList,"notificationEncouragementList");
-                        //clearGoogleApiClient();
-                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                        intent.putExtra("cantFindDrive","cantFindDrive");
-                        startActivity(intent);
-                        finish();
+                                signedIn = false;
+                                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putBoolean("signedIn", false);
+                                editor.putBoolean("signedIn_Pressed", false);
+                                editor.commit();
+                                //encouragementList.clear();
+                                notificationEncouragementList.clear();
+                                //saveArray(encouragementList,"encouragementList");
+                                saveArray(notificationEncouragementList, "notificationEncouragementList");
+                                //clearGoogleApiClient();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("cantFindDrive", "cantFindDrive");
+                                startActivity(intent);
+                                finish();
 //                        DialogPopup dialog = new DialogPopup();
 //                        Bundle args = new Bundle();
 //                        args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.CANT_FIND_DRIVE);
@@ -795,9 +820,7 @@ public class MainActivity extends BaseDemoDriveActivity {
 //                        dialog.setCancelable(false);
 //                        //dialog.setCanceledOnTouchOutside(false);
 //                        dialog.show(getSupportFragmentManager(), "cant-find-drive");
-                        Log.d("MainActivity","in !foundFile");
-
-
+                                Log.d("MainActivity", "in !foundFile");
 
 
 //                        showMessage("Creating Contents");
@@ -806,10 +829,14 @@ public class MainActivity extends BaseDemoDriveActivity {
 //                                .setResultCallback(driveContentsCallback);
 
 
-                    }
+                            }
 
-                    myOptionMenu.getItem(1).setVisible(false);
-                    myOptionMenu.getItem(2).setVisible(true);
+                            myOptionMenu.getItem(1).setVisible(false);
+                            myOptionMenu.getItem(2).setVisible(true);
+                        }else{
+                            Log.d("MainActivity","Query Result is null");
+                        }
+                    }
 
                 }
             };
