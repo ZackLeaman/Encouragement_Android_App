@@ -115,23 +115,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         loadArray(notificationScriptureList,getActivity().getApplicationContext(),"notificationScriptureList");
         loadArray(encouragementList,getActivity().getApplicationContext(),"encouragementList");
 
-        // On first time app opened
-        if(MainActivity.isFirstTimeOpening){
-            // Save that the app has been opened for the first time
-            MainActivity.isFirstTimeOpening = false;
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-            SharedPreferences.Editor mEdit1 = sp.edit();
-            mEdit1.remove("SMS_isFirstTimeOpening");
-            mEdit1.putBoolean("SMS_isFirstTimeOpening",false);
-            mEdit1.commit();
-            // Popup dialog asking if want prayer and scripture categories
-            DialogPopup dialog = new DialogPopup();
-            Bundle args = new Bundle();
-            args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.OTHER_CATEGORIES);
-            args.putInt("FragmentID",this.getId());
-            dialog.setArguments(args);
-            dialog.show(getFragmentManager(), "other-categories");
-        }
+
 
 
         // Setting up the 40 starter encouragements
@@ -917,6 +901,54 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             btnScriptureDropdown.setVisibility(View.GONE);
 
             tvPrayerAndScripture.setVisibility(View.VISIBLE);
+
+        }
+
+
+        // On first time app opened
+        if(MainActivity.isFirstTimeOpening){
+            // Save that the app has been opened for the first time
+            MainActivity.isFirstTimeOpening = false;
+            sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor mEdit1 = sp.edit();
+            mEdit1.remove("SMS_isFirstTimeOpening");
+            mEdit1.putBoolean("SMS_isFirstTimeOpening",false);
+            mEdit1.commit();
+            // Popup dialog asking if want prayer and scripture categories
+            DialogPopup dialog = new DialogPopup();
+            Bundle args = new Bundle();
+            args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.OTHER_CATEGORIES);
+            args.putInt("FragmentID",this.getId());
+            dialog.setArguments(args);
+            dialog.show(getFragmentManager(), "other-categories");
+
+
+            starterEncouragements.add("/nEncouragement/n" + "Benjamin Franklin" + "/n" +
+                    "They who can give up essential liberty to obtain a little temporary safety deserve neither liberty nor safety." + "/nnone/n3/nAlarm Off");
+
+            // Setup reminder message alarm
+            setDailyAlarm("Weekly",7,10,0,4,
+                    "/nPrompt/nNA/n" +
+                            "Have you encouraged someone this week?" +
+                            "/nnone/n4/nAlarm Weekly",
+                    "0");
+
+            // Setup daily encouragement alarm
+            saveString("EncouragementNotiFreq","Daily");
+            setDailyAlarm("Daily",1,10,0,3,notificationEncouragementList.get(0),Integer.toString(positionEncouragement));
+            encouragementAlarmString = "Alarm Daily at 10:00 AM";
+            tvEncouragement.setText("Daily Encouragement");
+            tvEncouragementAlarmString.setText(encouragementAlarmString);
+            saveString("encouragementAlarmString", encouragementAlarmString);
+            saveString("encouragementType","Daily");
+            mEncouragementNotification = EncouragementNotification.DAILY;
+            saveString("EncouragementNotiFreq","Daily");
+            saveString("EncouragementTimeHour","10");
+            saveString("EncouragementTimeMinute","0");
+            saveString("encouragementType","Daily");
+            btnNotificationFreqEncouragement.setText("Daily Notification");
+
+
 
         }
 

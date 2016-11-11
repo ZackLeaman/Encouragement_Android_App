@@ -40,7 +40,21 @@ public class AlertReceiver extends BroadcastReceiver {
         String encouragementType = loadString("encouragementType",context);
 
 //        Toast.makeText(context,msgFull,Toast.LENGTH_LONG).show();
-        Log.d("AlertReceiver","42");
+
+        if(intent.getStringExtra("msgCategory").equals("Prompt")){
+            createNotification(context,
+                    msgFull,
+                    intent.getStringExtra("msgCategory"),
+                    msgTitle,
+                    intent.getStringExtra("msgText"),
+                    intent.getStringExtra("msgAlert"),
+                    intent.getStringExtra("msgPos"),
+                    intent.getIntExtra("notifyID", 999));
+
+            setDailyAlarm("Weekly",context,intent,"Have you encouraged someone this week?" +
+                    "/nnone/n4/nAlarm Weekly");
+
+        }
         if(intent.getStringExtra("msgCategory").equals("Encouragement")) {
             saveString("needUpdateNotificationEncouragement", context, "true");
         }
@@ -336,6 +350,10 @@ public class AlertReceiver extends BroadcastReceiver {
     public void createNotification(Context context, String msg, String msgCategory, String msgTitle,String msgText, String msgAlert, String msgPos, int notifyID){
 
         Intent intent = new Intent(context, CurrentEncouragement.class);
+
+        if(msgCategory.equals("Prompt")) {
+            intent = new Intent(context, MainActivity.class);
+        }
 
         //intent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
