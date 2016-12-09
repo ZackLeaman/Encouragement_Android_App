@@ -272,6 +272,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             categoriesListPrayer.add("/nFriends");
             categoriesListPrayer.add("/nMissions");
             categoriesListPrayer.add("/nWork");
+            categoriesListPrayer.add("/nAnswered");
             categoriesListPrayer.add("/nOther");
             saveArray(categoriesListPrayer,"categoriesListPrayer");
         }
@@ -928,9 +929,9 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
             // Setup reminder message alarm
             setDailyAlarm("Weekly",7,10,0,4,
-                    "/nPrompt/nNA/n" +
+                    "/nReminder/nNA/n" +
                             "Have you encouraged someone this week?" +
-                            "/nnone/n4/nAlarm Weekly",
+                            "/n /n4/nAlarm Weekly",
                     "0");
 
             // Setup daily encouragement alarm

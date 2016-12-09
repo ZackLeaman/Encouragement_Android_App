@@ -41,7 +41,7 @@ public class AlertReceiver extends BroadcastReceiver {
 
 //        Toast.makeText(context,msgFull,Toast.LENGTH_LONG).show();
 
-        if(intent.getStringExtra("msgCategory").equals("Prompt")){
+        if(intent.getStringExtra("msgCategory").equals("Reminder")){
             createNotification(context,
                     msgFull,
                     intent.getStringExtra("msgCategory"),
@@ -351,7 +351,7 @@ public class AlertReceiver extends BroadcastReceiver {
 
         Intent intent = new Intent(context, CurrentEncouragement.class);
 
-        if(msgCategory.equals("Prompt")) {
+        if(msgCategory.equals("Reminder")) {
             intent = new Intent(context, MainActivity.class);
         }
 
