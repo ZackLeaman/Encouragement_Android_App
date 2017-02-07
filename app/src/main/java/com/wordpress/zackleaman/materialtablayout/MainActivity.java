@@ -176,7 +176,7 @@ public class MainActivity extends BaseDemoDriveActivity {
 
         bIsFirstTimeAppOpened = sp.getBoolean("bIsFirstTimeAppOpened",true);
         Log.d("MainActivity","signedIn = " + signedIn);
-
+        Log.d("MainActivity",notificationEncouragementList.toString());
 
 
         mTabLayout = (TabLayout)findViewById(R.id.tabLayout);
@@ -520,6 +520,8 @@ public class MainActivity extends BaseDemoDriveActivity {
         mTabLayout.getTabAt(1).setIcon(R.drawable.ic_view_agenda_white_36dp);
         mTabLayout.getTabAt(2).setIcon(R.drawable.ic_create_white_36dp);
         mTabLayout.getTabAt(3).setIcon(R.drawable.message);
+
+
 
     }
 

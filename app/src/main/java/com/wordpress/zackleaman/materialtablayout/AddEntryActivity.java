@@ -28,6 +28,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Created by Zack on 8/15/2016.
+ * This class will handle the add entry activity to create a new entry and add it to the encouragement list
+ */
 public class AddEntryActivity extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener{
 
     private Activity activity;
@@ -63,9 +67,11 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         setSupportActionBar(toolbar);
         ToolbarConfigurer(AddEntryActivity.this, toolbar, true);
 
+        // load the encouragementList and alarmList to add entry to
         loadArray(encouragementList, getApplicationContext(), "encouragementList");
         loadArray(alarmList, getApplicationContext(), "alarmList");
 
+        // Initialize variables
         tvCategoryTitle = (TextView)findViewById(R.id.tvCategoryTitle);
         etMessage = (EditText)findViewById(R.id.etMessage);
         linearLayoutNotification = (LinearLayout)findViewById(R.id.linearLayoutNotification);
@@ -75,6 +81,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         btnCreate = (Button)findViewById(R.id.btnCreate);
         btnCancel = (Button)findViewById(R.id.btnCancel);
 
+        // Get bundle intent extras that will give the category and subcategory
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             if (extras.containsKey("category_createEntry")) {
@@ -91,6 +98,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
             tvCategoryTitle.setText(displayedCatTitle);
         }
 
+        // set the button notification text to the correct values and visible elements
         btnNotificationFreq.setText("No Notification");
         btnNotificationDay.setText("Sunday");
         btnNotificationDay.setVisibility(View.GONE);
@@ -99,14 +107,17 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
             linearLayoutNotification.setVisibility(View.GONE);
         }
 
+        // get the current date and time and format it correctly
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         String dateText = format.format(date);
         nameAddressDate = nameAddressDate + dateText;
 
+        // get the next id for notifications that is not taken and use that for notifID string
         notID = findNextNotifID();
         notifID = Integer.toString(notID);
 
+        // this button will show a menu of notification frequencies the user can pick
         btnNotificationFreq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +126,8 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                 showPopUp(view);
             }
         });
+
+        // this button will show a menu of days the user can pick for notifications
         btnNotificationDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,7 +137,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-
+        // if the user does not want to create a new entry they can cancel
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,9 +148,12 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                 finish();
             }
         });
+
+        // if the user wishes to create a new entry with the values entered
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // make sure that there is a message entered to add to entries
                 if(!etMessage.getText().toString().isEmpty()){
                     message = etMessage.getText().toString();
                     if (Build.VERSION.SDK_INT >= 23 ) {
@@ -155,6 +171,8 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                     String day = "";
                     String pos = "0";
 
+                    // use the hour an minute values entered and convert them to a number to display
+                    //      to the user
                     if(hour >= 12 && hour <= 23){
                         amOrPm = "PM";
                         if(hour != 12) {
@@ -175,6 +193,8 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                     }else{
                         stringMinute = Integer.toString(minute);
                     }
+
+                    // use the day that the user choose
                     switch (mNotificationDay){
                         case SUNDAY:
                             dayNum = 1;
@@ -205,6 +225,8 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                             day = "Saturday";
                             break;
                     }
+
+                    // use the notification frequency that the user choose
                     switch (mNotification){
                         case DAILY:
                             type = "Daily";
@@ -222,19 +244,24 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                             break;
                     }
 
+                    // get the entry string that will represent the entry in full
                     String fullEntry = "/n" + category + "/n" + nameAddressDate + "/n"
                             + message + "/n" + subCategory + "/n" + notifID + "/n" +
                             notifAlarmString;
+
+                    // save the entry in the array list of encouragements
                     encouragementList.add(0,fullEntry);
                     saveArray(encouragementList,"encouragementList");
 
-
+                    // check that the notification type is not none. If so then set the notif alarm
                     if(!type.equals("None")){
                         setDailyAlarm(type,dayNum,hour,minute,notID,fullEntry,pos);
                     }
 
-                    Toast.makeText(getApplicationContext(),"Entry added to " + tvCategoryTitle.getText().toString(),Toast.LENGTH_LONG).show();
-                    //NavUtils.navigateUpFromSameTask(activity);
+                    // show message of success to the user and then go back to the library tab on
+                    //      main page
+                    Toast.makeText(getApplicationContext(),"Entry added to " +
+                            tvCategoryTitle.getText().toString(),Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(),PermissionsActivity.class);
                     intent.putExtra("startPage","Library");
                     startActivity(intent);
@@ -249,6 +276,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        // grab the bundle extras on new intent to use for category and subcategories
         Bundle extras = intent.getExtras();
         if(extras != null) {
             if (extras.containsKey("category_createEntry")) {
@@ -267,6 +295,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void ToolbarConfigurer(Activity activity, Toolbar toolbar, boolean displayHomeAsUpEnabled) {
+        // check that the back button on toolbar is there if so then set icon and set nav listener
         toolbar.setTitle((this.activity = activity).getTitle());
         if (!displayHomeAsUpEnabled) return;
         toolbar.setNavigationIcon(android.R.drawable.ic_menu_revert);
@@ -275,10 +304,9 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        //NavUtils.navigateUpFromSameTask(activity);
         switch (v.getId()) {
             default:
-                //NavUtils.navigateUpFromSameTask(activity);
+                // when the toolbar back button is pressed then go back to the main library page
                 Intent intent = new Intent(this,MainActivity.class);
                 intent.putExtra("startPage","Library");
                 startActivity(intent);
@@ -290,6 +318,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed()
     {
+        // when the back button is pressed then go back to the main library page
         Intent intent = new Intent(this,MainActivity.class);
         intent.putExtra("startPage","Library");
         startActivity(intent);
@@ -297,6 +326,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private int findNextNotifID(){
+        // get the next notification number id for encouragement list entry to use
         int notifID = 200;
         for(int i = 0; i < encouragementList.size(); i++){
             try{
@@ -315,13 +345,14 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void showPopUp(View v){
+        // Create an instance of PopupMenu with created PopupMenu style
         PopupMenu popupMenu = new PopupMenu(this,v,1,0,R.style.PopupMenu);
 
         popupMenu.setOnMenuItemClickListener(this);
         MenuInflater inflater = popupMenu.getMenuInflater();
 
+        // use the popup_home_menu and display items correctly based on which notif button pressed
         inflater.inflate(R.menu.popup_home_menu, popupMenu.getMenu());
-
         if(isNotifFreqActive){
             for(int i = 3; i <= 9; i++) {
                 popupMenu.getMenu().getItem(i).setVisible(false);
@@ -333,14 +364,14 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
             }
         }
 
-
-
         popupMenu.show();
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
+
+            // notification frequency pressed
             case R.id.popup_dailyNotification:
                 if(isNotifFreqActive) {
                     mNotification = Notification.DAILY;
@@ -367,8 +398,9 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
                     timePickerNotification.setVisibility(View.GONE);
                     isNotifFreqActive = false;
                 }
-
                 return true;
+
+            // notification day for weekly notifications pressed
             case R.id.popup_sunday:
                 if(isNotifDayActive) {
                     btnNotificationDay.setText("Sunday");
@@ -423,7 +455,10 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public void setDailyAlarm(String notificationType, int day, int hour, int minute, int notifyID, String msg, String pos){
+    public void setDailyAlarm(String notificationType, int day, int hour, int minute,
+                              int notifyID, String msg, String pos){
+
+        // get the important information from the entry to be created
         String category = "";
         String nameAddressDate = "";
         String message = "";
@@ -438,13 +473,15 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
             e.printStackTrace();
         }
 
+        // if the entry does not have a sub category then just show category if not then display:
+        //      'category - subcategory' as the notification title
         if(subCategory.equals("none")){
             subCategory = "";
         }else{
             subCategory = " - " + subCategory;
         }
 
-
+        // make a calendar instance of the day, hour, minute and second given
         Calendar calendar = Calendar.getInstance();
         if(notificationType.equals("Weekly")) {
             calendar.set(Calendar.DAY_OF_WEEK, day);
@@ -454,7 +491,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         calendar.set(Calendar.MINUTE,minute);
         calendar.set(Calendar.SECOND,0);
 
-
+        // add intent extras for the alarm manager to catch when alarm shoots
         Intent alertIntent = new Intent(this,AlertReceiver.class);
         alertIntent.putExtra("msg",msg);
         alertIntent.putExtra("msgCategory",category);
@@ -465,8 +502,10 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         alertIntent.putExtra("notifyID",notifyID);
         alertIntent.putStringArrayListExtra("encouragementList",encouragementList);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(),notifyID,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(),
+                notifyID,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
+        // add entry to alarm list to reset alarms on rebooting of phone
         try {
             loadArray(alarmList, getApplicationContext(), "alarmList");
             boolean newEntry = true;
@@ -490,39 +529,40 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
             e.printStackTrace();
         }
 
+        // create an alarm manager to create the entry alarm
         AlarmManager alarmManager = (AlarmManager)
                 this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        if(notificationType.equals("Daily")) {
-//            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-//                    AlarmManager.INTERVAL_DAY, pendingIntent);
 
-            // if calendar time has already passed then add a day to the time
+        // set a daily alarm
+        if(notificationType.equals("Daily")) {
+
+            // if calendar time has already passed today then add a day to the time
             if(calendar.getTimeInMillis() < System.currentTimeMillis()){
                 calendar.setTimeInMillis(calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY);
-                //Toast.makeText(this,"Time Added",Toast.LENGTH_LONG).show();
             }
 
+            // based on the build version use set or setExact for alarm services
             if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             } else {
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             }
 
+        // set a weekly alarm
         }else if(notificationType.equals("Weekly")){
-//            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-//                    AlarmManager.INTERVAL_DAY*7, pendingIntent);
 
-            // if calendar time has already passed then add a week to the time
+            // if calendar time has already passed this week then add a week to the time
             if(calendar.getTimeInMillis() < System.currentTimeMillis()){
                 calendar.setTimeInMillis(calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY*7);
-//                Toast.makeText(getContext(),"Time Added",Toast.LENGTH_LONG).show();
             }
 
+            // based on the build version use set or setExact for alarm services
             if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             } else {
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-            }        }
+            }
+        }
 
     }
 

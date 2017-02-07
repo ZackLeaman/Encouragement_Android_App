@@ -16,6 +16,7 @@ import android.view.View;
 
 /**
  * Created by Zack on 8/15/2016.
+ * This class will handle all necessary runtime permissions
  */
 public abstract class AbsRuntimePermission extends AppCompatActivity {
     private SparseIntArray mErrorString;
@@ -32,6 +33,7 @@ public abstract class AbsRuntimePermission extends AppCompatActivity {
     public void requestAppPermissions(final String[] requestedPermissions, final int stringId, final int requestCode){
         mErrorString.put(requestCode,stringId);
 
+        // check the current permissions to see if already accepted or denied
         int permissionCheck = PackageManager.PERMISSION_GRANTED;
         boolean showRequestPermission = false;
         for(String permission: requestedPermissions){
@@ -39,6 +41,7 @@ public abstract class AbsRuntimePermission extends AppCompatActivity {
             showRequestPermission = showRequestPermission || ActivityCompat.shouldShowRequestPermissionRationale(this,permission);
         }
 
+        // if not granted then show the snackbar message on bottom of screen to grant permission
         if(permissionCheck!=PackageManager.PERMISSION_GRANTED){
             if(showRequestPermission){
                 Snackbar.make(findViewById(android.R.id.content),stringId, Snackbar.LENGTH_INDEFINITE).setAction("Grant", new View.OnClickListener() {

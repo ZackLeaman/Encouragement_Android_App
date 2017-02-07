@@ -24,6 +24,7 @@ public abstract class ApiClientAsyncTask<Params, Progress, Result>
     private GoogleApiClient mClient;
 
     public ApiClientAsyncTask(Context context) {
+        // on creation of the Async task build the Google Api Client
         GoogleApiClient.Builder builder = new GoogleApiClient.Builder(context)
                 .addApi(Drive.API)
                 .addScope(Drive.SCOPE_FILE);
@@ -32,7 +33,7 @@ public abstract class ApiClientAsyncTask<Params, Progress, Result>
 
     @Override
     protected final Result doInBackground(Params... params) {
-        Log.d("TAG", "in background");
+        // Reconnect the Google Api Client if need to and can
         final CountDownLatch latch = new CountDownLatch(1);
         mClient.registerConnectionCallbacks(new ConnectionCallbacks() {
             @Override

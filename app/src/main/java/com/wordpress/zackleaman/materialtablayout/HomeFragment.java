@@ -308,7 +308,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         }catch (Exception e){
             e.printStackTrace();
         }
-        // If notificationEncouragementList is empty and encouragemetns is empty display a blank encouragement on home tab
+        // If notificationEncouragementList is empty and encouragements is empty display a blank encouragement on home tab
         if(notificationEncouragementList.isEmpty() && encouragements.isEmpty()){
             notificationEncouragementList.add(0,"/nEncouragement/n /n /nnone/n3/nAlarm Off");
             saveArray(notificationEncouragementList,"notificationEncouragementList");
@@ -330,7 +330,8 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             }
         }
         // Generate a random list of encouragement notifications if its empty, null, or first time opening app
-        if(notificationEncouragementList.isEmpty() || MainActivity.isFirstTimeOpening || notificationEncouragementList == null){
+        if(notificationEncouragementList.isEmpty()){
+            // || MainActivity.isFirstTimeOpening
             Log.d("notificationEnc", "is empty");
             Random r = new Random();
             ArrayList<String> orderedList = new ArrayList<>();
@@ -399,8 +400,9 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                         }
 
                         for (int x = index.size(); x > 0; x--) {
-                            int pos = x - 1;
-                            notificationEncouragementList.remove(index.get(pos).intValue());
+                            int indexPos = x - 1;
+                            int notifPos = index.get(indexPos);
+                            notificationEncouragementList.remove(notifPos);
                         }
 
                         saveArray(notificationEncouragementList, "notificationEncouragementList");

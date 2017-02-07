@@ -26,22 +26,19 @@
         <SwitchPreference
             android:key = "wantsStarterEncouragement"
             android:title="Starter encouragements"
-            android:summary="Include these entries"
+            android:summaryOn="Include these entries"
+            android:summaryOff="Exclude these entries"
             android:defaultValue="true"
             />
 
         <SwitchPreference
             android:key = "wantsPrayerAndScripture"
             android:title="Prayer and Scripture"
-            android:summary="Include these categories"
+            android:summaryOn="Include these categories"
+            android:summaryOff="Exclude these categories"
             android:defaultValue="true"
             />
 
-        <!--<RingtonePreference-->
-            <!--android:key="ringkey"-->
-            <!--android:title="Ringtone"-->
-            <!--android:summary="Select your ringtone here"-->
-            <!--/>-->
 
 
     </PreferenceCategory>

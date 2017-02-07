@@ -1,6 +1,7 @@
 package com.wordpress.zackleaman.materialtablayout;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -9,8 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v7.app.NotificationCompat;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,10 +26,11 @@ public class AlertReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("AlertReceiver","in On Receive");
+
+        // load the notificationEncouragementList to make sure if cant find the first encouragement
+        //      then go to the next one that is actually in encouragement list
         loadArray(notificationEncouragementList,context,"notificationEncouragementList");
-        Log.d("AlertReceiver",notificationEncouragementList.toString());
-        Log.d("AlertReceiver","32");
+
         String msgFull = intent.getStringExtra("msg");
         String msgTitle = intent.getStringExtra("msgTitle");
         String msgAlarmString = "Alarm Off";
@@ -39,8 +39,8 @@ public class AlertReceiver extends BroadcastReceiver {
         boolean foundMessage = false;
         String encouragementType = loadString("encouragementType",context);
 
-//        Toast.makeText(context,msgFull,Toast.LENGTH_LONG).show();
-
+        // if the entry is a encouragement reminder then send reminder notification and create new
+        //      alarm
         if(intent.getStringExtra("msgCategory").equals("Reminder")){
             createNotification(context,
                     msgFull,
@@ -55,14 +55,15 @@ public class AlertReceiver extends BroadcastReceiver {
                     "/nnone/n4/nAlarm Weekly");
 
         }
+
+        // if this entry alarmed is an encouragement then notification list needs to be updated
         if(intent.getStringExtra("msgCategory").equals("Encouragement")) {
             saveString("needUpdateNotificationEncouragement", context, "true");
         }
+
         try {
             // handle if entry has been moved
-            Log.d("AlertReceiver","48");
             loadArray(encouragementList, context, "encouragementList");
-            Log.d("AlertReceiver",encouragementList.toString());
             try{
                 if(intent.getStringExtra("encouragementList") != null) {
                     encouragementList = intent.getStringArrayListExtra("encouragementList");
@@ -72,6 +73,7 @@ public class AlertReceiver extends BroadcastReceiver {
             }
 
             if (!encouragementList.isEmpty()) {
+                // break the current message into its main parts
                 String[] msg = intent.getStringExtra("msg").split("/n");
                 String msgCat = msg[1];
                 String msgFrom = msg[2];
@@ -79,9 +81,11 @@ public class AlertReceiver extends BroadcastReceiver {
                 String msgSubCat = msg[4];
                 String msgNotifID = msg[5];
                 String msgNotifString = msg[6];
+                // create a msg string to compare without sub cat because it can change
                 String msgCompare = msgCat + msgFrom + msgText + msgNotifID;
-                Log.d("AlertReceiver","59");
 
+                // check the encouragement list to make sure user has not deleted entry in between
+                //      alarm time
                 for (int i = 0; i < encouragementList.size(); i++) {
                     String[] entry = encouragementList.get(i).split("/n");
                     String entryCat = entry[1];
@@ -90,28 +94,34 @@ public class AlertReceiver extends BroadcastReceiver {
                     String entrySubCat = entry[4];
                     String entryNotifID = entry[5];
                     String entryNotifString = entry[6];
+                    // create an entry string to compare without sub cat because it can change
                     String entryCompare = entryCat + entryFrom + entryText + entryNotifID;
-                    Log.d("AlertReceiver","70");
 
+                    // if message is found in encouragement list then it is good to display it
                     if (msgCompare.equals(entryCompare)) {
                         foundMessage = true;
+                        // check that the notification string is not 'none'
                         if(!entryNotifString.equals("none")) {
+                            // set alarm to either daily or weekly if not none
                             String[] type = entryNotifString.split(" ");
                             alarmType = type[1];
                         }else{
+                            // set alarm to off if none
                             alarmType = "Off";
                         }
                         category = msgCat;
                         msgAlarmString = entryNotifString;
                         if (!msgSubCat.equals(entrySubCat)) {
                             msgSubCat = entrySubCat;
+
+                            // create the full message string and message title to show on alarm notification
                             msgFull = "/n" + entryCat + "/n" + entryFrom + "/n" + entryText + "/n" +
                                     entrySubCat + "/n" + entryNotifID + "/n" + entryNotifString;
                             msgTitle = entryCat + " - " + entrySubCat;
 
+                            // exit out of for loop because found the message
                             i = encouragementList.size();
                         }
-                        Log.d("AlertReceiver", "86");
 
 
                     }
@@ -201,30 +211,17 @@ public class AlertReceiver extends BroadcastReceiver {
                 }
 
             }
-//            else{
-////                Toast.makeText(context,"encouragementList empty",Toast.LENGTH_LONG).show();
-//            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // Either Message still part of encouragementList or we need to stop notification
         if(foundMessage) {
-//            Toast.makeText(context,"in foundMessage",Toast.LENGTH_LONG).show();
-//            Toast.makeText(context,category,Toast.LENGTH_LONG).show();
-//            Toast.makeText(context,encouragementType,Toast.LENGTH_LONG).show();
-
 
             // reset the alarm
-            Log.d("AlertReceiver","105");
-            Log.d("AlertReceiver",category);
-            Log.d("AlertReceiver","homeEncouragement = " + msgFull);
-            Log.d("AlertReceiver",encouragementType);
             if(category.equals("Encouragement")){
-                Log.d("AlertReceiver","113");
                 if(!encouragementType.equals("Off")){
-//                    Toast.makeText(context,"New Alarm Set",Toast.LENGTH_LONG).show();
-                    Log.d("AlertReceiver","116");
 
                     createNotification(context,
                             msgFull,
@@ -234,20 +231,18 @@ public class AlertReceiver extends BroadcastReceiver {
                             intent.getStringExtra("msgAlert"),
                             intent.getStringExtra("msgPos"),
                             intent.getIntExtra("notifyID", 999));
-                    Log.d("AlertReceiver","125");
 
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
                     SharedPreferences.Editor mEdit1 = sp.edit();
                     mEdit1.remove("homeEncouragement");
                     mEdit1.putString("homeEncouragement",msgFull);
                     mEdit1.commit();
-                    Log.d("AlertReceiver","131");
 
                     if(!notificationEncouragementList.isEmpty()) {
                         notificationEncouragementList.remove(0);
                     }
-                    if(notificationEncouragementList.isEmpty() || MainActivity.isFirstTimeOpening || notificationEncouragementList == null) {
-                        Log.d("notificationEnc", "is empty");
+                    if(notificationEncouragementList.isEmpty()) {
+                        // || MainActivity.isFirstTimeOpening || notificationEncouragementList == null
                         Random r = new Random();
                         ArrayList<String> orderedList = new ArrayList<>();
                         for (int i = 0; i < encouragementList.size(); i++) {
@@ -281,12 +276,10 @@ public class AlertReceiver extends BroadcastReceiver {
                     }
                     setDailyAlarm(encouragementType,context,intent,notificationEncouragementList.get(0));
                     saveArray(notificationEncouragementList,context,"notificationEncouragementList");
-                    Log.d("notifEncouragementList",notificationEncouragementList.toString());
                 }
             }else {
                 if (!alarmType.equals("Off")) {
                     setDailyAlarm(alarmType, context, intent, msgFull);
-//                    Toast.makeText(context, "New Alarm Set", Toast.LENGTH_LONG).show();
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                     boolean wantsPrayerAndScripture = sp.getBoolean("wantsPrayerAndScripture",true);
                     if(wantsPrayerAndScripture) {
@@ -323,7 +316,7 @@ public class AlertReceiver extends BroadcastReceiver {
 
 
         }else{
-            // may not need the stop notification cause the alarm is being set manually
+
             stopNotification(intent.getIntExtra("notifyID", 999),context);
 
             try {
@@ -355,8 +348,8 @@ public class AlertReceiver extends BroadcastReceiver {
             intent = new Intent(context, MainActivity.class);
         }
 
-        //intent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|
+                Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
         intent.removeExtra("msg");
         intent.removeExtra("msgCategory");
@@ -380,11 +373,12 @@ public class AlertReceiver extends BroadcastReceiver {
         PendingIntent notificIntent = PendingIntent.getActivity(context, notifyID,
                 intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
+
+        Notification.BigTextStyle style = new Notification.BigTextStyle();
         style.setBigContentTitle(msgTitle);
         style.bigText(msgText);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        Notification.Builder builder = new Notification.Builder(context);
         builder.setContentTitle(msgTitle);
         builder.setContentText(msgText);
         builder.setSmallIcon(R.mipmap.ic_launcher);
@@ -396,7 +390,7 @@ public class AlertReceiver extends BroadcastReceiver {
         builder.setContentIntent(notificIntent);
 
 
-        builder.setDefaults(NotificationCompat.DEFAULT_SOUND);
+        builder.setDefaults(Notification.DEFAULT_SOUND);
         builder.setAutoCancel(true);
 
         NotificationManager mNotificationManager =
@@ -434,15 +428,6 @@ public class AlertReceiver extends BroadcastReceiver {
         oldAlarmManager.cancel(oldPendingIntent);
         oldPendingIntent.cancel();
 
-//        Calendar calendar = Calendar.getInstance();
-//        if(notificationType.equals("Weekly")) {
-//            calendar.set(Calendar.DAY_OF_WEEK, day);
-//        }
-//
-//        calendar.set(Calendar.HOUR_OF_DAY,hour);
-//        calendar.set(Calendar.MINUTE,minute);
-//        calendar.set(Calendar.SECOND,0);
-
 
         Intent alertIntent = new Intent(context,AlertReceiver.class);
         alertIntent.putExtra("msg",msg);
@@ -452,7 +437,6 @@ public class AlertReceiver extends BroadcastReceiver {
         alertIntent.putExtra("msgAlert","New " + category + " Notification");
         alertIntent.putExtra("msgPos",0);
         alertIntent.putExtra("notifyID",notifyID);
-        // TODO maybe add put Extra for string array list for encouragement List for encouragement category
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(),notifyID,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -486,8 +470,6 @@ public class AlertReceiver extends BroadcastReceiver {
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         if(notificationType.equals("Daily")) {
-//            alarmManager.set(AlarmManager.RTC_WAKEUP,
-//                    calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY, pendingIntent);
 
             if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -496,10 +478,6 @@ public class AlertReceiver extends BroadcastReceiver {
             }
 
         }else if(notificationType.equals("Weekly")){
-//            alarmManager.set(AlarmManager.RTC_WAKEUP,
-//                    calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY*7, pendingIntent);
-            //either set or setWindow and use the alarmList to determine the last time it fired
-
 
             if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY*7, pendingIntent);
