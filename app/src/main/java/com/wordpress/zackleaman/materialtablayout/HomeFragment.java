@@ -13,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,7 +34,9 @@ import java.util.Random;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by Zack on 8/15/2016.
+ * This Fragment class is to display a home page on the main activity layout that shows all the
+ * entries that have alarms on them as well as the most recent encouragement pushed to the user.
  */
 public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickListener, AdapterView.OnItemClickListener{
 
@@ -77,10 +78,7 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
     private String homeEncouragement = "";
 
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
+    public HomeFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -200,10 +198,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 "By failing to prepare, you are preparing to fail." + "/nnone/n3/nAlarm Off");
         starterEncouragements.add("/nEncouragement/n" + "Charles R. Swindoll" + "/n" +
                 "We are all faced with a series of great opportunities brilliantly disguised as impossible situations." + "/nnone/n3/nAlarm Off");
-//        for(int i = 0; i < 30; i++){
-//            starterEncouragements.add("/nEncouragement/n" + "NameAddressDate" + "/n" +
-//                    "Starter Encouragement " + i + "/nnone" + "/n3"  + "/nAlarm Off");
-//        }
 
         // Get the wantsStarterEncouragement boolean from shared preferences
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -316,7 +310,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
             mEdit1.remove("homeEncouragement");
             mEdit1.putString("homeEncouragement",notificationEncouragementList.get(0));
             mEdit1.commit();
-            Log.d("AlertReceiver","notifEnt.isEmpty and encouragements.isempty homeEn = notfi(0)");
         }
         // If notificationEncouragementList is still displaying a blank encouragement even though encouragements have been added to encouragements remove the blank
         if(notificationEncouragementList.size() == 1 && !encouragements.isEmpty()){
@@ -326,13 +319,10 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 SharedPreferences.Editor mEdit1 = sp.edit();
                 mEdit1.remove("homeEncouragement");
                 mEdit1.commit();
-                Log.d("AlertReceiver","notifEnt.size 1 and !encouragements.isempty homeEn = removed");
             }
         }
         // Generate a random list of encouragement notifications if its empty, null, or first time opening app
         if(notificationEncouragementList.isEmpty()){
-            // || MainActivity.isFirstTimeOpening
-            Log.d("notificationEnc", "is empty");
             Random r = new Random();
             ArrayList<String> orderedList = new ArrayList<>();
             for(int i = 0; i < encouragementList.size(); i++){
@@ -376,7 +366,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 String[] entry = homeEncouragement.split("/n");
                 String nameAddressDate = entry[2];
                 String message = entry[3];
-                Log.d("AlertReceiver","notifEnt.isEmpty or firstopened homeEn = " + homeEncouragement);
 
                 tvEncouragementMessage.setText(message);
                 tvEncouragementFrom.setText(nameAddressDate);
@@ -421,7 +410,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                             mEdit1.remove("homeEncouragement");
                             mEdit1.putString("homeEncouragement", homeEncouragement);
                             mEdit1.commit();
-                            Log.d("AlertReceiver","!wantstarter homeEn = " + homeEncouragement);
                         }
                     }
 
@@ -440,7 +428,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 String[] entry = homeEncouragement.split("/n");
                 String nameAddressDate = entry[2];
                 String message = entry[3];
-                Log.d("AlertReceiver","!notifEnt.isEmpty homeEn = " + homeEncouragement);
 
                 tvEncouragementMessage.setText(message);
                 tvEncouragementFrom.setText(nameAddressDate);
@@ -451,8 +438,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
 
         }
-        Log.d("ListValues","notif list " + notificationEncouragementList.toString());
-        Log.d("ListValues","enc list " + encouragementList.toString());
 
         relativeLayoutEncouragementEntry = (RelativeLayout)getView().findViewById(R.id.relativeLayoutEncouragementEntry);
         relativeLayoutEncouragementEntry.setOnClickListener(new View.OnClickListener() {
@@ -475,7 +460,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         if(!notificationEncouragementList.isEmpty()) {
             if (!homeEncouragement.equals("/nEncouragement/n /n /nnone/n3/nAlarm Off")) {
                 btnEncouragementEntry.setVisibility(View.VISIBLE);
-                Log.d("NotifIf",notificationEncouragementList.get(0));
             } else {
                 btnEncouragementEntry.setVisibility(View.INVISIBLE);
             }
@@ -516,15 +500,12 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         String encNotFreq = loadString("EncouragementNotiFreq",getActivity().getApplicationContext());
 
         if(encNotFreq.equals("Daily")){
-            //tvEncouragement.setText("Daily Encouragement");
             mEncouragementNotification = EncouragementNotification.DAILY;
             btnNotificationFreqEncouragement.setText("Daily Notification");
         }else if(encNotFreq.equals("Weekly")){
-            //tvEncouragement.setText("Weekly Encouragement");
             mEncouragementNotification = EncouragementNotification.WEEKLY;
             btnNotificationFreqEncouragement.setText("Weekly Notification");
         }else if(encNotFreq.equals("None")){
-            //tvEncouragement.setText("Encouragement");
             mEncouragementNotification = EncouragementNotification.NONE;
             btnNotificationFreqEncouragement.setText("No Notification");
         }
@@ -963,7 +944,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("Alert","onResume");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
         homeEncouragement = sp.getString("homeEncouragement","/nEncouragement/n /n /nnone/n3/nAlarm Off");
         loadArray(notificationEncouragementList,getContext(),"notificationEncouragementList");
@@ -1006,6 +986,16 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         }
     }
 
+    /**
+     * This sets the alarm for the particular entry or for all encouragements
+     * @param notificationType string that represents type of notification
+     * @param day int that represents day alarm to be set to
+     * @param hour int that is the hour the alarm to be set to
+     * @param minute int that is the minute the alarm to be set to
+     * @param notifyID int that is the unique notification identifier
+     * @param msg string message to send as the notification text
+     * @param pos string position of selected entry
+     */
     public void setDailyAlarm(String notificationType, int day, int hour, int minute, int notifyID, String msg, String pos){
         String category = "";
         String message = "";
@@ -1113,7 +1103,10 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
     }
 
 
-
+    /**
+     * Used to display a popup list to select from
+     * @param v view to show the popup on
+     */
     public void showPopUp(View v){
         PopupMenu popupMenu = new PopupMenu(getActivity(),v,1,0,R.style.PopupMenu);
 
@@ -1142,7 +1135,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         switch (item.getItemId()){
             case R.id.popup_dailyNotification:
                 if(isEncouragementNotiFreqActive) {
-                    //tvEncouragement.setText("Daily Encouragement");
                     mEncouragementNotification = EncouragementNotification.DAILY;
                     btnNotificationFreqEncouragement.setText("Daily Notification");
                     btnDayWeekEncouragement.setVisibility(View.GONE);
@@ -1152,7 +1144,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 return true;
             case R.id.popup_weeklyNotification:
                 if(isEncouragementNotiFreqActive) {
-                    //tvEncouragement.setText("Weekly Encouragement");
                     mEncouragementNotification = EncouragementNotification.WEEKLY;
                     btnNotificationFreqEncouragement.setText("Weekly Notification");
                     btnDayWeekEncouragement.setVisibility(View.VISIBLE);
@@ -1162,7 +1153,6 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 return true;
             case R.id.popup_noNotification:
                 if(isEncouragementNotiFreqActive) {
-                    //tvEncouragement.setText("Encouragement");
                     mEncouragementNotification = EncouragementNotification.NONE;
                     btnNotificationFreqEncouragement.setText("No Notification");
                     btnDayWeekEncouragement.setVisibility(View.GONE);
@@ -1265,15 +1255,27 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
     }
 
 
+    /**
+     * Holds the view elements for the list adapter
+     */
     public class ViewHolder{
         TextView title;
         TextView title2;
         Button button;
     }
 
+    /**
+     * Array Adapter class that holds the home page displayed entries
+     */
     private class MyListAdapter extends ArrayAdapter<String> {
         private int layout;
 
+        /**
+         * constructor for MyListAdapter
+         * @param context Context that will be using the ListAdapter
+         * @param resource int resource id
+         * @param objects List<String> of objects to display
+         */
         public MyListAdapter(Context context, int resource, List<String> objects) {
             super(context, resource, objects);
             layout = resource;

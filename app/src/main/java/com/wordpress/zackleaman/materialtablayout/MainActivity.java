@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
@@ -40,6 +39,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Created by Zack on 8/15/2016.
+ * This class is used as the MainActivity for the application and will handle home page operations.
+ * This includes creating the material tab layout with fragment classes:
+ * HomeFragment, ReviewLibrary, SendMessageFragment, and NewMessages
+ * These Fragments are labeled as:
+ * Home, Library, Create, and Inbox
+ */
 public class MainActivity extends BaseDemoDriveActivity {
 
     public static boolean isFirstTimeOpening = true;
@@ -53,14 +60,11 @@ public class MainActivity extends BaseDemoDriveActivity {
     static Context myContext;
 
 
-    public static String secondTextVal = "";
-    private TextView mTextView;
+
     private int Cur_State = 1;
     private final int Query_State = 1;
     private final int Retrieve_State = 2;
     private final int Create_State = 3;
-    private ArrayList<String> myList = new ArrayList<>();
-    private ArrayList<String> myNewList = new ArrayList<>();
     private boolean signedIn;
     public static String EXISTING_FILE_ID = "NONE";
     private ArrayList<String> encouragementList = new ArrayList<>();
@@ -77,21 +81,19 @@ public class MainActivity extends BaseDemoDriveActivity {
         setContentView(R.layout.activity_main);
         mToolbar = (Toolbar)findViewById(R.id.toolBar);
         setSupportActionBar(mToolbar);
-        Log.d("onNewIntent", "new onCreate");
 
         try {
             Bundle extras = getIntent().getExtras();
-            String clearGAC = "null";
-            String CState = "null";
-            String cantFindDrive = "null";
-            String startPage = "null";
-            String signOut = "null";
+            String clearGAC;
+            String CState;
+            String cantFindDrive;
+            String startPage;
+
             if (extras != null) {
                 clearGAC = extras.getString("clearGAC");
                 CState = extras.getString("curState");
                 cantFindDrive = extras.getString("cantFindDrive");
                 startPage = extras.getString("startPage");
-                signOut = extras.getString("signOut");
                 if(clearGAC != null) {
                     if (clearGAC.equals("clearGAC")) {
                         Log.d("onNewIntent", "got clearGAC and equals");
@@ -101,28 +103,21 @@ public class MainActivity extends BaseDemoDriveActivity {
                         editor.putBoolean("signedIn", true);
                         editor.putBoolean("signedIn_Pressed", true);
                         editor.commit();
-                        //encouragementList.clear();
                         notificationEncouragementList.clear();
-                        //saveArray(encouragementList,"encouragementList");
                         saveArray(notificationEncouragementList, "notificationEncouragementList");
                         bNeedToClear = true;
-                        //clearGoogleApiClient();
                         Intent intent = new Intent(this, PermissionsActivity.class);
-                        //intent.putExtra("clearGAC","clearedGAC");
                         startActivity(intent);
                         finish();
-                        //reconnectGoogleApiClient();
                     }
                 }
                 if(CState != null) {
                     if (CState.equals("3")) {
                         try {
                             Cur_State = Integer.parseInt(CState);
-                            Log.d("onNewIntent", "cur_state " + Cur_State);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-//
                     }
                 }
                 if(cantFindDrive != null){
@@ -131,10 +126,8 @@ public class MainActivity extends BaseDemoDriveActivity {
                             DialogPopup dialog = new DialogPopup();
                             Bundle args = new Bundle();
                             args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.CANT_FIND_DRIVE);
-                            //args.putInt("FragmentID",this.getId());
                             dialog.setArguments(args);
                             dialog.setCancelable(false);
-                            //dialog.setCanceledOnTouchOutside(false);
                             dialog.show(getSupportFragmentManager(), "cant-find-drive");
 
                         }catch (Exception e){
@@ -153,17 +146,11 @@ public class MainActivity extends BaseDemoDriveActivity {
                         pageIndex = 3;
                     }
                 }
-                if(signOut != null){
-                    if(signOut.equals("true")){
-                        //clearGoogleApiClient();
-                    }
-                }
 
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        //Cur_State = Query_State;
 
         thisActivity = this;
 
@@ -175,8 +162,6 @@ public class MainActivity extends BaseDemoDriveActivity {
         homeEncouragement = sp.getString("homeEncouragement","/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off");
 
         bIsFirstTimeAppOpened = sp.getBoolean("bIsFirstTimeAppOpened",true);
-        Log.d("MainActivity","signedIn = " + signedIn);
-        Log.d("MainActivity",notificationEncouragementList.toString());
 
 
         mTabLayout = (TabLayout)findViewById(R.id.tabLayout);
@@ -188,7 +173,6 @@ public class MainActivity extends BaseDemoDriveActivity {
 
         int picChoice = -1;
         try {
-            //SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             picChoice = Integer.parseInt(sp.getString("backgroundSelection", "-1"));
         }catch (Exception e){
             e.printStackTrace();
@@ -370,7 +354,6 @@ public class MainActivity extends BaseDemoDriveActivity {
 
         int picChoice = -1;
         try {
-            //SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             picChoice = Integer.parseInt(sp.getString("backgroundSelection", "-1"));
         }catch (Exception e){
             e.printStackTrace();
@@ -525,6 +508,10 @@ public class MainActivity extends BaseDemoDriveActivity {
 
     }
 
+    /**
+     * Used to select the fragment page index on the material design tab layout
+     * @param pageIndex
+     */
     void selectPage(int pageIndex){
         mTabLayout.setScrollPosition(pageIndex,0f,true);
         mViewPager.setCurrentItem(pageIndex);
@@ -575,7 +562,6 @@ public class MainActivity extends BaseDemoDriveActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this,SettingsActivity.class);
             startActivityForResult(intent,0);
@@ -585,7 +571,6 @@ public class MainActivity extends BaseDemoDriveActivity {
         if(id == R.id.action_sign_in){
             signedIn = true;
             isFirstTimeOpening = true;
-            //MainActivity.firstTimeAppOpened = true;
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = sp.edit();
             editor.putBoolean("signedIn", true);
@@ -607,22 +592,6 @@ public class MainActivity extends BaseDemoDriveActivity {
             args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.SIGN_OUT);
             dialog.setArguments(args);
             dialog.show(getSupportFragmentManager(), "sign-out");
-
-
-//            signedIn = false;
-//            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-//            SharedPreferences.Editor editor = sp.edit();
-//            editor.putBoolean("signedIn", false);
-//            editor.putBoolean("signedIn_Pressed", false);
-//            editor.commit();
-//            //encouragementList.clear();
-//            notificationEncouragementList.clear();
-//            //saveArray(encouragementList,"encouragementList");
-//            saveArray(notificationEncouragementList,"notificationEncouragementList");
-//            clearGoogleApiClient();
-//            Intent intent = new Intent(this,MainActivity.class);
-//            startActivity(intent);
-//            finish();
             return true;
         }
 
@@ -669,56 +638,36 @@ public class MainActivity extends BaseDemoDriveActivity {
     @Override
     public void onConnected(Bundle connectionHint) {
         super.onConnected(connectionHint);
-        Log.d("MainActivity", "in on connected");
         if(getGoogleApiClient() != null) {
             if (bNeedToClear) {
                 clearGoogleApiClient();
-                Log.d("MainActivity", "bNeedToClear");
-                //reconnectGoogleApiClient();
 
             }
             if (isJustOpened) {
-                Log.d("MainActivity", "in on connected");
 
                 isJustOpened = false;
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
                 signedIn = sp.getBoolean("signedIn", false);
-                //showMessage("in on connected signedIn = " + signedIn);
                 if (signedIn) {
-                    Log.d("MainActivity", "in on connected");
 
                     if (Cur_State == Query_State) {
-                        Log.d("MainActivity", "in on connected");
 
                         Query query = new Query.Builder()
                                 .addFilter(Filters.contains(SearchableField.TITLE, ""))
                                 .build();
                         Drive.DriveApi.query(getGoogleApiClient(), query)
                                 .setResultCallback(metadataCallback);
-                        //showMessage("Query State");
-
-                        //TODO make this to where if this is first time then it does this:
-//                    SharedPreferences.Editor editor = sp.edit();
-//                    editor.putBoolean("signedIn", false);
-//                    editor.commit();
-//                    myOptionMenu.getItem(1).setVisible(true);
-//                    myOptionMenu.getItem(2).setVisible(false);
-
 
                     }
                     if (Cur_State == Retrieve_State) {
-                        Log.d("MainActivity", "in on connected");
 
                         Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
                                 .setResultCallback(idCallback);
-                        //showMessage("Retrieve State");
                     }
                     if (Cur_State == Create_State) {
-                        Log.d("MainActivity", "in on connected");
 
                         Drive.DriveApi.newDriveContents(getGoogleApiClient())
                                 .setResultCallback(driveContentsCallback);
-                        //showMessage("Create State");
                     }
                 }
             }
@@ -732,45 +681,23 @@ public class MainActivity extends BaseDemoDriveActivity {
                 @Override
                 public void onResult(DriveApi.MetadataBufferResult result) {
                     if(getGoogleApiClient() != null) {
-                        Log.d("MainActivty", getGoogleApiClient().toString());
                         if (result != null) {
                             if (!result.getStatus().isSuccess()) {
-                                Log.d("MainActivty", "result is success");
 
                                 myOptionMenu.getItem(1).setVisible(true);
                                 myOptionMenu.getItem(2).setVisible(false);
-                                //showMessage("Problem while retrieving results");
                                 return;
                             }
-                            Log.d("MainActivty", result.toString());
 
                             boolean foundFile = false;
                             int count = result.getMetadataBuffer().getCount() - 1;
                             for (int i = 0; i < count; i++) {
                                 Metadata metadata = result.getMetadataBuffer().get(i);
-                                Log.d("MainActivity", metadata.getTitle());
                                 if (metadata.getTitle().equals("DailyEncList")) {
                                     MainActivity.EXISTING_FILE_ID = metadata.getDriveId().getResourceId();
                                     foundFile = true;
-                                    Log.d("MainActivity", "foundFile = True");
-                                    Log.d("MainActivity", Boolean.toString(bIsFirstTimeAppOpened));
                                     if (bIsFirstTimeAppOpened) {
-//                                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//                                SharedPreferences.Editor editor = sp.edit();
-//                                editor.putBoolean("signedIn", false);
-//                                editor.commit();
-//                                myOptionMenu.getItem(1).setVisible(true);
-//                                myOptionMenu.getItem(2).setVisible(false);
-//                                DialogPopup dialog = new DialogPopup();
-//                                Bundle args = new Bundle();
-//                                args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.FIRST_FOUND_DRIVE);
-//                                //args.putInt("FragmentID",this.getId());
-//                                dialog.setArguments(args);
-//                                dialog.show(getSupportFragmentManager(), "first-found-drive");
 
-                                        Log.d("MainActivty", getGoogleApiClient().toString());
-
-                                        //showMessage("Retrieving Contents");
                                         Cur_State = Retrieve_State;
                                         if(getGoogleApiClient() != null && MainActivity.EXISTING_FILE_ID != null) {
                                             Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
@@ -778,16 +705,11 @@ public class MainActivity extends BaseDemoDriveActivity {
                                         }
 
                                     } else {
-                                        Log.d("MainActivity","before cur state");
-                                        //showMessage("Changing Contents");
                                         Cur_State = Create_State;
-                                        Log.d("MainActivity","mid cur state");
                                         if(getGoogleApiClient() != null && MainActivity.EXISTING_FILE_ID != null) {
                                             Drive.DriveApi.fetchDriveId(getGoogleApiClient(), MainActivity.EXISTING_FILE_ID)
                                                     .setResultCallback(idCallbackEdit);
                                         }
-                                        Log.d("MainActivity","after cur state");
-
 
                                     }
 
@@ -805,31 +727,12 @@ public class MainActivity extends BaseDemoDriveActivity {
                                 editor.putBoolean("signedIn", false);
                                 editor.putBoolean("signedIn_Pressed", false);
                                 editor.commit();
-                                //encouragementList.clear();
                                 notificationEncouragementList.clear();
-                                //saveArray(encouragementList,"encouragementList");
                                 saveArray(notificationEncouragementList, "notificationEncouragementList");
-                                //clearGoogleApiClient();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra("cantFindDrive", "cantFindDrive");
                                 startActivity(intent);
                                 finish();
-//                        DialogPopup dialog = new DialogPopup();
-//                        Bundle args = new Bundle();
-//                        args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.CANT_FIND_DRIVE);
-//                        //args.putInt("FragmentID",this.getId());
-//                        dialog.setArguments(args);
-//                        dialog.setCancelable(false);
-//                        //dialog.setCanceledOnTouchOutside(false);
-//                        dialog.show(getSupportFragmentManager(), "cant-find-drive");
-                                Log.d("MainActivity", "in !foundFile");
-
-
-//                        showMessage("Creating Contents");
-//                        Cur_State = Create_State;
-//                        Drive.DriveApi.newDriveContents(getGoogleApiClient())
-//                                .setResultCallback(driveContentsCallback);
-
 
                             }
 
@@ -890,10 +793,8 @@ public class MainActivity extends BaseDemoDriveActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             if (result == null) {
-                //showMessage("Error while reading from the file");
                 return;
             }
-            //showMessage("Retrieved contents: " + result);
             try {
                 String[] totalResult = result.split("/t/");
                 String[] encouragementResult = totalResult[0].split("/m/");
@@ -982,7 +883,6 @@ public class MainActivity extends BaseDemoDriveActivity {
                 @Override
                 public void onResult(DriveApi.DriveContentsResult result) {
                     if (!result.getStatus().isSuccess()) {
-                        //showMessage("Error while trying to create new file contents");
                         return;
                     }
                     final DriveContents driveContents = result.getDriveContents();
@@ -1049,10 +949,8 @@ public class MainActivity extends BaseDemoDriveActivity {
                 @Override
                 public void onResult(DriveFolder.DriveFileResult result) {
                     if (!result.getStatus().isSuccess()) {
-                        //showMessage("Error while trying to create the file");
                         return;
                     }
-                    //showMessage("Created a file with content: " + result.getDriveFile().getDriveId());
 
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor editor = sp.edit();
@@ -1067,7 +965,6 @@ public class MainActivity extends BaseDemoDriveActivity {
         @Override
         public void onResult(DriveApi.DriveIdResult result) {
             if (!result.getStatus().isSuccess()) {
-                //showMessage("Cannot find DriveId. Are you authorized to view this file?");
                 return;
             }
 

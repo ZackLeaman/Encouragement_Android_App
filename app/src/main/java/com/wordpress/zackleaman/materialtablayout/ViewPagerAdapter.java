@@ -8,19 +8,21 @@ import java.util.ArrayList;
 
 /**
  * Created by Zack on 7/20/2016.
+ * This Class is used to extend the FragmentPagerAdapter in order to make a material tab layout
+ * with 4 fragment tabs
  */
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    ArrayList<Fragment> mFragments = new ArrayList<>();
-    ArrayList<String> mTabTitles = new ArrayList<>();
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
+    private ArrayList<String> mTabTitles = new ArrayList<>();
 
-    public void addFragments(Fragment fragments, String titles){
+    void addFragments(Fragment fragments, String titles){
         this.mFragments.add(fragments);
         this.mTabTitles.add(titles);
     }
 
 
-    public ViewPagerAdapter(FragmentManager fm){
+    ViewPagerAdapter(FragmentManager fm){
         super(fm);
     }
 

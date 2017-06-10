@@ -22,8 +22,10 @@ import java.util.List;
 
 /**
  * Created by Zack on 6/29/2016.
+ * Used in displaying dialog popups that ask users if they want
+ * Prayer and Scripture categories, as well as whether they want to delete an
+ * entry
  */
-//TODO FIX THIS CLASS
 public class DialogPopup extends DialogFragment {
     private static final String LOG_TAG = DialogPopup.class.getSimpleName();
     private LayoutInflater mLayoutInflater;
@@ -45,7 +47,6 @@ public class DialogPopup extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-//        setStyle(DialogFragment.STYLE_NORMAL,R.style.AppTheme);
         loadArray(encouragementList,getContext(),"encouragementList");
         loadArray(categoriesListPrayer,getContext(),"categoriesListPrayer");
         loadArray(categoriesListScripture,getContext(),"categoriesListScripture");
@@ -56,6 +57,7 @@ public class DialogPopup extends DialogFragment {
         final View view = mLayoutInflater.inflate(R.layout.dialog_layout, null);
         String command = getArguments().getString(DIALOG_TYPE);
 
+        // In the case that user is deleting an entry
         if (command.equals(DELETE_RECORD)) {
             final int entryPos = getArguments().getInt("entryPos");
             final String msg = getArguments().getString("msg");
@@ -95,16 +97,12 @@ public class DialogPopup extends DialogFragment {
                     String homeEncouragement = sp.getString("homeEncouragement","none");
                     if(msg.equals(homeEncouragement)){
                         if(!notificationEncouragementList.isEmpty()){
-                            //homeEncouragement = notificationEncouragementList.get(0);
                             SharedPreferences.Editor mEdit1 = sp.edit();
                             mEdit1.remove("homeEncouragement");
-                            //mEdit1.putString("homeEncouragement",homeEncouragement);
                             mEdit1.commit();
                         }else{
-                           // homeEncouragement = "/nEncouragement/n /nNo Entries in Encouragement/nnone/n3/nAlarm Off";
                             SharedPreferences.Editor mEdit1 = sp.edit();
                             mEdit1.remove("homeEncouragement");
-                            //mEdit1.putString("homeEncouragement",homeEncouragement);
                             mEdit1.commit();
                         }
                     }
@@ -115,9 +113,6 @@ public class DialogPopup extends DialogFragment {
                             if (msg.equals(shownEncouragementList.get(l))) {
                                 shownEncouragementList.remove(l);
                                 saveArray(shownEncouragementList, "shownEncouragementList");
-//                                ((CustomFieldsFragmentAlertDialog)getFragmentManager().findFragmentById(FragmentId)).updateAdapter();
-                                //((CustomFieldsFragmentAlertDialog)getTargetFragment()).updateAdapter();
-                                //((CustomFieldsFragmentAlertDialog)getFragmentManager().findFragmentByTag("ReviewLibrary")).updateAdapter();
                                 l = shownEncouragementList.size();
                             }
                         }
@@ -138,6 +133,7 @@ public class DialogPopup extends DialogFragment {
                         }
                     });
 
+        // In the case the user is selected whether they want other categories
         } else if(command.equals(OTHER_CATEGORIES)){
 
             final int FragmentId = getArguments().getInt("FragmentID");
@@ -150,9 +146,6 @@ public class DialogPopup extends DialogFragment {
                     SharedPreferences.Editor mEdit1 = sp.edit();
                     mEdit1.putBoolean("wantsPrayerAndScripture",true);
                     mEdit1.commit();
-//                    Intent intent = new Intent(getContext(),MainActivity.class);
-//                    getActivity().finish();
-//                    startActivity(intent);
                 }
             })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -168,6 +161,7 @@ public class DialogPopup extends DialogFragment {
                         }
                     });
 
+        // if backup found then ask if want to restore from it
         }else if(command.equals(FIRST_FOUND_DRIVE)) {
 
             final int FragmentId = getArguments().getInt("FragmentID");
@@ -194,7 +188,7 @@ public class DialogPopup extends DialogFragment {
                         }
                     });
 
-
+        // if cant find backup then ask if want to create new backup
         }else if(command.equals(CANT_FIND_DRIVE)) {
 
             final int FragmentId = getArguments().getInt("FragmentID");
@@ -203,10 +197,6 @@ public class DialogPopup extends DialogFragment {
             builder.setView(view).setPositiveButton("Restoring Account -- Resign-in", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    //TODO have a resign in
-                    //signedIn = true;
-                    //isFirstTimeOpening = true;
-                    //MainActivity.firstTimeAppOpened = true;
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putBoolean("signedIn", false);
@@ -239,7 +229,7 @@ public class DialogPopup extends DialogFragment {
                         }
                     });
 
-
+        // confirmation that want to restore from drive
         }else if(command.equals(RESTORE_BACKUP_CONFIRM)) {
 
             final int FragmentId = getArguments().getInt("FragmentID");
@@ -267,7 +257,7 @@ public class DialogPopup extends DialogFragment {
                         }
                     });
 
-
+        // confirmation that want to backup local to drive
         }else if(command.equals(BACKUP_DRIVE_CONFIRM)) {
 
             final int FragmentId = getArguments().getInt("FragmentID");
@@ -295,7 +285,7 @@ public class DialogPopup extends DialogFragment {
                         }
                     });
 
-
+        // confirmation that want to delete subcategory of prayer or scripture
         }else if(command.equals(DELETE_SUBCATEGORY)) {
             final int entryPos = getArguments().getInt("entryPos");
             final String category = getArguments().getString("category");
@@ -311,7 +301,7 @@ public class DialogPopup extends DialogFragment {
                         for (int j = 0; j < encouragementList.size(); j++) {
                             String[] entry = encouragementList.get(j).split("/n");
                             String entryCategory = "/n" + entry[1] + "/n";
-                            String entrySubCategory = "/n" + entry[4];
+                            String entrySubCategory = entry[4];
                             String newEntry = "/nOther";
                             if (subCategory.equals(entrySubCategory) && entryCategory.equals("/nPrayer/n")) {
                                 //newEntry = newEntry + entry[2] + "/n" + entry[3];
@@ -327,7 +317,7 @@ public class DialogPopup extends DialogFragment {
                         for (int j = 0; j < encouragementList.size(); j++) {
                             String[] entry = encouragementList.get(j).split("/n");
                             String entryCategory = "/n" + entry[1] + "/n";
-                            String entrySubCategory = "/n" + entry[4];
+                            String entrySubCategory = entry[4];
                             String newEntry = "/nOther";
                             if (subCategory.equals(entrySubCategory) && entryCategory.equals("/nScripture/n")) {
                                 //newEntry = newEntry + entry[2] + "/n" + entry[3];
@@ -354,27 +344,14 @@ public class DialogPopup extends DialogFragment {
                         }
                     });
 
-
+        // confirmation that want to sign out of Google Drive
         }else if(command.equals(SIGN_OUT)) {
 
-            //final int FragmentId = getArguments().getInt("FragmentID");
             TextView popupMessage = (TextView) view.findViewById(R.id.popup_message);
             popupMessage.setText("Are you sure you wish to Sign Out of Google Drive?");
             builder.setView(view).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    //signedIn = false;
-
-//                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-//                    SharedPreferences.Editor editor = sp.edit();
-//                    editor.putBoolean("signedIn", false);
-//                    editor.putBoolean("signedIn_Pressed", false);
-//                    editor.commit();
-
-                    //encouragementList.clear();
-                    //notificationEncouragementList.clear();
-                    //saveArray(encouragementList,"encouragementList");
-                    //saveArray(notificationEncouragementList,"notificationEncouragementList");
                     BaseDemoDriveActivity.clearGACOnConnected();
                     Intent intent = new Intent(getContext(),MainActivity.class);
                     startActivity(intent);
@@ -388,15 +365,11 @@ public class DialogPopup extends DialogFragment {
                         }
                     });
 
-
         }
-
-
 
         else {
             Log.d(LOG_TAG, "Invalid command passed as parameter");
         }
-
 
         return builder.create();
 

@@ -5,7 +5,6 @@ package com.wordpress.zackleaman.materialtablayout;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -16,6 +15,7 @@ import com.google.android.gms.drive.Drive;
 import java.util.concurrent.CountDownLatch;
 
 /**
+ * Created by Zack on 8/15/2016.
  * An AsyncTask that maintains a connected client.
  */
 public abstract class ApiClientAsyncTask<Params, Progress, Result>

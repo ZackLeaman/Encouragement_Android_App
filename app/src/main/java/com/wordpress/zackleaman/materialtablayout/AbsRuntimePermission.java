@@ -28,8 +28,18 @@ public abstract class AbsRuntimePermission extends AppCompatActivity {
 
     }
 
+    /**
+     * Once permissions are granted this abstract method is called for child classes
+     * @param requestCode int that represents the request code for permissions
+     */
     public abstract void onPermissionsGranted(int requestCode);
 
+    /**
+     * This method requests app permissions from the user
+     * @param requestedPermissions string array of all the permissions needed to be requested
+     * @param stringId final int id of a string resource to display to user as request title
+     * @param requestCode final int request code id
+     */
     public void requestAppPermissions(final String[] requestedPermissions, final int stringId, final int requestCode){
         mErrorString.put(requestCode,stringId);
 
@@ -58,6 +68,15 @@ public abstract class AbsRuntimePermission extends AppCompatActivity {
         }
     }
 
+    /**
+     * When app requests permissions, the system presents a dialog box. When user responds, the
+     * system invokes app's onRequestPermissionsResult() passing it the user response.
+     * App overrides this method to find out whether the permission was granted.
+     * The callback is passed the same request code you passed to requestPermissions()
+     * @param requestCode int that represents the requestCode
+     * @param permissions string array that represents the permissions
+     * @param grantResults int array that represents the permissions that were granted
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

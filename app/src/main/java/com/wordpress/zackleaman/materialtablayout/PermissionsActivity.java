@@ -5,6 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+/**
+ * Created by Zack on 8/15/2016.
+ * This is the PermissionActivity that is used to determine if user has granted all of the
+ * necessary permissions to access the app.
+ * Extends the AbsRuntimePermission class which handles RuntimePermission Utility Functions
+ */
 public class PermissionsActivity extends AbsRuntimePermission {
 
     private static final int REQUEST_PERMISSION = 10;
@@ -17,6 +23,7 @@ public class PermissionsActivity extends AbsRuntimePermission {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // RequestAppPermissions from extended AbsRuntimePermission class
         requestAppPermissions(new String[]{
                         Manifest.permission.READ_SMS,
                         Manifest.permission.SEND_SMS,
@@ -30,6 +37,10 @@ public class PermissionsActivity extends AbsRuntimePermission {
                 REQUEST_PERMISSION);
     }
 
+    /**
+     * Override extended classes onPermissionsGranted to launch MainActivity since permission granted
+     * @param requestCode int that represents the request code for permissions
+     */
     @Override
     public void onPermissionsGranted(int requestCode) {
         bPermissionGranted = true;
@@ -38,6 +49,9 @@ public class PermissionsActivity extends AbsRuntimePermission {
         finish();
     }
 
+    /**
+     * If app is resumed then request the app permissions again from extended class
+     */
     @Override
     protected void onResume() {
         super.onResume();

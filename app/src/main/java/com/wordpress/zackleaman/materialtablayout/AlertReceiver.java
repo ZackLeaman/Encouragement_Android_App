@@ -18,12 +18,18 @@ import java.util.Random;
 
 /**
  * Created by Zack on 8/1/2016.
+ * This class extends the broadcast receiver and handles when alarm alert received
  */
 public class AlertReceiver extends BroadcastReceiver {
     private ArrayList<String> encouragementList = new ArrayList<>();
     private ArrayList<String> alarmList = new ArrayList<>();
     private ArrayList<String> notificationEncouragementList = new ArrayList<>();
 
+    /**
+     * When Alarm goes off this method is called
+     * @param context context of app
+     * @param intent intent from which this was called from
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -340,24 +346,34 @@ public class AlertReceiver extends BroadcastReceiver {
 
     }
 
-    public void createNotification(Context context, String msg, String msgCategory, String msgTitle,String msgText, String msgAlert, String msgPos, int notifyID){
+    /**
+     * This method builds the notification and then sends it to the user
+     * @param context Context from which to build intent
+     * @param msg String full notification message
+     * @param msgCategory String message category
+     * @param msgTitle String message title
+     * @param msgText String message text to display on the notification
+     * @param msgAlert String message alert that can be used to reset alarm
+     * @param msgPos String message position in encouragement list
+     * @param notifyID int unique notification id
+     */
+    public void createNotification(Context context, String msg, String msgCategory,
+                                   String msgTitle,String msgText, String msgAlert,
+                                   String msgPos, int notifyID){
 
+        // Create new intent to go to the current encouragement sent through notification
         Intent intent = new Intent(context, CurrentEncouragement.class);
 
+        // If message is a reminder then go to main activity instead of current
         if(msgCategory.equals("Reminder")) {
             intent = new Intent(context, MainActivity.class);
         }
 
+        // Add intent flags for single top
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|
                 Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        intent.removeExtra("msg");
-        intent.removeExtra("msgCategory");
-        intent.removeExtra("msgTitle");
-        intent.removeExtra("msgText");
-        intent.removeExtra("msgAlert");
-        intent.removeExtra("msgPos");
-
+        // put all data to be sent to the new intent activity
         intent.putExtra("msg",msg);
         intent.putExtra("msgCategory", msgCategory);
         intent.putExtra("msgTitle",msgTitle);
@@ -368,8 +384,10 @@ public class AlertReceiver extends BroadcastReceiver {
             intent.putExtra("homeEncouragement", msg);
         }
 
+        // make a unique set action to ensure activity has new data
         intent.setAction("com.wordpress.zackleaman.materialtablayout.intent.action.ACTION_NAME" + notifyID);
 
+        // Build notification and send it through notification manager
         PendingIntent notificIntent = PendingIntent.getActivity(context, notifyID,
                 intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -399,7 +417,13 @@ public class AlertReceiver extends BroadcastReceiver {
 
     }
 
-
+    /**
+     * This sets the alarm for the particular entry or for all encouragements
+     * @param notificationType string that represents type of notification
+     * @param context Context to send the alarm from
+     * @param intent Intent to send the alarm from
+     * @param msg string message to send as the notification text
+     */
     public void setDailyAlarm(String notificationType, Context context, Intent intent, String msg){
         String category = "";
         String nameAddressDate = "";
@@ -488,6 +512,11 @@ public class AlertReceiver extends BroadcastReceiver {
 
     }
 
+    /**
+     * Stops the notification if needed
+     * @param notifID int unique notification id used
+     * @param context Context to stop the notification
+     */
     public void stopNotification(int notifID,Context context){
         Intent intentstop = new Intent(context, AlertReceiver.class);
         PendingIntent senderstop = PendingIntent.getBroadcast(context,

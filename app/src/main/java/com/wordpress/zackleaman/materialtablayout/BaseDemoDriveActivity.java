@@ -1,16 +1,3 @@
-/**
- * Copyright 2013 Google Inc. All Rights Reserved.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 package com.wordpress.zackleaman.materialtablayout;
 
@@ -32,6 +19,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.drive.Drive;
 
 /**
+ * Created by Zack on 8/15/2016.
  * An abstract activity that handles authorization and connection to the Drive
  * services.
  */
@@ -83,31 +71,10 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //showMessage("Im in on Create");
-        //setContentView(R.layout.activity_second_main);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         onActivityResult = true;
         onActivityResult(REQUEST_CODE_RESOLUTION,RESULT_OK,null);
 
-//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-//        if (sp.getBoolean("signedIn", true)) {
-//            if(inAccountPicker) {
-//                if(mGoogleApiClient2 != null) {
-//                    mGoogleApiClient2.connect();
-//                    showMessage("mGoogleApiClient2.connect()");
-//                }
-//
-//                //inAccountPicker = false;
-//            }
-//            else{
-//                SharedPreferences.Editor editor = sp.edit();
-//                editor.putBoolean("signedIn", false);
-//                editor.commit();
-//            }
-//        }
     }
 
     /**
@@ -119,14 +86,8 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        //showMessage("On Resume");
-
-//        mGoogleApiClient2.hasConnectedApi(Drive.API);
-
-
         if (mGoogleApiClient2 != null) {
-            //showMessage("onResume mGoogle");
-            //showMessage("onResume connect");
+
             mGoogleApiClient2.connect();
         }
 
@@ -134,7 +95,6 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         if(sp.getBoolean("signedIn",false)) {
 
-            Log.d("onResumeSignedin","sI = true " + sp.getBoolean("signedIn",false));
             try{
                 if(myOptionMenu != null){
                     myOptionMenu.getItem(1).setVisible(false);
@@ -145,7 +105,6 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
             }
 
         }else{
-            Log.d("onResumeSignedin","sI = false " + sp.getBoolean("signedIn",false));
             try{
                 if(myOptionMenu != null){
                     myOptionMenu.getItem(1).setVisible(true);
@@ -166,12 +125,9 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
             Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //showMessage("onActivityResult");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             if (sp.getBoolean("signedIn", true)) {
-                Log.d(TAG,"onActivity signedIn true");
                     if (requestCode == REQUEST_CODE_RESOLUTION && resultCode == RESULT_OK) {
-                        Log.d(TAG,"onActivity request and result");
                         if (mGoogleApiClient2 == null) {
                             mGoogleApiClient2 = new GoogleApiClient.Builder(this)
                                     .addApi(Drive.API)
@@ -180,13 +136,10 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
                                     .addConnectionCallbacks(this)
                                     .addOnConnectionFailedListener(this)
                                     .build();
-                            Log.d(TAG,"googleAPICLIENT build");
                         }
 
                         mGoogleApiClient2.connect();
-                        Log.d(TAG,"googleAPICLIENT connect");
                     }
-                    Log.d("accountPickerOnActiv", "account = true");
         }
 
     }
@@ -209,9 +162,7 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
      */
     @Override
     public void onConnected(Bundle connectionHint) {
-        Log.i(TAG, "GoogleApiClient connected");
         if(NEED_CLEAR_GAC){
-            Log.d(TAG,"In NEED CLEAR GAC");
             clearGoogleApiClient();
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = sp.edit();
@@ -247,14 +198,14 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(ConnectionResult result) {
         Log.i(TAG, "GoogleApiClient connection failed: " + result.toString());
-        Log.d(TAG, "result.getErrorCode = " + result.getErrorCode());
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         if(result.getErrorCode() == 4) {
             if (sp.getBoolean("signedIn", false)) {
 
                 MainActivity.isFirstTimeOpening = true;
-                sp.edit().putBoolean("isFirstTimeOpening", true);
-                sp.edit().commit();
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putBoolean("isFirstTimeOpening", true);
+                editor.commit();
 
                 if (numOfConnectionFailed == 0) {
                     numOfConnectionFailed++;
@@ -272,9 +223,9 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
 
                 } else if (numOfConnectionFailed > 0) {
                     mGoogleApiClient2.disconnect();
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putBoolean("signedIn", false);
-                    editor.commit();
+                    SharedPreferences.Editor editor2 = sp.edit();
+                    editor2.putBoolean("signedIn", false);
+                    editor2.commit();
                     myOptionMenu.getItem(1).setVisible(true);
                     myOptionMenu.getItem(2).setVisible(false);
                 }
@@ -316,16 +267,13 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
 
         if(mGoogleApiClient2 != null) {
             if(mGoogleApiClient2.isConnected() || mGoogleApiClient2.isConnecting()) {
-                Log.d("onNewIntent", "in the mgoogleconnected to clear it");
                 mGoogleApiClient2.unregisterConnectionCallbacks(this);
                 mGoogleApiClient2.unregisterConnectionFailedListener(this);
                 mGoogleApiClient2.clearDefaultAccountAndReconnect().setResultCallback(new ResultCallback<Status>() {
                     @Override
                     public void onResult(Status status) {
                         if(status.isSuccess()){
-                            Log.d("onNewIntent", "in success and bNeedToClear = " + MainActivity.bNeedToClear);
                             if(MainActivity.bNeedToClear) {
-                                Log.d("onNewIntent", "in success and bNeedToClear");
                                 MainActivity.bNeedToClear = false;
                                 mGoogleApiClient2.disconnect();
                                 reconnectGoogleApiClient();
@@ -340,12 +288,6 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
             }
         }
 
-        //mGoogleApiClient2 = null;
-
-        if(mGoogleApiClient2 == null){
-            //showMessage("mGoogleApiClient2 is null");
-        }
-
     }
 
     public void reconnectGoogleApiClient(){
@@ -357,11 +299,9 @@ public abstract class BaseDemoDriveActivity extends AppCompatActivity implements
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .build();
-            Log.d(TAG,"googleAPICLIENT build");
         }
 
         mGoogleApiClient2.connect();
-        Log.d(TAG,"googleAPICLIENT connect");
     }
 
 

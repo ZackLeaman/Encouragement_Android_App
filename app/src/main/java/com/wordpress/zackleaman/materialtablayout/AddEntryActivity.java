@@ -27,12 +27,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Zack on 8/15/2016.
- * This class will handle the add entry activity to create a new entry and add it to the encouragement list
+ * This class will handle the add entry activity to create a new entry and add it to the
+ * encouragement list
  */
-public class AddEntryActivity extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener{
+public class AddEntryActivity extends AppCompatActivity implements View.OnClickListener,
+        PopupMenu.OnMenuItemClickListener{
 
     private Activity activity;
     private String category = "";
@@ -109,7 +112,7 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
 
         // get the current date and time and format it correctly
         Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         String dateText = format.format(date);
         nameAddressDate = nameAddressDate + dateText;
 
@@ -294,6 +297,12 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * Used to display a back button on the Toolbar
+     * @param activity Activity that is to be used
+     * @param toolbar Toolbar to display back button on
+     * @param displayHomeAsUpEnabled boolean to determine whether want to display back button or not
+     */
     public void ToolbarConfigurer(Activity activity, Toolbar toolbar, boolean displayHomeAsUpEnabled) {
         // check that the back button on toolbar is there if so then set icon and set nav listener
         toolbar.setTitle((this.activity = activity).getTitle());
@@ -325,6 +334,10 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         finish();
     }
 
+    /**
+     * This is to find the next notification id to be able to be used
+     * @return notifID int that is a unique notification id
+     */
     private int findNextNotifID(){
         // get the next notification number id for encouragement list entry to use
         int notifID = 200;
@@ -344,6 +357,10 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         return notifID;
     }
 
+    /**
+     * Used to display a popup list to select from
+     * @param v view to show the popup on
+     */
     public void showPopUp(View v){
         // Create an instance of PopupMenu with created PopupMenu style
         PopupMenu popupMenu = new PopupMenu(this,v,1,0,R.style.PopupMenu);
@@ -367,6 +384,11 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         popupMenu.show();
     }
 
+    /**
+     * Handles menu item clicks such as from a popup list
+     * @param item MenuItem that was pressed
+     * @return boolean item pressed
+     */
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
@@ -455,6 +477,16 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * This sets the alarm for the particular entry or for all encouragements
+     * @param notificationType string that represents type of notification
+     * @param day int that represents day alarm to be set to
+     * @param hour int that is the hour the alarm to be set to
+     * @param minute int that is the minute the alarm to be set to
+     * @param notifyID int that is the unique notification identifier
+     * @param msg string message to send as the notification text
+     * @param pos string position of selected entry
+     */
     public void setDailyAlarm(String notificationType, int day, int hour, int minute,
                               int notifyID, String msg, String pos){
 
@@ -566,6 +598,12 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    /**
+     * Used to save an array to shared pref
+     * @param sKey List<String> to be saved to shared pref
+     * @param arrayName String of name of array to be saved to shared pref
+     * @return boolean whether commit success or not
+     */
     private boolean saveArray(List<String> sKey, String arrayName){
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor mEdit1=sp.edit();
@@ -579,6 +617,12 @@ public class AddEntryActivity extends AppCompatActivity implements View.OnClickL
         return mEdit1.commit();
     }
 
+    /**
+     * Used to load an array from shared pref
+     * @param sKey List<String> to be loaded from shared pref
+     * @param mContext context current context loading from
+     * @param arrayName String name to be loaded from shared pref
+     */
     private static void loadArray(List<String>sKey, Context mContext, String arrayName){
         SharedPreferences mSharedPreference1=PreferenceManager.getDefaultSharedPreferences(mContext);
         sKey.clear();

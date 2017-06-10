@@ -10,4 +10,11 @@
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_permissions">PermissionsActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="last_10_messages">Last 10 Messages</string>
+    <string name="last_20_messages">Last 20 Messages</string>
+    <string name="last_50_messages">Last 50 Messages</string>
+    <string name="create">Create</string>
+    <string name="categories">Categories</string>
+    <string name="_dash_Prayer">" - Prayer"</string>
+    <string name="_dash_Scripture">" - Scripture"</string>
 </resources>

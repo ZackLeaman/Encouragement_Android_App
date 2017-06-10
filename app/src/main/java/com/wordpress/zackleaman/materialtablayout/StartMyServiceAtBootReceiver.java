@@ -14,15 +14,17 @@ import java.util.List;
 
 /**
  * Created by Zack on 8/9/2016.
+ * This class is called whenever the phone is restarted in order to reset the alarms for the
+ * notifications being sent to the user.
  */
 public class StartMyServiceAtBootReceiver extends BroadcastReceiver {
     private ArrayList<String> alarmList = new ArrayList<>();
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        // If the intent action is equal to boot completed
         if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
-//            Intent serviceIntent = new Intent("com.wordpress.zackleaman.materialtablayout.NotifyService");
-//            context.startService(serviceIntent);
+            // Load the alarm list array and reset all the alarms in it
             loadArray(alarmList,context,"alarmList");
             for(int i = 0; i < alarmList.size(); i++){
                 String[] entry = alarmList.get(i).split("/n");
@@ -36,43 +38,48 @@ public class StartMyServiceAtBootReceiver extends BroadcastReceiver {
                 String fullMessage = "/n" + category + "/n" + from + "/n" +
                         msg + "/n" + subCategory + "/n" + notifID + "/n" + notifString;
 
+                // Make an alertIntent for the AlertReceiver with the current entry
                 Intent alertIntent = new Intent(context,AlertReceiver.class);
                 alertIntent.putExtra("msg",fullMessage);
                 alertIntent.putExtra("msgCategory",category);
                 alertIntent.putExtra("msgTitle", category + subCategory);
                 alertIntent.putExtra("msgText",msg);
                 alertIntent.putExtra("msgAlert","New " + category + " Notification");
-                //alertIntent.putExtra("msgPos",pos);
                 alertIntent.putExtra("notifyID",notifID);
 
+                // If its alarm status string is alarm off then do not set alarm
                 if(!notifString.equals("Alarm Off")){
                     try {
                         int notifyID = Integer.parseInt(notifID);
                         long timeLong = Long.parseLong(time);
 
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,notifyID,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+                        PendingIntent pendingIntent = PendingIntent
+                                .getBroadcast(context,notifyID,alertIntent,
+                                        PendingIntent.FLAG_UPDATE_CURRENT);
+
                         AlarmManager alarmManager = (AlarmManager)
                                 context.getSystemService(Context.ALARM_SERVICE);
 
                         String[] type = notifString.split(" ");
+                        // If alarm type is Daily use the alarm manager alarm service to set a new alarm
                         if(type[1].equals("Daily")){
-//                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeLong,
-//                                    AlarmManager.INTERVAL_DAY, pendingIntent);
                             if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                                alarmManager.set(AlarmManager.RTC_WAKEUP, timeLong + AlarmManager.INTERVAL_DAY, pendingIntent);
+                                alarmManager.set(AlarmManager.RTC_WAKEUP, timeLong +
+                                        AlarmManager.INTERVAL_DAY, pendingIntent);
                             } else {
-                                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeLong + AlarmManager.INTERVAL_DAY, pendingIntent);
+                                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeLong +
+                                        AlarmManager.INTERVAL_DAY, pendingIntent);
                             }
 
-
+                        // If alarm type is Weekly use the alarm manager alarm service to set a new alarm
                         }else if(type[1].equals("Weekly")){
-//                            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeLong,
-//                                    AlarmManager.INTERVAL_DAY*7, pendingIntent);
 
                             if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                                alarmManager.set(AlarmManager.RTC_WAKEUP, timeLong + AlarmManager.INTERVAL_DAY*7, pendingIntent);
+                                alarmManager.set(AlarmManager.RTC_WAKEUP, timeLong +
+                                        AlarmManager.INTERVAL_DAY*7, pendingIntent);
                             } else {
-                                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeLong + AlarmManager.INTERVAL_DAY*7, pendingIntent);
+                                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeLong +
+                                        AlarmManager.INTERVAL_DAY*7, pendingIntent);
                             }
 
                         }

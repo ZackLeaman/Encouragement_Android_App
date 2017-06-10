@@ -35,6 +35,7 @@ import java.util.Random;
 
 /**
  * Created by Zack on 7/28/2016.
+ * This class is to have a detail activity on a certain entry selected
  */
 public class CurrentEncouragement extends AppCompatActivity implements View.OnClickListener,
         PopupMenu.OnMenuItemClickListener{
@@ -118,7 +119,6 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         btnSunset  = (ImageButton)findViewById(R.id.btn_sunset_small);
         btnTarp  = (ImageButton)findViewById(R.id.btn_tarp_small);
         btnWheatfield = (ImageButton)findViewById(R.id.btn_wheatfield_small);
-        //                        btnCity2, btnCrumbledPaper,btnForest,btnHutWall,btnSea4,btnShore,btnTrain,btnTropic2,btnWood;
         btnCity2 = (ImageButton)findViewById(R.id.btn_city_2);
         btnCrumbledPaper = (ImageButton)findViewById(R.id.btn_crumbled_paper);
         btnForest = (ImageButton)findViewById(R.id.btn_forest);
@@ -243,7 +243,6 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         //Notification setup
         tvNotification = (TextView)this.findViewById(R.id.tvNotification);
         btnInfoNotification = (Button)this.findViewById(R.id.btnInfoNotification);
-        //svNotificationDetails = (ScrollView)this.findViewById(R.id.svNotificationDetails);
         linearLayoutNotification = (LinearLayout)this.findViewById(R.id.linearLayoutNotification);
         btnNotificationFreq = (Button)this.findViewById(R.id.btnNotificationFreq);
         btnDayWeekNotification = (Button)this.findViewById(R.id.btnDayWeekNotification);
@@ -273,6 +272,7 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         }catch (Exception e){
             e.printStackTrace();
         }
+        // select the btn that is current background
         if(picChoice == 0){
             btnAriedLandscape.setAlpha(0.2f);
         }else if(picChoice == 1){
@@ -397,11 +397,13 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
             btnPlain.setAlpha(0.2f);
         }
 
+        // determine if pic choice cycle if so then choose random pic for background
         if(picChoice == -1){
             Random r = new Random();
             picChoice = r.nextInt(60);
             btnCyclePhotos.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent3));
         }
+        // set the background of the main layout
         if(picChoice == 0){
             entryRelativeLayout.setBackgroundResource(R.drawable.ariedlandscape);
         }else if(picChoice == 1){
@@ -526,102 +528,10 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
             entryRelativeLayout.setBackgroundResource(R.drawable.plain);
         }
 
-
-
-
-
-
-
-
-//        selectedBackground = new ArrayList<>();
-//        loadArray(selectedBackground,getApplicationContext(),"selectedBackground");
-//        int picChoice;
-//        if(!selectedBackground.isEmpty()) {
-//            picChoice = Integer.parseInt(selectedBackground.get(0));
-//        }else{
-//            picChoice = 0;
-//        }
-//
-//        if(picChoice == 1){
-//            btnAriedLandscape.setAlpha(0.2f);
-//        }else if(picChoice == 2){
-//            btnBrickwall.setAlpha(0.2f);
-//        }else if(picChoice == 3){
-//            btnCity.setAlpha(0.2f);
-//        }else if(picChoice == 4){
-//            btnMountains1.setAlpha(0.2f);
-//        }else if(picChoice == 5){
-//            btnMountains2.setAlpha(0.2f);
-//        }else if(picChoice == 6){
-//            btnRoof.setAlpha(0.2f);
-//        }else if(picChoice == 7){
-//            btnSea1.setAlpha(0.2f);
-//        }else if(picChoice == 8){
-//            btnSea2.setAlpha(0.2f);
-//        }else if(picChoice == 9){
-//            btnSea3.setAlpha(0.2f);
-//        }else if(picChoice == 10){
-//            btnSky1.setAlpha(0.2f);
-//        }else if(picChoice == 11){
-//            btnSky2.setAlpha(0.2f);
-//        }else if(picChoice == 12){
-//            btnSunset.setAlpha(0.2f);
-//        }else if(picChoice == 13){
-//            btnTarp.setAlpha(0.2f);
-//        }else if(picChoice == 14){
-//            btnWheatfield.setAlpha(0.2f);
-//        }
-//
-//        if(picChoice == 0){
-//            Random r = new Random();
-//            picChoice = r.nextInt(14) + 1;
-//            btnCyclePhotos.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent3));
-//        }
-//
-//        if(picChoice == 1){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.ariedlandscape);
-//        }else if(picChoice == 2){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.brickwall);
-//        }else if(picChoice == 3){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.city);
-//        }else if(picChoice == 4){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.mountains1);
-//        }else if(picChoice == 5){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.mountains2);
-//        }else if(picChoice == 6){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.roof);
-//        }else if(picChoice == 7){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.sea1);
-//        }else if(picChoice == 8){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.sea2);
-//        }else if(picChoice == 9){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.sea3);
-//        }else if(picChoice == 10){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.sky1);
-//        }else if(picChoice == 11){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.sky2);
-//        }else if(picChoice == 12){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.sunset);
-//        }else if(picChoice == 13){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.tarp);
-//        }else if(picChoice == 14){
-//            entryRelativeLayout.setBackgroundResource(R.drawable.wheatfield);
-//        }
-
-
-//        createNotification(context,
-//                intent.getStringExtra("msg"),
-//                intent.getStringExtra("msgCategory"),
-//                intent.getStringExtra("msgTitle"),
-//                intent.getStringExtra("msgText"),
-//                intent.getStringExtra("msgAlert"),
-//                intent.getStringExtra("msgPos"),
-//                intent.getIntExtra("notifyID",999));
-        // TODO end of new Intent
+        // get the intent extra data and set the display accordingly
         Bundle extras = intent.getExtras();
         if(extras != null){
             if(extras.containsKey("msg")){
-                ///TODO SAVE MESSAGE
                 try{
                     String msg = extras.getString("msg");
                     fullEntry = msg;
@@ -675,6 +585,7 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                     mainCategory = 3;
                 }
 
+                // If not encouragement then show the alarm editor for this entry
                 if(!category.equals("Encouragement")) {
                     //Alarm Weekly on Monday 8:39 PM ::format::
                     if (notifInfoString.equals("new")) {
@@ -708,8 +619,6 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                     } else {
                         tvNotification.setText(notifInfoString);
                         btnInfoNotification.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
-                        //relativeLayoutNotification.setVisibility(View.GONE);
-                        //svNotificationDetails.setVisibility(View.GONE);
                         linearLayoutNotification.setVisibility(View.GONE);
                         isInfoActive = false;
                         isNotifFreqActive = false;
@@ -788,8 +697,6 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                     tvNotification.setText("");
                     tvNotification.setVisibility(View.GONE);
                     btnInfoNotification.setVisibility(View.GONE);
-                    //relativeLayoutNotification.setVisibility(View.GONE);
-                    //svNotificationDetails.setVisibility(View.GONE);
                     linearLayoutNotification.setVisibility(View.GONE);
                 }
 
@@ -809,7 +716,8 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
     public void onBackPressed()
     {
         Intent intent = new Intent(this,MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|
+                Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         Random r = new Random();
         int ID = r.nextInt(10000);
         intent.setAction("com.wordpress.zackleaman.materialtablayout.intent.action.ACTION_NAME" + ID);
@@ -818,23 +726,18 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         finish();
     }
 
-
+    /**
+     * Used to display a back button on the Toolbar
+     * @param activity Activity that is to be used
+     * @param toolbar Toolbar to display back button on
+     * @param displayHomeAsUpEnabled boolean to determine whether want to display back button or not
+     */
     public void ToolbarConfigurer(Activity activity, Toolbar toolbar, boolean displayHomeAsUpEnabled) {
         toolbar.setTitle((this.activity = activity).getTitle());
         if (!displayHomeAsUpEnabled) return;
         toolbar.setNavigationIcon(android.R.drawable.ic_menu_revert);
         toolbar.setNavigationOnClickListener(this);
     }
-
-
-//    tvNotification = (TextView)findViewById(R.id.tvNotification);
-//    btnInfoNotification = (Button)findViewById(R.id.btnInfoNotification);
-//    svNotificationDetails = (ScrollView)findViewById(R.id.svNotificationDetails);
-//    btnNotificationFreq = (Button)findViewById(R.id.btnNotificationFreq);
-//    btnDayWeekNotification = (Button)findViewById(R.id.btnDayWeekNotification);
-//    btnSaveNotification = (Button)findViewById(R.id.btnSaveNotification);
-//    timePickerNotification = (TimePicker)findViewById(R.id.timePickerNotification);
-//    relativeLayoutNotification = (RelativeLayout)findViewById(R.id.relativeLayoutNotification);
 
 
     @Override
@@ -877,8 +780,6 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
 
 
                 }else{
-                    //svNotificationDetails.setVisibility(View.GONE);
-                    //relativeLayoutNotification.setVisibility(View.GONE);
                     linearLayoutNotification.setVisibility(View.GONE);
                     btnInfoNotification.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
                 }
@@ -894,7 +795,6 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 showPopUp(v);
                 break;
             case R.id.btnSaveNotification:
-                //TODO notification save
                 if (Build.VERSION.SDK_INT >= 23 ) {
                     hour = timePickerNotification.getHour();
                     minute = timePickerNotification.getMinute();
@@ -1012,8 +912,6 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 isInfoActive = false;
                 isNotifFreqActive = false;
                 isNotifDayActive = false;
-                //relativeLayoutNotification.setVisibility(View.GONE);
-                //svNotificationDetails.setVisibility(View.GONE);
                 linearLayoutNotification.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(),
                         "Notification Settings Saved",
@@ -1029,152 +927,91 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 resetButtonTints();
                 btnCyclePhotos.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent3));
                 saveString("backgroundSelection","-1");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"0");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_ariedlandscape_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.ariedlandscape);
                 resetButtonTints();
                 btnAriedLandscape.setAlpha(0.2f);
                 saveString("backgroundSelection","0");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"1");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_brickwall_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.brickwall);
                 resetButtonTints();
                 btnBrickwall.setAlpha(0.2f);
                 saveString("backgroundSelection","1");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"2");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_city_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.city);
                 resetButtonTints();
                 btnCity.setAlpha(0.2f);
                 saveString("backgroundSelection","2");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"3");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_mountains1_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.mountains1);
                 resetButtonTints();
                 btnMountains1.setAlpha(0.2f);
                 saveString("backgroundSelection","3");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"4");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_mountains2_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.mountains2);
                 resetButtonTints();
                 btnMountains2.setAlpha(0.2f);
                 saveString("backgroundSelection","4");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"5");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_roof_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.roof);
                 resetButtonTints();
                 btnRoof.setAlpha(0.2f);
                 saveString("backgroundSelection","5");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"6");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_sea1_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.sea1);
                 resetButtonTints();
                 btnSea1.setAlpha(0.2f);
                 saveString("backgroundSelection","6");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"7");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_sea2_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.sea2);
                 resetButtonTints();
                 btnSea2.setAlpha(0.2f);
                 saveString("backgroundSelection","7");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"8");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_sea3_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.sea3);
                 resetButtonTints();
                 btnSea3.setAlpha(0.2f);
                 saveString("backgroundSelection","8");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"9");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_sky1_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.sky1);
                 resetButtonTints();
                 btnSky1.setAlpha(0.2f);
                 saveString("backgroundSelection","9");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"10");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_sky2_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.sky2);
                 resetButtonTints();
                 btnSky2.setAlpha(0.2f);
                 saveString("backgroundSelection","10");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"11");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_sunset_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.sunset);
                 resetButtonTints();
                 btnSunset.setAlpha(0.2f);
                 saveString("backgroundSelection","11");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"12");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_tarp_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.tarp);
                 resetButtonTints();
                 btnTarp.setAlpha(0.2f);
                 saveString("backgroundSelection","12");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"13");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
             case R.id.btn_wheatfield_small:
                 entryRelativeLayout.setBackgroundResource(R.drawable.wheatfield);
                 resetButtonTints();
                 btnWheatfield.setAlpha(0.2f);
                 saveString("backgroundSelection","13");
-
-//                selectedBackground.clear();
-//                selectedBackground.add(0,"14");
-//                saveArray(selectedBackground,"selectedBackground");
                 break;
-            //TODO add the new picture buttons
             case R.id.btn_city_2:
                 entryRelativeLayout.setBackgroundResource(R.drawable.city_2);
                 resetButtonTints();
@@ -1456,7 +1293,6 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 btnClose.setVisibility(View.GONE);
                 break;
             default:
-                //NavUtils.navigateUpFromSameTask(activity);
                 Intent intent = new Intent(this,MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 Random r = new Random();
@@ -1472,11 +1308,15 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        // once destroyed unbind drawable of main layout to save space
         unbindDrawables(findViewById(R.id.entryRelativeLayout));
         System.gc();
     }
 
+    /**
+     * Used to save space by unbinding drawable on specific view element
+     * @param view view used to unbind drawables on that view item
+     */
     private void unbindDrawables(View view) {
         if (view.getBackground() != null) {
             view.getBackground().setCallback(null);
@@ -1533,30 +1373,14 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
             if(mainCategory == 2) {
                 for (int i = 0; i < categoriesListPrayer.size(); i++) {
                     String[] catList = categoriesListPrayer.get(i).split("/n");
-                    //String[] selectedCategory = tvTitle.getText().toString().split(" - ");
-//                int catSize = categoriesList.size() -1;
-//                for(int j = 0; j < catSize; j++){
-//                    item.getSubMenu().removeItem(j);
-//                }
-//                if(!catList[1].equals(category)) {
                     CharSequence c_arr = catList[1];
                     menu.getItem(0).getSubMenu().addSubMenu(0, i, 0, c_arr);
-                    //getMenu().getItem(0)
-//                }
                 }
             }else if(mainCategory == 3) {
                 for (int i = 0; i < categoriesListScripture.size(); i++) {
                     String[] catList = categoriesListScripture.get(i).split("/n");
-                    //String[] selectedCategory = tvTitle.getText().toString().split(" - ");
-//                int catSize = categoriesList.size() -1;
-//                for(int j = 0; j < catSize; j++){
-//                    item.getSubMenu().removeItem(j);
-//                }
-//                if(!catList[1].equals(category)) {
                     CharSequence c_arr = catList[1];
                     menu.getItem(0).getSubMenu().addSubMenu(0, i, 0, c_arr);
-                    //getMenu().getItem(0)
-//                }
                 }
             }
         }catch (Exception e){
@@ -1576,20 +1400,14 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
 
                 return true;
             case R.id.choosePhotoEntry:
-                //Toast.makeText(getApplicationContext(),"Background",Toast.LENGTH_LONG).show();
                 hsv.setVisibility(View.VISIBLE);
                 btnClose.setVisibility(View.VISIBLE);
                 return true;
             case R.id.deleteEntry:
-//                Toast.makeText(getApplicationContext(),"Entry Deleted",Toast.LENGTH_LONG).show();
-//                deleteEntry();
-//                NavUtils.navigateUpFromSameTask(activity);
-
                 DialogPopup dialog = new DialogPopup();
                 Bundle args = new Bundle();
                 args.putString(DialogPopup.DIALOG_TYPE, DialogPopup.DELETE_RECORD);
                 args.putInt("entryPos", -1);
-//                args.putInt("FragmentID",this.getId());
                 args.putString("msg", fullEntry);
                 args.putString("type","Review");
                 dialog.setArguments(args);
@@ -1612,10 +1430,6 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                         saveArray(encouragementList, "encouragementList");
                         category = title;
 
-//                        Toast.makeText(getApplicationContext(),encouragementList.get(0),Toast.LENGTH_LONG).show();
-//                        Toast.makeText(getApplicationContext(),selectedEncouragement.get(0),Toast.LENGTH_LONG).show();
-
-
                         Toast.makeText(getApplicationContext(), "Entry moved to " + title + " category", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getApplicationContext(), "Entry already in " + title + " category", Toast.LENGTH_SHORT).show();
@@ -1630,11 +1444,11 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
 
         }
 
-
-
-        //return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This resets the background buttons to be unselected state
+     */
     public void resetButtonTints(){
         btnPlain.setAlpha(1.0f);
         btnCyclePhotos.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent2));
@@ -1702,36 +1516,10 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
     }
 
 
-    public void deleteEntry(){
-        for(int i = 0; i < encouragementList.size(); i++){
-            if(selectedEncouragement.get(0).equals(encouragementList.get(i))){
-
-                //This is here to delete the entry from notification list
-                ArrayList<String> notificationEncouragementList = new ArrayList<>();
-                loadArray(notificationEncouragementList,this,"notificationEncouragementList");
-                for(int j = 0; j < notificationEncouragementList.size(); j++) {
-                    if (notificationEncouragementList.get(j).equals(selectedEncouragement.get(0))) {
-                        notificationEncouragementList.remove(j);
-                        saveArray(notificationEncouragementList, "notificationEncouragementList");
-                    }
-                }
-
-                encouragementList.remove(i);
-                saveArray(encouragementList,"encouragementList");
-            }
-        }
-        if(category.equals("Prayer") || category.equals("Scripture")){
-            try {
-                int notID = Integer.parseInt(notifID);
-                stopNotification(notID);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-
+    /**
+     * Used to display a popup list to select from
+     * @param v view to show the popup from
+     */
     public void showPopUp(View v){
         PopupMenu popupMenu = new PopupMenu(this,v,1,0,R.style.PopupMenu);
 
@@ -1750,23 +1538,6 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 popupMenu.getMenu().getItem(i).setVisible(false);
             }
         }
-
-//        inflater.inflate(R.menu.entry_menu, popupMenu.getMenu());
-//        try {
-//            for(int i = 0; i < categoriesList.size(); i++){
-//                String[] catList = categoriesList.get(i).split("/n");
-//                //String[] selectedCategory = tvTitle.getText().toString().split(" - ");
-//
-//                if(!catList[1].equals(category)) {
-//                    CharSequence c_arr = catList[1];
-//                    popupMenu.getMenu().getItem(0).getSubMenu().addSubMenu(0, i, 0, c_arr);
-//                }
-//            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-
-
 
         popupMenu.show();
     }
@@ -1854,30 +1625,19 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 return true;
             default:
                 return false;
-//            default:
-//                String title = item.getTitle().toString();
-//                try{
-//
-//                    String smsMessageStr = "/n" + category + "/n" + from + "/n" + message + "/n" + title;
-//                    Toast.makeText(getApplicationContext(), "Entry Moved to " + title, Toast.LENGTH_SHORT).show();
-//
-//                    for (int j = 0; j < encouragementList.size(); j++) {
-//                        if (encouragementList.get(j).equals(selectedEncouragement.get(0))) {
-//                            encouragementList.set(j, smsMessageStr);
-//                            saveArray(encouragementList, "encouragementList");
-//                            j = encouragementList.size();
-//                        }
-//                    }
-//
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//
-//                return false;
         }
     }
 
-
+    /**
+     * This sets the alarm for the particular entry or for all encouragements
+     * @param notificationType string that represents type of notification
+     * @param day int that represents day alarm to be set to
+     * @param hour int that is the hour the alarm to be set to
+     * @param minute int that is the minute the alarm to be set to
+     * @param notifyID int that is the unique notification identifier
+     * @param msg string message to send as the notification text
+     * @param pos string position of selected entry
+     */
     public void setDailyAlarm(String notificationType, int day, int hour, int minute, int notifyID, String msg, String pos){
         String category = "";
         String nameAddressDate = "";
@@ -1948,13 +1708,10 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
         AlarmManager alarmManager = (AlarmManager)
                 this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         if(notificationType.equals("Daily")) {
-//            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-//                    AlarmManager.INTERVAL_DAY, pendingIntent);
 
             // if calendar time has already passed then add a day to the time
             if(calendar.getTimeInMillis() < System.currentTimeMillis()){
                 calendar.setTimeInMillis(calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY);
-                //Toast.makeText(this,"Time Added",Toast.LENGTH_LONG).show();
             }
 
             if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
@@ -1963,15 +1720,11 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             }
 
-//            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }else if(notificationType.equals("Weekly")){
-//            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-//                    AlarmManager.INTERVAL_DAY*7, pendingIntent);
 
             // if calendar time has already passed then add a week to the time
             if(calendar.getTimeInMillis() < System.currentTimeMillis()){
                 calendar.setTimeInMillis(calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY*7);
-//                Toast.makeText(getContext(),"Time Added",Toast.LENGTH_LONG).show();
             }
 
             if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
@@ -1980,7 +1733,6 @@ public class CurrentEncouragement extends AppCompatActivity implements View.OnCl
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             }
 
-//            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
 
     }

@@ -40,20 +40,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by Zack on 8/15/2016.
+ * This is a fragment material layout tab to show the users encouragement library.
+ * This is called and used by the MainActivity class
  */
-public class SendMessageFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener,
+public class SendMessageFragment extends Fragment implements AdapterView.OnItemClickListener,
+        AdapterView.OnItemSelectedListener,
         PopupMenu.OnMenuItemClickListener{
 
-    private Button sendSmsBtn, btnCancelContact, btnSyncContacts;
-    private EditText toPhoneNumber;
+    private Button sendSmsBtn, btnCancelContact;
     private EditText smsMessageET;
-    private EditText etTo;
-    private String scAddress;
-    private String destinationAddress;
 
     private RelativeLayout relativeLayoutSend, relativeLayoutAdd;
     private Button btnSendDropdown, btnAddDropdown;
@@ -63,10 +63,7 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
     private TextView tvNotificationTitleAdd;
     private TimePicker timePickerNotificationAdd;
 
-    private Button btnRR1, btnRR2, btnRR3, btnRR4, btnRR5;
-
     private Boolean isSendActive, isAddActive;
-
 
     private String category = "";
     private String nameAddressDate = "Me on ";
@@ -80,7 +77,6 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
     private ArrayList<String> categoriesListPrayer = new ArrayList<>();
     private ArrayList<String> categoriesListScripture = new ArrayList<>();
     private ArrayList<String> alarmList = new ArrayList<>();
-    private ArrayList<String> recentSenders = new ArrayList<>();
     private enum Notification{DAILY,WEEKLY,NONE}
     private enum NotificationDay{SUNDAY,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY}
     private Notification mNotification;
@@ -91,24 +87,16 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
 
 
     public static ArrayAdapter<String> adapter;
-    // Store contacts values in these arraylist
+    // Store contacts values in these arraylists
     public static ArrayList<String> phoneValueArr = new ArrayList<String>();
     public static ArrayList<String> nameValueArr = new ArrayList<String>();
 
-
-
-    // Initialize variables
-
     private AutoCompleteTextView textView=null;
 
-
-    private EditText toNumber=null;
     private String name = "";
     private String toNumberValue="";
 
-    public SendMessageFragment() {
-        // Required empty public constructor
-    }
+    public SendMessageFragment() {}
 
 
     @Override
@@ -121,7 +109,8 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        Log.d("ActivityCreated","line 71");
+
+        // GET VIEW REFERENCES AND INITIALIZE VARIABLES
         isSendActive = true;
         isAddActive = false;
         isCategorySubActive = false;
@@ -139,12 +128,6 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         etMessageAdd = (EditText)getView().findViewById(R.id.etMessageAdd);
         tvNotificationTitleAdd = (TextView)getView().findViewById(R.id.tvNotificationTitleAdd);
         timePickerNotificationAdd = (TimePicker)getView().findViewById(R.id.timePickerNotificationAdd);
-        btnRR1 = (Button)getView().findViewById(R.id.btnRR1);
-        btnRR2 = (Button)getView().findViewById(R.id.btnRR2);
-        btnRR3 = (Button)getView().findViewById(R.id.btnRR3);
-        btnRR4 = (Button)getView().findViewById(R.id.btnRR4);
-        btnRR5 = (Button)getView().findViewById(R.id.btnRR5);
-
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         wantsPrayerAndScripture = sp.getBoolean("wantsPrayerAndScripture",true);
@@ -153,6 +136,7 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         btnAddDropdown.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, android.R.drawable.arrow_down_float);
         relativeLayoutAdd.setVisibility(View.GONE);
 
+        // Drop down button for displaying and hiding the Send Message Layout
         btnSendDropdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,6 +154,7 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                 }
             }
         });
+        // Drop down button for displaying and hiding the Add Entry Layout
         btnAddDropdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,12 +176,14 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         });
 
 
+        // LOAD ARRAYS FROM SHARED PREF
         loadArray(categoriesList, getContext(), "categoriesList");
         loadArray(categoriesListPrayer,getContext(),"categoriesListPrayer");
         loadArray(categoriesListScripture,getContext(),"categoriesListScripture");
         loadArray(encouragementList, getContext(), "encouragementList");
         loadArray(alarmList, getContext(), "alarmList");
 
+        // If entry created then make sure default variables are set
         category = "Encouragement";
         nameAddressDate = "Me on ";
         message = "";
@@ -205,8 +192,9 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         notifAlarmString = "Alarm Off";
         notID = findNextNotifID();
 
+        // Get the date for the Name Address and Date for the entry to be created
         Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         String dateText = format.format(date);
         nameAddressDate = nameAddressDate + dateText;
 
@@ -219,6 +207,7 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         btnNotificationDayAdd.setVisibility(View.GONE);
         timePickerNotificationAdd.setVisibility(View.GONE);
 
+        // Used for Category Selection
         btnCategorySub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -228,6 +217,7 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                 showPopUp(view);
             }
         });
+        // Used for the Type of Notification Time Settings Selection
         btnNotificationTypeAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -237,6 +227,7 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                 showPopUp(view);
             }
         });
+        // Used for Selection of Day for Notification Time Settings Selection
         btnNotificationDayAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -246,6 +237,7 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                 showPopUp(view);
             }
         });
+        // Used for Clearing the create entry section
         btnClearAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -266,12 +258,14 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                 etMessageAdd.setText(message);
             }
         });
+        // Used to Create an entry and add it to one's library
         btnCreateAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!etMessageAdd.getText().toString().isEmpty()) {
                     if(!btnCategorySub.getText().toString().equals("Encouragement")){
                         try{
+                            // get a new notification id for new entry
                             notID = findNextNotifID();
                             notifID = Integer.toString(notID);
                         }catch (Exception e){
@@ -279,7 +273,10 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                         }
                     }
 
+                    // get body message for entry
                     message = etMessageAdd.getText().toString();
+
+                    // get the time set for the notification alarm
                     if (Build.VERSION.SDK_INT >= 23 ) {
                         hour = timePickerNotificationAdd.getHour();
                         minute = timePickerNotificationAdd.getMinute();
@@ -287,6 +284,9 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                         hour = timePickerNotificationAdd.getCurrentHour();
                         minute = timePickerNotificationAdd.getCurrentMinute();
                     }
+
+                    // Get the hour and minute selected and convert it to displayable value for user
+                    //      to interpret.
                     String type = "Daily";
                     String amOrPmHour;
                     String amOrPm;
@@ -294,27 +294,32 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                     int dayNum = 1;
                     String day = "";
                     String pos = "0";
-
+                    // If hour is PM
                     if(hour >= 12 && hour <= 23){
                         amOrPm = "PM";
+                        // If not 12 then subtract 12 because in military time
                         if(hour != 12) {
                             amOrPmHour = Integer.toString(hour - 12);
                         }else{
                             amOrPmHour = Integer.toString(hour);
                         }
+                    // If hour is AM
                     }else{
                         amOrPm = "AM";
+                        // If 0 then add 12 because in military time
                         if(hour == 0) {
                             amOrPmHour = Integer.toString(hour + 12);
                         }else{
                             amOrPmHour = Integer.toString(hour);
                         }
                     }
+                    // Make sure to display 0 before the value if less then 10
                     if(minute < 10){
                         stringMinute = "0"+Integer.toString(minute);
                     }else{
                         stringMinute = Integer.toString(minute);
                     }
+                    // Get the Day chosen by the user to send notification
                     switch (mNotificationDay){
                         case SUNDAY:
                             dayNum = 1;
@@ -345,6 +350,8 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                             day = "Saturday";
                             break;
                     }
+                    // Get the time type for the notification and build the string to display to the
+                    //      user for the entries alarm overview
                     switch (mNotification){
                         case DAILY:
                             type = "Daily";
@@ -361,16 +368,22 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                             notifAlarmString = "Alarm Off";
                             break;
                     }
+
+                    // Create the final full entry by :
+                    // /nCategory/nNameAddressDate/nMessage/nSubCategory/nNotifID/nNotifAlarmString
                     String fullEntry = "/n" + category + "/n" + nameAddressDate + "/n"
                             + message + "/n" + subCategory + "/n" + notifID + "/n" +
                             notifAlarmString;
+                    // Add newly created entry to list and save to pref
                     encouragementList.add(0,fullEntry);
                     saveArray(encouragementList,"encouragementList");
+                    // set the alarm for the notification
                     if(!type.equals("None")){
                         setDailyAlarm(type,dayNum,hour,minute,notID,fullEntry,pos);
                     }
 
-                    Toast.makeText(getContext(),"Entry added to " + btnCategorySub.getText().toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Entry added to " +
+                            btnCategorySub.getText().toString(),Toast.LENGTH_LONG).show();
 
                     // Close the tab once created
                     isAddActive = false;
@@ -398,7 +411,8 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                     startActivity(intent);
 
                 }else{
-                    Toast.makeText(getContext(),"Please enter a message to create", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Please enter a message to create",
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -409,22 +423,17 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
 
 
         sendSmsBtn = (Button)getView().findViewById(R.id.btnSendSMS);
-//        toPhoneNumber = (EditText)getView().findViewById(R.id.editTextPhoneNo);
-//        Log.d("ActivityCreated","line 74");
 
         smsMessageET = (EditText)getView().findViewById(R.id.editTextMessage);
-//        etTo = (EditText)getView().findViewById(R.id.editTextTo);
         sendSmsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendSms();
             }
         });
-//        Log.d("ActivityCreated","line 84");
 
         btnCancelContact = (Button)getView().findViewById(R.id.btnCancelContact);
         btnCancelContact.setVisibility(View.GONE);
-//        Log.d("ActivityCreated","line 88");
 
         btnCancelContact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -432,71 +441,34 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                 cancelContact();
             }
         });
-//        btnSyncContacts = (Button)getView().findViewById(R.id.btnSyncContacts);
-//        btnSyncContacts.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                btnSyncContacts.setText("Syncing Contacts...");
-//                readContactData();
-//                textView.setAdapter(adapter);
-//            }
-//        });
-//        Log.d("ActivityCreated","line 105");
 
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, new ArrayList<String>());
-
-
-//        if(phoneValueArr.isEmpty() && nameValueArr.isEmpty()){
-//            btnSyncContacts.setText("Sync Contacts");
-//        }
-
-        // Initialize AutoCompleteTextView values
-
         textView = (AutoCompleteTextView) getView().findViewById(R.id.toNumber);
         textView.setDropDownBackgroundResource(R.color.colorPrimaryDarkAlpha);
-        //Create adapter
-//        Log.d("ActivityCreated","line 119");
-
-
         textView.setThreshold(1);
 
         //Set adapter to AutoCompleteTextView
         textView.setAdapter(adapter);
         textView.setOnItemSelectedListener(this);
         textView.setOnItemClickListener(this);
-//        Log.d("ActivityCreated","line 128");
 
         textView.addTextChangedListener(new TextWatcher() {
-
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // TODO Auto-generated method stub
-//                if(phoneValueArr.isEmpty() && nameValueArr.isEmpty()) {
-//                    readContactData();
-//                    textView.setAdapter(adapter);
-//                }
-//                else if(adapter.isEmpty()){
-//                    for(int i = 0; i < phoneValueArr.size(); i++){
-//                        adapter.add(nameValueArr.get(i) + " Mobile" + " - " + phoneValueArr.get(i));
-//                    }
-//                    textView.setAdapter(adapter);
-//                }
-            }
-
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                // TODO Auto-generated method stub
-
-            }
-
+                                          int after) {}
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
+                // This is used to load reading in the contacts from the user to display in a
+                //      dropdown that the user can choose from.
                 if(!textView.getText().toString().equals("")) {
+                    // If have not gathered the phone numbers and names yet
                     if (phoneValueArr.isEmpty() && nameValueArr.isEmpty()) {
+                        // Read the phone contact data
                         readContactData();
                         textView.setAdapter(adapter);
+                    // The adapter is empty so add the names and phone numbers to it
                     } else if (adapter.isEmpty()) {
                         for (int i = 0; i < phoneValueArr.size(); i++) {
                             adapter.add(nameValueArr.get(i) + " Mobile" + " - " + phoneValueArr.get(i));
@@ -508,10 +480,13 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         });
     }
 
+    /**
+     * This reads and puts the phone contacts and numbers in lists in order to be used for the
+     * dropdown to choose a contact rather than typing the number out completely
+     */
     private void readContactData() {
 
         try {
-//            btnSyncContacts.setText("Syncing Contacts...");
 
             /*********** Reading Contacts Name And Number **********/
 
@@ -529,15 +504,14 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                             null);
 
             // If data data found in contacts
-            if (cur.getCount() > 0) {
+            if (cur != null && cur.getCount() > 0) {
 
                 Log.i("AutocompleteContacts", "Reading   contacts........");
 
-                int k=0;
+                int k = 0;
                 String name = "";
 
-                while (cur.moveToNext())
-                {
+                while (cur.moveToNext()) {
 
                     String id = cur
                             .getString(cur
@@ -550,8 +524,7 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                     if (Integer
                             .parseInt(cur
                                     .getString(cur
-                                            .getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0)
-                    {
+                                            .getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
 
                         //Create query to get phone number by contact id
                         Cursor pCur = cr
@@ -559,99 +532,68 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                                         null,
                                         ContactsContract.CommonDataKinds.Phone.CONTACT_ID
                                                 + " = ?",
-                                        new String[] { id },
+                                        new String[]{id},
                                         null);
-                        int j=0;
+                        int j = 0;
 
-                        while (pCur
-                                .moveToNext())
-                        {
+                        if (pCur != null) {
+                            while (pCur
+                                    .moveToNext()) {
 
-                            if(j == 0) {
-                                int phoneType = pCur.getInt(pCur.getColumnIndex(
-                                        ContactsContract.CommonDataKinds.Phone.TYPE));
-                                phoneNumber = pCur.getString(pCur.getColumnIndex(
-                                        ContactsContract.CommonDataKinds.Phone.NUMBER));
-                                switch (phoneType) {
-                                    case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-                                        // take out the dashes so easier to find
-                                        try{
-                                            String[] numberEntry = phoneNumber.split("-");
-                                            phoneNumber = "";
-                                            for(int n = 0; n < numberEntry.length; n++){
-                                                phoneNumber += numberEntry[n];
+                                if (j == 0) {
+                                    int phoneType = pCur.getInt(pCur.getColumnIndex(
+                                            ContactsContract.CommonDataKinds.Phone.TYPE));
+                                    phoneNumber = pCur.getString(pCur.getColumnIndex(
+                                            ContactsContract.CommonDataKinds.Phone.NUMBER));
+                                    switch (phoneType) {
+                                        case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
+                                            // take out the dashes so easier to find
+                                            try {
+                                                String[] numberEntry = phoneNumber.split("-");
+                                                phoneNumber = "";
+                                                for (String aNumberEntry : numberEntry) {
+                                                    phoneNumber += aNumberEntry;
+                                                }
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
                                             }
-                                        }catch (Exception e){
-                                            e.printStackTrace();
-                                        }
 
-                                        adapter.add(name + " Mobile" + " - " + phoneNumber);
-                                        phoneValueArr.add(phoneNumber.toString());
-                                        nameValueArr.add(name.toString());
-                                        j++;
-                                        k++;
-                                        break;
-//                                case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-//                                    phoneValueArr.add(phoneNumber.toString());
-//                                    nameValueArr.add(name.toString());
-//                                    break;
-//                                case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
-//                                    adapter.add(name + " - " + phoneNumber + " - Work");
-//                                    phoneValueArr.add(phoneNumber.toString());
-//                                    nameValueArr.add(name.toString());
-//                                    break;
-//                                case ContactsContract.CommonDataKinds.Phone.TYPE_OTHER:
-//                                    adapter.add(name + " - " + phoneNumber + " - Other");
-//                                    phoneValueArr.add(phoneNumber.toString());
-//                                    nameValueArr.add(name.toString());
-//                                    break;
-                                    default:
-                                        break;
+                                            adapter.add(name + " Mobile" + " - " + phoneNumber);
+                                            phoneValueArr.add(phoneNumber);
+                                            nameValueArr.add(name);
+                                            j++;
+                                            k++;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+
+
                                 }
 
-
-                            }
-
-                            /*
-                            // Sometimes get multiple data
-                            if(j==0)
-                            {
-                                // Get Phone number
-                                phoneNumber =""+pCur.getString(pCur
-                                        .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
-                                // Add contacts names to adapter
-                                adapter.add(name + " - " + phoneNumber);
-
-                                // Add ArrayList names to adapter
-                                phoneValueArr.add(phoneNumber.toString());
-                                nameValueArr.add(name.toString());
-
-
-                                j++;
-                                k++;
-                            }
-                            */
-
-                        }  // End while loop
-                        pCur.close();
+                            }  // End while loop
+                        }
+                        if (pCur != null) {
+                            pCur.close();
+                        }
                     } // End if
 
                 }  // End while loop
 
             } // End Cursor value check
-            cur.close();
+            if (cur != null) {
+                cur.close();
+            }
 
-//            btnSyncContacts.setText("Contacts Synced");
 
         } catch (Exception e) {
             Log.i("AutocompleteContacts","Exception : "+ e);
         }
-
-        Log.d("ContactsList",phoneValueArr.toString());
-        Log.d("ContactsList",nameValueArr.toString());
     }
 
+    /**
+     * This is used to clear the contact that is currently selected to send a message to
+     */
     private void cancelContact(){
         name = "";
         toNumberValue = "";
@@ -660,20 +602,28 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         textView.setEnabled(true);
     }
 
+    /**
+     * This is used to send SMS to an individual phone number
+     */
     private void sendSms(){
-        //String toPhone = toPhoneNumber.getText().toString();
+        // get the message to send
         String smsMessage = smsMessageET.getText().toString();
 
+        // If name is empty or null that means that sending message to a phone number that might
+        //      not be in the phone's contacts
         if(name.isEmpty() || name.equals("") || name == null){
             toNumberValue = textView.getText().toString();
         }
 
         try{
+            // Get the SmsManager and send a text message to the number value given
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(toNumberValue,null,smsMessage, null, null);
 
+            // Display to user that SMS has been sent
             Toast.makeText(getActivity().getApplicationContext(),"SMS Sent", Toast.LENGTH_LONG).show();
 
+            // Clear the message and contact because it has been sent
             cancelContact();
             smsMessageET.setText("");
             textView.setText("");
@@ -682,51 +632,20 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
 
         }catch(Exception e){
             e.printStackTrace();
-            Toast.makeText(getActivity().getApplicationContext(), "Error SMS Not Sent", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), "Error SMS Not Sent",
+                    Toast.LENGTH_LONG).show();
         }
 
     }
-
-//
-//    private View.OnClickListener BtnAction(final AutoCompleteTextView toNumber) {
-//        return new View.OnClickListener() {
-//
-//            public void onClick(View v) {
-//
-//                String NameSel = "";
-//                NameSel = toNumber.getText().toString();
-//
-//
-//                final String ToNumber = toNumberValue;
-//
-//
-//                if (ToNumber.length() == 0 ) {
-//                    Toast.makeText(getActivity().getBaseContext(), "Please fill phone number",
-//                            Toast.LENGTH_SHORT).show();
-//                }
-//                else
-//                {
-//                    Toast.makeText(getActivity().getBaseContext(), NameSel+" : "+toNumberValue,
-//                            Toast.LENGTH_LONG).show();
-//                }
-//
-//            }
-//        };
-//    }
-
 
 
 
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position,
-                               long arg3) {
-        // TODO Auto-generated method stub
-        //Log.d("AutocompleteContacts", "onItemSelected() position " + position);
-    }
+                               long arg3) {}
 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
 
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
                 getActivity().INPUT_METHOD_SERVICE);
@@ -736,7 +655,6 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-        // TODO Auto-generated method stub
 
         // Get Array index value for selected name
 
@@ -753,16 +671,7 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
                     getActivity().INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
 
-            // Show Alert
-            //Toast.makeText(getActivity().getBaseContext(), "Position:"+arg2+" Name:"+arg0.getItemAtPosition(arg2)+" Number:"+toNumberValue,
-                    //Toast.LENGTH_LONG).show();
-
-            //Log.d("AutocompleteContacts", "Position:"+arg2+" Name:"+arg0.getItemAtPosition(arg2)+" Number:"+toNumberValue);
-
         }
-//        name = textView.getText().toString();
-//        String text = name;// + " ("+toNumberValue+")";
-//        textView.setText(text);
         btnCancelContact.setVisibility(View.VISIBLE);
         textView.setEnabled(false);
 
@@ -776,7 +685,10 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         super.onDestroy();
     }
 
-
+    /**
+     * This is to find the next notification id to be able to be used
+     * @return notifID int that is a unique notification id
+     */
     private int findNextNotifID(){
         int notifID = 200;
         for(int i = 0; i < encouragementList.size(); i++){
@@ -795,35 +707,38 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         return notifID;
     }
 
+    /**
+     * Used to display a popup list to select from
+     * @param v view to show the popup on
+     */
     public void showPopUp(View v){
         PopupMenu popupMenu = new PopupMenu(getContext(),v,1,0,R.style.PopupMenu);
 
         popupMenu.setOnMenuItemClickListener(this);
         MenuInflater inflater = popupMenu.getMenuInflater();
 
+        // User clicked on Category selection button
         if(isCategorySubActive){
 
             inflater.inflate(R.menu.popup_category_menu, popupMenu.getMenu());
+            // if doesn't want prayer and scripture then don't display them in the choices
             if(!wantsPrayerAndScripture){
                 popupMenu.getMenu().getItem(1).setVisible(false);
                 popupMenu.getMenu().getItem(2).setVisible(false);
             }
+
+            // Add the sub menus for both Prayer and Scripture Subcategories
             try {
-                //if(mainCategory == 2) {
                 for (int i = 0; i < categoriesListPrayer.size(); i++) {
                     String[] category = categoriesListPrayer.get(i).split("/n");
                     CharSequence c_arr = category[1];
-                    //popupMenu.getMenu().add(0, i, 0, c_arr).setShortcut('3', 'c');
                     popupMenu.getMenu().getItem(1).getSubMenu().add(0, i, 0, c_arr).setShortcut('3', 'c');
                 }
-                //}else if(mainCategory == 3) {
                 for (int i = 0; i < categoriesListScripture.size(); i++) {
                     String[] category = categoriesListScripture.get(i).split("/n");
                     CharSequence c_arr = category[1];
-                    //popupMenu.getMenu().add(0, i, 0, c_arr).setShortcut('3', 'c');
                     popupMenu.getMenu().getItem(2).getSubMenu().add(0, i, 0, c_arr).setShortcut('3', 'c');
                 }
-                //}
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -832,12 +747,16 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
 
             inflater.inflate(R.menu.popup_home_menu, popupMenu.getMenu());
 
+            // User clicked on Notification Frequency selection
             if (isNotifFreqActive) {
+                // hide elements that are not notification frequency
                 for (int i = 3; i <= 9; i++) {
                     popupMenu.getMenu().getItem(i).setVisible(false);
                 }
             }
+            // User clicked on Notification Day Selection
             if (isNotifDayActive) {
+                // hide elements that are not notification day selection
                 for (int i = 0; i <= 2; i++) {
                     popupMenu.getMenu().getItem(i).setVisible(false);
                 }
@@ -965,6 +884,10 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         }
     }
 
+    /**
+     * This is used to show and hide the notification settings based on which notification
+     * frequency selected.
+     */
     private void showNotificationSettings(){
         switch (mNotification){
             case DAILY:
@@ -988,15 +911,24 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         }
     }
 
-    public void setDailyAlarm(String notificationType, int day, int hour, int minute, int notifyID, String msg, String pos){
+    /**
+     * This sets the alarm for the particular entry or for all encouragements
+     * @param notificationType string that represents type of notification
+     * @param day int that represents day alarm to be set to
+     * @param hour int that is the hour the alarm to be set to
+     * @param minute int that is the minute the alarm to be set to
+     * @param notifyID int that is the unique notification identifier
+     * @param msg string message to send as the notification text
+     * @param pos string position of selected entry
+     */
+    public void setDailyAlarm(String notificationType, int day, int hour, int minute, int notifyID,
+                              String msg, String pos){
         String category = "";
-        String nameAddressDate = "";
         String message = "";
         String subCategory = "";
         try{
             String[] entry = msg.split("/n");
             category = entry[1];
-            nameAddressDate = entry[2];
             message = entry[3];
             subCategory = entry[4];
         }catch (Exception e){
@@ -1030,7 +962,8 @@ public class SendMessageFragment extends Fragment implements AdapterView.OnItemC
         alertIntent.putExtra("notifyID",notifyID);
         alertIntent.putStringArrayListExtra("encouragementList",encouragementList);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getContext(),notifyID,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getContext(),notifyID,
+                alertIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         try {
             loadArray(alarmList, getContext(), "alarmList");
