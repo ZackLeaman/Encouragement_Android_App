@@ -8,8 +8,8 @@ android {
         applicationId "com.wordpress.zackleaman.materialtablayout"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 5
-        versionName "1.4"
+        versionCode 6
+        versionName "1.5"
 
         // Enabling multidex support.
         multiDexEnabled true
